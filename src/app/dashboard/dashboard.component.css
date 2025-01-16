@@ -1,0 +1,100 @@
+.container{
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        height: 100%;
+        flex-direction: row;  
+        flex-wrap: wrap;
+        gap: 0 50px;
+        /* overflow-x: hidden; */
+}
+
+#title{
+        font-family: 'Montserrat', sans-serif;
+        background-color: rgb(63, 112, 181);
+        color: rgb(255, 255, 255);
+        font-size: 28px;
+        font-weight: bolder;
+        padding: 15px;
+        width: 100%;
+        text-align: center;
+}
+
+.day-container, .overall-container{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        background-color: #f5f5f5;
+        flex-direction: column;  
+        /* overflow-x: hidden; */
+}
+
+.day-return-amnt{
+        font-size: 32px;
+        font-weight: 550;
+        color: rgb(0, 211, 0);
+}
+
+.day-sub-return-cont{
+        margin: 20px;
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        flex-direction: row;
+        flex-wrap: wrap;  
+        gap: 15px;
+}
+.day-sub-return{
+        width: 125px;
+        height: 100%;
+        border-radius: 18px;
+        color: rgb(63, 112, 181);
+        background-color: rgb(191, 252, 191);
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        padding: 8px 15px;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        font-weight: bold;
+        font-size: 20px;
+        transition: all 0.3s ease-out;
+        /* transition: width 0.3s ease-out; */
+        cursor: pointer;
+        overflow: hidden;
+        user-select: none;
+        transform-origin: left;
+}
+.day-sub-return.expanded{
+        width: 320px;
+}
+.day-sub-return-amnt{
+        margin: 8px auto;
+        font-size: 24px;
+        color: rgb(0, 187, 0);;
+}
+.day-sub-return-perct{
+        font-weight: 100;
+        color: black;
+}
+.day-sub-details-tbl{
+        border-collapse: collapse;
+        font-size: 15px;
+        margin-top: 12px;
+        color: rgb(91, 91, 91);
+        width: 100%;
+}
+.day-sub-details-tbl tr{
+        border-bottom: 1px gray;
+}
+.day-sub-details-tbl td{
+        padding: 4px;
+        white-space: nowrap;
+        overflow: hidden;
+}
+.day-sub-details-tbl td:first-child{
+        text-align: left;
+}
+.day-sub-details-tbl td:nth-child(2), td:nth-child(3){
+        text-align: right;
+}

@@ -1,0 +1,74 @@
+<div id="title">Investment Dashboard</div>
+<div class="container">
+         <div class="day-container">
+                <h2>Wednesday, 15 January</h2>
+                <div class="day-return-amnt">&#8377;15,786  &nbsp;  2.40%</div>
+                <div class="day-sub-return-cont">
+                        <div class="day-sub-return" >
+                                <div>NAEEM</div>
+                                <div class="day-sub-overview" >
+                                        <div class="day-sub-return-amnt">&#8377;15,786</div>
+                                        <div class="day-sub-return-perct">2.44%</div>
+                                </div>
+                                <!-- <div class="day-sub-details" *ngIf = "isExpanded">
+                                        <table class="day-sub-details-tbl">
+                                                <tr *ngFor="let row of tableData; let i = index" [ngClass]="'row-' + i" [ngStyle]="{ 'transition-delay': (i * 0.2) + 's' }">
+                                                        <td>{{ row.name }}</td>
+                                                        <td>{{ row.amount }}</td>
+                                                        <td>{{ row.percentage }}</td>
+                                                </tr>
+                                        </table>
+                                </div> -->
+                        </div>
+                        <div class="day-sub-return" (click)="expandDayOverview()" [ngClass]="{ 'expanded': isExpanded }">
+                                <div>SABERA</div>
+                                <div class="day-sub-overview" *ngIf = "!isExpanded">
+                                        <div class="day-sub-return-amnt">&#8377;8,786</div>
+                                        <div class="day-sub-return-perct">1.44%</div>
+                                </div>
+                                <div class="day-sub-details" *ngIf = "isExpanded">
+                                        <table class="day-sub-details-tbl">
+                                                <tr *ngFor="let row of tableData; let i = index" [ngClass]="'row-' + i" [ngStyle]="{ 'transition-delay': (i * 0.2) + 's' }">
+                                                        <td>{{ row.name }}</td>
+                                                        <td>{{ row.amount }}</td>
+                                                        <td>{{ row.percentage }}</td>
+                                                </tr>
+                                        </table>
+                                </div>
+                        </div>
+                </div>
+         </div>
+         <div class="overall-container">
+                <h2>Overall</h2>
+                <div class="day-return-amnt">&#8377;15,786  &nbsp;  2.40%</div>
+                <div class="day-sub-return-cont">
+                        <div class="day-sub-return">
+                                <div>NAEEM</div>
+                                <div class="day-sub-overview" >
+                                        <div class="day-sub-return-amnt">&#8377;15,786</div>
+                                        <div class="day-sub-return-perct">2.44%</div>
+                                </div>
+                                <div class="day-sub-details" style="display: none;">
+                                        <table class="day-sub-details-tbl">
+                                                <tr *ngFor="let row of tableData; let i = index" [ngClass]="'row-' + i" [ngStyle]="{ 'transition-delay': (i * 0.2) + 's' }">
+                                                        <td>{{ row.name }}</td>
+                                                        <td>{{ row.amount }}</td>
+                                                        <td>{{ row.percentage }}</td>
+                                                </tr>
+                                        </table>
+                                </div>
+                        </div>
+                        <div class="day-sub-return">
+                                <div>SABERA</div>
+                                <div class="day-sub-overview">
+                                        <div class="day-sub-return-amnt">&#8377;8,786</div>
+                                        <div class="day-sub-return-perct">1.44%</div>
+                                </div>
+                                <div class="day-sub-details">
+
+                                </div>
+                        </div>
+                </div>
+         </div>
+</div>
+{{data}}
