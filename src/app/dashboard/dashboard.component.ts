@@ -53,4 +53,11 @@ export class DashboardComponent {
       }, 100);
     }
   }
+
+  expandMutualFund(name:string, MFId: number) {
+    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
+    const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
+    mf.isExpanded = !mf.isExpanded;
+
+  }
 }
