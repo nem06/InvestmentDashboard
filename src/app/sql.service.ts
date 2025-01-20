@@ -8,4 +8,12 @@ import initSqlJs from 'sql.js';
 export class SqlService {
 
   constructor() { }
+
+  async getDb() {
+    const SQL = await initSqlJs();
+    const db = new SQL.Database();
+    return db;
+  }
+
+  
 }

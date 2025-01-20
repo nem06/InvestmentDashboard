@@ -1,37 +1,26 @@
 <div id="title">Investment Dashboard</div>
 <div class="container">
          <div class="day-container">
-                <h2>Wednesday, 15 January</h2>
-                <div class="day-return-amnt">&#8377;15,786  &nbsp;  2.40%</div>
+                <h1>{{data.MaxDate | date:'EEEE, dd MMMM'}}</h1>
+                <div class="day-return-amnt pstv-amnt" *ngIf = "data.SingleNodes[0].Daily_Ret >= 0">&#8377;{{data.SingleNodes[0].Daily_Ret | number}}  &nbsp;  {{data.SingleNodes[0].Daily_Per}}%</div>
+                <div class="day-return-amnt ngtv-amnt" *ngIf = "data.SingleNodes[0].Daily_Ret < 0">1&#8377;{{data.SingleNodes[0].Daily_Ret*-1 | number}}  &nbsp;  {{data.SingleNodes[0].Daily_Per*-1}}%</div>
                 <div class="day-sub-return-cont">
-                        <div class="day-sub-return" >
-                                <div>NAEEM</div>
-                                <div class="day-sub-overview" >
-                                        <div class="day-sub-return-amnt">&#8377;15,786</div>
-                                        <div class="day-sub-return-perct">2.44%</div>
+                        <div class="day-sub-return" *ngFor="let user of data.UserNodes" (click)="expandDayOverview(user.Name, 'open')" [ngClass]="{ 'expanded': user.isExpandedDay }">
+                                <div class="day-sub-overview" [ngClass]="{ 'expanded': user.isExpandedDay }" > 
+                                        <div (click)="expandDayOverview(user.Name, 'close')">{{user.Name}}</div>
+                                        <div class="day-sub-return-amnt pstv-amnt" *ngIf = "user.Daily_Ret >= 0" >&#8377;{{user.Daily_Ret | number}}</div>
+                                        <div class="day-sub-return-amnt ngtv-amnt" *ngIf = "user.Daily_Ret < 0" >-&#8377;{{user.Daily_Ret*-1 | number}}</div>
+                                        <div class="day-sub-return-perct pstv-amnt" *ngIf = "user.Daily_Ret >= 0">{{user.Daily_Per}}%</div>
+                                        <div class="day-sub-return-perct ngtv-amnt" *ngIf = "user.Daily_Ret < 0">{{user.Daily_Per*-1}}%</div>
                                 </div>
-                                <!-- <div class="day-sub-details" *ngIf = "isExpanded">
+                                <div class="day-sub-details" *ngIf = "user.isExpandedDay" >
                                         <table class="day-sub-details-tbl">
-                                                <tr *ngFor="let row of tableData; let i = index" [ngClass]="'row-' + i" [ngStyle]="{ 'transition-delay': (i * 0.2) + 's' }">
-                                                        <td>{{ row.name }}</td>
-                                                        <td>{{ row.amount }}</td>
-                                                        <td>{{ row.percentage }}</td>
-                                                </tr>
-                                        </table>
-                                </div> -->
-                        </div>
-                        <div class="day-sub-return" (click)="expandDayOverview()" [ngClass]="{ 'expanded': isExpanded }">
-                                <div>SABERA</div>
-                                <div class="day-sub-overview" *ngIf = "!isExpanded">
-                                        <div class="day-sub-return-amnt">&#8377;8,786</div>
-                                        <div class="day-sub-return-perct">1.44%</div>
-                                </div>
-                                <div class="day-sub-details" *ngIf = "isExpanded">
-                                        <table class="day-sub-details-tbl">
-                                                <tr *ngFor="let row of tableData; let i = index" [ngClass]="'row-' + i" [ngStyle]="{ 'transition-delay': (i * 0.2) + 's' }">
-                                                        <td>{{ row.name }}</td>
-                                                        <td>{{ row.amount }}</td>
-                                                        <td>{{ row.percentage }}</td>
+                                                <tr *ngFor="let MutualFund of user.MutualFunds" >
+                                                        <td>{{ MutualFund.MutualFund }}</td>
+                                                        <td *ngIf = "MutualFund.Daily_Ret >= 0" class="pstv-amnt">&#8377;{{ MutualFund.Daily_Ret | number}}</td>
+                                                        <td *ngIf = "MutualFund.Daily_Ret < 0" class="ngtv-amnt">-&#8377;{{ MutualFund.Daily_Ret*-1 | number}}</td>
+                                                        <td *ngIf = "MutualFund.Daily_Ret >= 0" class="pstv-amnt">{{ MutualFund.Daily_Per }}%</td>
+                                                        <td *ngIf = "MutualFund.Daily_Ret < 0" class="ngtv-amnt">{{ MutualFund.Daily_Per*-1 }}%</td>
                                                 </tr>
                                         </table>
                                 </div>
@@ -39,36 +28,30 @@
                 </div>
          </div>
          <div class="overall-container">
-                <h2>Overall</h2>
-                <div class="day-return-amnt">&#8377;15,786  &nbsp;  2.40%</div>
+                <h1>Overall</h1>
+                <div class="day-return-amnt pstv-amnt" *ngIf = "data.SingleNodes[0].Total_Ret >= 0">&#8377;{{data.SingleNodes[0].Total_Ret | number}}  &nbsp;  {{data.SingleNodes[0].Total_Per}}%</div>
+                <div class="day-return-amnt ngtv-amnt" *ngIf = "data.SingleNodes[0].Total_Ret < 0">-&#8377;{{data.SingleNodes[0].Total_Ret*-1 | number}}  &nbsp;  {{data.SingleNodes[0].Total_Per*-1}}%</div>
                 <div class="day-sub-return-cont">
-                        <div class="day-sub-return">
-                                <div>NAEEM</div>
-                                <div class="day-sub-overview" >
-                                        <div class="day-sub-return-amnt">&#8377;15,786</div>
-                                        <div class="day-sub-return-perct">2.44%</div>
+                        <div class="day-sub-return" *ngFor="let user of data.UserNodes" (click)="expandOverall(user.Name, 'open')" [ngClass]="{ 'expanded': user.isExpandedAll }">
+                                <div class="day-sub-overview" [ngClass]="{ 'expanded': user.isExpandedAll }" >
+                                        <div (click)="expandOverall(user.Name, 'close')">{{user.Name}}</div>
+                                        <div class="day-sub-return-amnt pstv-amnt" *ngIf = "user.Total_Ret >= 0" >&#8377;{{user.Total_Ret | number}}</div>
+                                        <div class="day-sub-return-amnt ngtv-amnt" *ngIf = "user.Total_Ret < 0" >-&#8377;{{user.Total_Ret*-1 | number}}</div>
+                                        <div class="day-sub-return-perct pstv-amnt" *ngIf = "user.Total_Ret >= 0">{{user.Total_Per }}%</div>
+                                        <div class="day-sub-return-perct ngtv-amnt" *ngIf = "user.Total_Ret < 0">{{user.Total_Per*-1}}%</div>
                                 </div>
-                                <div class="day-sub-details" style="display: none;">
+                                <div class="day-sub-details" *ngIf = "user.isExpandedAll" >
                                         <table class="day-sub-details-tbl">
-                                                <tr *ngFor="let row of tableData; let i = index" [ngClass]="'row-' + i" [ngStyle]="{ 'transition-delay': (i * 0.2) + 's' }">
-                                                        <td>{{ row.name }}</td>
-                                                        <td>{{ row.amount }}</td>
-                                                        <td>{{ row.percentage }}</td>
+                                                <tr *ngFor="let MutualFund of user.MutualFunds" >
+                                                        <td>{{ MutualFund.MutualFund }}</td>
+                                                        <td *ngIf = "MutualFund.Total_Ret >= 0" class="pstv-amnt">&#8377;{{ MutualFund.Total_Ret | number}}</td>
+                                                        <td *ngIf = "MutualFund.Total_Ret < 0" class="ngtv-amnt">-&#8377;{{ MutualFund.Total_Ret*-1 | number}}</td>
+                                                        <td *ngIf = "MutualFund.Total_Ret >= 0" class="pstv-amnt">{{ MutualFund.Total_Per }}%</td>
+                                                        <td *ngIf = "MutualFund.Total_Ret < 0" class="ngtv-amnt">{{ MutualFund.Total_Per*-1 }}%</td>
                                                 </tr>
                                         </table>
-                                </div>
-                        </div>
-                        <div class="day-sub-return">
-                                <div>SABERA</div>
-                                <div class="day-sub-overview">
-                                        <div class="day-sub-return-amnt">&#8377;8,786</div>
-                                        <div class="day-sub-return-perct">1.44%</div>
-                                </div>
-                                <div class="day-sub-details">
-
                                 </div>
                         </div>
                 </div>
          </div>
 </div>
-{{data}}

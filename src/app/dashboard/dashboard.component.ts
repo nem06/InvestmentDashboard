@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { expand } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -10,14 +11,7 @@ import { CommonModule } from '@angular/common';
 export class DashboardComponent {
   isExpanded:boolean = false;
   data: any;
-  tableData = [
-    { name: 'Bandhan Small Cap', amount: '₹15,786', percentage: '1.11%' },
-    { name: 'Bandhan Small Cap', amount: '₹15,786', percentage: '1.11%' },
-    { name: 'Bandhan Small Cap', amount: '₹15,786', percentage: '1.11%' },
-    { name: 'Bandhan Small Cap', amount: '₹15,786', percentage: '1.11%' },
-    { name: 'Bandhan Small Cap', amount: '₹15,786', percentage: '1.11%' },
-    // Add or remove rows dynamically
-  ];
+  expandProgress = false
 
   ngOnInit(): void {
     // Use fetch to get the JSON data
@@ -32,7 +26,31 @@ export class DashboardComponent {
       });
   }
 
-  expandDayOverview(){
-    this.isExpanded = !this.isExpanded;
+  expandDayOverview(name: string, operation: string) {
+    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
+    if(!this.expandProgress){
+      this.expandProgress = true;
+      if(operation === 'open' || (operation === 'close' && !user.isExpandedDay)) 
+        user.isExpandedDay = true;
+      else if(operation === 'close') 
+        user.isExpandedDay = false;
+      setTimeout(() => {
+        this.expandProgress = false;
+      }, 100);
+    }
+  }
+
+  expandOverall(name: string, operation: string) {
+    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
+    if(!this.expandProgress){
+      this.expandProgress = true;
+      if(operation === 'open' || (operation === 'close' && !user.isExpandedAll)) 
+        user.isExpandedAll = true;
+      else if(operation === 'close') 
+        user.isExpandedAll = false;
+      setTimeout(() => {
+        this.expandProgress = false;
+      }, 100);
+    }
   }
 }
