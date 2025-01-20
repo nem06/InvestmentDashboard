@@ -3,15 +3,29 @@
          <div class="day-container">
                 <h1>{{data.MaxDate | date:'EEEE, dd MMMM'}}</h1>
                 <div class="day-return-amnt pstv-amnt" *ngIf = "data.SingleNodes[0].Daily_Ret >= 0">&#8377;{{data.SingleNodes[0].Daily_Ret | number}}  &nbsp;  {{data.SingleNodes[0].Daily_Per}}%</div>
-                <div class="day-return-amnt ngtv-amnt" *ngIf = "data.SingleNodes[0].Daily_Ret < 0">1&#8377;{{data.SingleNodes[0].Daily_Ret*-1 | number}}  &nbsp;  {{data.SingleNodes[0].Daily_Per*-1}}%</div>
+                <div class="day-return-amnt ngtv-amnt" *ngIf = "data.SingleNodes[0].Daily_Ret < 0">-&#8377;{{data.SingleNodes[0].Daily_Ret*-1 | number}}  &nbsp;  {{data.SingleNodes[0].Daily_Per*-1}}%</div>
+                <div class="day-other-return-amnt">
+                        <div class="pstv-amnt" *ngIf = "data.SingleNodes[0].Yest_Ret >= 0">Yesterday: &#8377;{{data.SingleNodes[0].Yest_Ret | number}} ({{data.SingleNodes[0].Yest_Per}}%)</div>
+                        <div class="ngtv-amnt" *ngIf = "data.SingleNodes[0].Yest_Ret < 0">Yesterday: -&#8377;{{data.SingleNodes[0].Yest_Ret*-1 | number}} ({{data.SingleNodes[0].Yest_Per*-1}}%)</div>
+                        <div class="pstv-amnt" *ngIf = "data.SingleNodes[0].Weekly_Ret >= 0">Week: &#8377;{{data.SingleNodes[0].Weekly_Ret | number}} ({{data.SingleNodes[0].Weekly_Per}}%)</div>
+                        <div class="ngtv-amnt" *ngIf = "data.SingleNodes[0].Weekly_Ret < 0">Week: -&#8377;{{data.SingleNodes[0].Weekly_Ret*-1 | number}} ({{data.SingleNodes[0].Weekly_Per*-1}}%)</div>
+                        <div class="pstv-amnt" *ngIf = "data.SingleNodes[0].Monthly_Ret >= 0">Month: &#8377;{{data.SingleNodes[0].Monthly_Ret | number}} ({{data.SingleNodes[0].Monthly_Per}}%)</div>
+                        <div class="ngtv-amnt" *ngIf = "data.SingleNodes[0].Monthly_Ret < 0">Month: -&#8377;{{data.SingleNodes[0].Monthly_Ret*-1 | number}} ({{data.SingleNodes[0].Monthly_Per*-1}}%)</div>
+                </div>
                 <div class="day-sub-return-cont">
                         <div class="day-sub-return" *ngFor="let user of data.UserNodes" (click)="expandDayOverview(user.Name, 'open')" [ngClass]="{ 'expanded': user.isExpandedDay }">
-                                <div class="day-sub-overview" [ngClass]="{ 'expanded': user.isExpandedDay }" > 
-                                        <div (click)="expandDayOverview(user.Name, 'close')">{{user.Name}}</div>
-                                        <div class="day-sub-return-amnt pstv-amnt" *ngIf = "user.Daily_Ret >= 0" >&#8377;{{user.Daily_Ret | number}}</div>
-                                        <div class="day-sub-return-amnt ngtv-amnt" *ngIf = "user.Daily_Ret < 0" >-&#8377;{{user.Daily_Ret*-1 | number}}</div>
-                                        <div class="day-sub-return-perct pstv-amnt" *ngIf = "user.Daily_Ret >= 0">{{user.Daily_Per}}%</div>
-                                        <div class="day-sub-return-perct ngtv-amnt" *ngIf = "user.Daily_Ret < 0">{{user.Daily_Per*-1}}%</div>
+                                <div (click)="expandDayOverview(user.Name, 'close')">{{user.Name}}</div>
+                                <div class="day-sub-overview" [ngClass]="{ 'expanded': user.isExpandedDay }" >                                   
+                                        <div class="day-sub-return-amnt pstv-amnt" *ngIf = "user.Daily_Ret >= 0" >&#8377;{{user.Daily_Ret | number}}  &nbsp;  {{user.Daily_Per}}%</div>
+                                        <div class="day-sub-return-amnt ngtv-amnt" *ngIf = "user.Daily_Ret < 0" >-&#8377;{{user.Daily_Ret*-1 | number}}  &nbsp;  {{user.Daily_Per*-1}}%</div>
+                                        <div class="day-user-other-return">
+                                                <div class="day-user-other-return-amnt pstv-amnt" *ngIf = "user.Yest_Ret >= 0">Y : &#8377;{{user.Yest_Ret | number}} ({{user.Yest_Per}}%)</div>
+                                                <div class="day-user-other-return-amnt ngtv-amnt" *ngIf = "user.Yest_Ret < 0">Y : -&#8377;{{user.Yest_Ret*-1 | number}} ({{user.Yest_Per*-1}}%)</div>
+                                                <div class="day-user-other-return-amnt pstv-amnt" *ngIf = "user.Weekly_Ret >= 0">W : &#8377;{{user.Weekly_Ret | number}} ({{user.Weekly_Per}}%)</div>
+                                                <div class="day-user-other-return-amnt ngtv-amnt" *ngIf = "user.Weekly_Ret < 0">W : -&#8377;{{user.Weekly_Ret*-1 | number}} ({{user.Weekly_Per*-1}}%)</div>
+                                                <div class="day-user-other-return-amnt pstv-amnt" *ngIf = "user.Monthly_Ret >= 0">M : &#8377;{{user.Monthly_Ret | number}} ({{user.Monthly_Per}}%)</div>
+                                                <div class="day-user-other-return-amnt ngtv-amnt" *ngIf = "user.Monthly_Ret < 0">M : -&#8377;{{user.Monthly_Ret*-1 | number}} ({{user.Monthly_Per*-1}}%)</div>
+                                        </div>
                                 </div>
                                 <div class="day-sub-details" *ngIf = "user.isExpandedDay" >
                                         <table class="day-sub-details-tbl">
@@ -31,14 +45,19 @@
                 <h1>Overall</h1>
                 <div class="day-return-amnt pstv-amnt" *ngIf = "data.SingleNodes[0].Total_Ret >= 0">&#8377;{{data.SingleNodes[0].Total_Ret | number}}  &nbsp;  {{data.SingleNodes[0].Total_Per}}%</div>
                 <div class="day-return-amnt ngtv-amnt" *ngIf = "data.SingleNodes[0].Total_Ret < 0">-&#8377;{{data.SingleNodes[0].Total_Ret*-1 | number}}  &nbsp;  {{data.SingleNodes[0].Total_Per*-1}}%</div>
+                <div class="day-other-return-amnt">
+                        <div class="pstv-amnt">Investment: &#8377;{{data.SingleNodes[0].Investments | number}}</div>
+                        <div class="pstv-amnt" *ngIf = "data.SingleNodes[0].MaxReturn >= 0">Max Return: &#8377;{{data.SingleNodes[0].MaxReturn | number}} ({{data.SingleNodes[0].Max_Per}}%)</div>
+                        <div class="ngtv-amnt" *ngIf = "data.SingleNodes[0].MaxReturn < 0">Max Return: -&#8377;{{data.SingleNodes[0].MaxReturn*-1 | number}} ({{data.SingleNodes[0].Max_Per*-1}}%)</div>
+                        <div class="pstv-amnt" *ngIf = "data.SingleNodes[0].Monthly_Ret >= 0">Month: &#8377;{{data.SingleNodes[0].Monthly_Ret | number}}({{data.SingleNodes[0].Monthly_Per}}%)</div>
+                        <div class="ngtv-amnt" *ngIf = "data.SingleNodes[0].Monthly_Ret < 0">Month: -&#8377;{{data.SingleNodes[0].Monthly_Ret*-1 | number}}({{data.SingleNodes[0].Monthly_Per*-1}}%)</div>
+                </div>
                 <div class="day-sub-return-cont">
                         <div class="day-sub-return" *ngFor="let user of data.UserNodes" (click)="expandOverall(user.Name, 'open')" [ngClass]="{ 'expanded': user.isExpandedAll }">
+                                <div (click)="expandOverall(user.Name, 'close')">{{user.Name}}</div>
                                 <div class="day-sub-overview" [ngClass]="{ 'expanded': user.isExpandedAll }" >
-                                        <div (click)="expandOverall(user.Name, 'close')">{{user.Name}}</div>
-                                        <div class="day-sub-return-amnt pstv-amnt" *ngIf = "user.Total_Ret >= 0" >&#8377;{{user.Total_Ret | number}}</div>
-                                        <div class="day-sub-return-amnt ngtv-amnt" *ngIf = "user.Total_Ret < 0" >-&#8377;{{user.Total_Ret*-1 | number}}</div>
-                                        <div class="day-sub-return-perct pstv-amnt" *ngIf = "user.Total_Ret >= 0">{{user.Total_Per }}%</div>
-                                        <div class="day-sub-return-perct ngtv-amnt" *ngIf = "user.Total_Ret < 0">{{user.Total_Per*-1}}%</div>
+                                        <div class="day-sub-return-amnt pstv-amnt" *ngIf = "user.Total_Ret >= 0" >&#8377;{{user.Total_Ret | number}}  &nbsp;  {{user.Total_Per }}%</div>
+                                        <div class="day-sub-return-amnt ngtv-amnt" *ngIf = "user.Total_Ret < 0" >-&#8377;{{user.Total_Ret*-1 | number}}  &nbsp;  {{user.Total_Per*-1}}%</div>
                                 </div>
                                 <div class="day-sub-details" *ngIf = "user.isExpandedAll" >
                                         <table class="day-sub-details-tbl">
