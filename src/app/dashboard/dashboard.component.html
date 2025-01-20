@@ -50,8 +50,8 @@
                                                         <td *ngIf = "MutualFund.Yest_Ret < 0" class="ngtv-amnt">-&#8377;{{ MutualFund.Yest_Ret*-1 | number}} <br/>  <span class="day-perct">{{ MutualFund.Yest_Per*-1 }}%</span></td>
                                                         <td *ngIf = "MutualFund.Weekly_Ret >= 0" class="pstv-amnt">&#8377;{{ MutualFund.Weekly_Ret | number}} <br/>  <span class="day-perct">{{ MutualFund.Weekly_Per }}%</span></td>
                                                         <td *ngIf = "MutualFund.Weekly_Ret < 0" class="ngtv-amnt">-&#8377;{{ MutualFund.Weekly_Ret*-1 | number}} <br/>  <span class="day-perct">{{ MutualFund.Weekly_Per*-1 }}%</span></td>
-                                                        <td *ngIf = "MutualFund.Yest_Ret >= 0" class="pstv-amnt">&#8377;{{ MutualFund.Yest_Ret | number}} <br/>  <span class="day-perct">{{ MutualFund.Monthly_Per }}%</span></td>
-                                                        <td *ngIf = "MutualFund.Yest_Ret < 0" class="ngtv-amnt">-&#8377;{{ MutualFund.Yest_Ret*-1 | number}} <br/>  <span class="day-perct">{{ MutualFund.Monthly_Per*-1 }}%</span></td>
+                                                        <td *ngIf = "MutualFund.Yest_Ret >= 0" class="pstv-amnt">&#8377;{{ MutualFund.Monthly_Ret | number}} <br/>  <span class="day-perct">{{ MutualFund.Monthly_Per }}%</span></td>
+                                                        <td *ngIf = "MutualFund.Yest_Ret < 0" class="ngtv-amnt">-&#8377;{{ MutualFund.Monthly_Ret*-1 | number}} <br/>  <span class="day-perct">{{ MutualFund.Monthly_Per*-1 }}%</span></td>
                                                         
                                                 </tr>
                                                 <tr style="background-color: #dfdfdf;">
