@@ -6,7 +6,7 @@
         flex-direction: row;  
         flex-wrap: wrap;
         gap: 0 50px;
-        /* overflow-x: hidden; */
+        /* overflow-x: auto; */
 }
 
 #title{
@@ -30,7 +30,6 @@ h1{
         height: 100%;
         /* background-color: #f5f5f5; */
         flex-direction: column;  
-        /* overflow-x: hidden; */
 }
 
 .day-return-amnt{
@@ -63,7 +62,7 @@ h1{
         color: rgb(63, 112, 181);
         background-color: #e6f3f6;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 8px 10px;
+        padding: 8px 12px;
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -80,7 +79,7 @@ h1{
         width: 100%;
         max-width: 380px;
         /* width: max-content; */
-        overflow-x: auto;
+        /* overflow-x: auto; */
 }
 .day-sub-overview{
         display: flex;
@@ -93,6 +92,15 @@ h1{
 }
 .day-sub-overview.expanded{
         flex-direction: row;
+}
+@media (max-width: 768px) {
+        .day-sub-return{
+                width: 160px;
+        }
+        .day-sub-return.expanded {
+                max-width: 95vw;
+                overflow-x: auto;
+        }
 }
 .day-sub-return-amnt{
         font-size: 20px;
