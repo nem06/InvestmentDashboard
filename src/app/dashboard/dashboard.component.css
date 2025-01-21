@@ -45,6 +45,7 @@ h1{
         align-items: center;
         gap: 5px 20px;
         flex-wrap: wrap;
+        max-width: 500px;
 }
 .day-sub-return-cont{
         margin: 20px;
@@ -76,7 +77,8 @@ h1{
         transform-origin: left;
 }
 .day-sub-return.expanded{
-        width: 370px;
+        width: 100%;
+        max-width: 380px;
         /* width: max-content; */
         overflow-x: auto;
 }

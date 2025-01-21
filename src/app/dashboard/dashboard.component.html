@@ -44,6 +44,7 @@
                                                 
                                                 <tr *ngFor="let MutualFund of user.MutualFunds" >
                                                         <td>{{ MutualFund.MutualFund }}</td>
+                                                        <td *ngIf = "MutualFund.Daily_Ret === undefined" class="pstv-amnt"></td>
                                                         <td *ngIf = "MutualFund.Daily_Ret >= 0" class="pstv-amnt">&#8377;{{ MutualFund.Daily_Ret | number}} <br/> <span class="day-perct">{{ MutualFund.Daily_Per }}%</span></td>
                                                         <td *ngIf = "MutualFund.Daily_Ret < 0" class="ngtv-amnt">-&#8377;{{ MutualFund.Daily_Ret*-1 | number}} <br/>  <span class="day-perct">{{ MutualFund.Daily_Per*-1 }}%</span></td>
                                                         <td *ngIf = "MutualFund.Yest_Ret >= 0" class="pstv-amnt">&#8377;{{ MutualFund.Yest_Ret | number}} <br/>  <span class="day-perct">{{ MutualFund.Yest_Per }}%</span></td>
@@ -78,6 +79,8 @@
                         
                         <div class="pstv-amnt" *ngIf = "data.SingleNodes[0].MaxReturn >= 0"><span class="amnt-header">Maximum :</span> &#8377;{{data.SingleNodes[0].MaxReturn | number}} ({{data.SingleNodes[0].Max_Per}}%)</div>
                         <div class="ngtv-amnt" *ngIf = "data.SingleNodes[0].MaxReturn < 0"><span class="amnt-header">Maximum :</span> -&#8377;{{data.SingleNodes[0].MaxReturn*-1 | number}} ({{data.SingleNodes[0].Max_Per*-1}}%)</div>
+                        <div class="day-user-other-return-amnt max-amnt"  *ngIf = "data.SingleNodes[0].DownFromMax === data.SingleNodes[0].MarketValue"><span class="amnt-header">Down :</span> &#8377;{{data.SingleNodes[0].DownFromMax | number}} ({{ data.SingleNodes[0].DownMax_Per }}%)</div>
+                        <div class="day-user-other-return-amnt ngtv-amnt"  *ngIf = "data.SingleNodes[0].DownFromMax > 0"><span class="amnt-header">Down :</span> &#8377;{{data.SingleNodes[0].DownFromMax | number}} ({{ data.SingleNodes[0].DownMax_Per }}%)</div>                  
                         <div class="pstv-amnt"  *ngIf = "data.SingleNodes[0].Investments <= data.SingleNodes[0].MarketValue"><span class="amnt-header">Market Value :</span> &#8377;{{data.SingleNodes[0].MarketValue | number}}</div>
                         <div class="ngtv-amnt"  *ngIf = "data.SingleNodes[0].Investments > data.SingleNodes[0].MarketValue"><span class="amnt-header">Market Value :</span> &#8377;{{data.SingleNodes[0].MarketValue | number}}</div>
                         <div class=""><span class="amnt-header">Investment :</span> &#8377;{{data.SingleNodes[0].Investments | number}}</div>
