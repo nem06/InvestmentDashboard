@@ -60,4 +60,22 @@ export class DashboardComponent {
     mf.isExpanded = !mf.isExpanded;
 
   }
+
+  expandMutualFundDaily(name:string, MFId: number) {
+    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
+    const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
+    mf.isExpandedDaily = !mf.isExpandedDaily;
+  }
+
+  expandMutualFundOverView(name:string, MFId: number) {
+    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
+    const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
+    mf.isExpandedOverview = !mf.isExpandedOverview;
+  }
+
+  togglePurchase(name:string, MFId: number) {
+    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
+    const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
+    mf.isPurchaseShow = !mf.isPurchaseShow;
+  }
 }
