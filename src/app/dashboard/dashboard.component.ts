@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { StockApiService } from '../stock-api.service';
 import { expand } from 'rxjs';
 
 @Component({

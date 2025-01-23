@@ -1,0 +1,32 @@
+
+<div id="title">Stocks</div>
+<div class="container">
+        <button (click)="setIP()">Set IP</button>
+        <table class="stock-tbl-tbl">
+                <thead>
+                        <tr>
+                                <th>Name</th>
+                                <th>Current</th>
+                                <th>Day Return</th>
+                                <th>Total Return</th>
+                        </tr>
+                </thead>
+                
+                <tr *ngFor="let stock of stockList">
+                        <td><b>{{stock.name}}</b><br/><span style="font-size: 14px;">Q:{{stock.qty}} &nbsp; B:{{stock.buy}}</span></td>
+                        <td>{{stock.current_price | number}} <br/> <span style="font-size: 14px;">{{stock.change | number}}({{stock.change_pr | number}}%)</span></td>
+                        <td *ngIf="stock.day_ret >= 0" class="pstv-amnt">{{stock.day_ret | number}}</td>
+                        <td *ngIf="stock.day_ret < 0" class="ngtv-amnt">{{stock.day_ret | number}}</td>
+
+                        <td *ngIf="stock.total_ret >= 0" class="pstv-amnt">{{stock.total_ret | number}}</td>
+                        <td *ngIf="stock.total_ret < 0" class="ngtv-amnt">{{stock.total_ret | number}}</td>
+                </tr>
+                <tr>
+                        <td>Total</td>
+                        <td></td>
+                        <td>{{totalDayRet | number}}</td>
+                        <td>{{totalRet | number}}</td>
+                </tr>
+        </table>
+</div>  
+        
