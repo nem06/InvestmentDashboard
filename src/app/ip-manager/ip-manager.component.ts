@@ -24,7 +24,7 @@ export class IpManagerComponent {
     if (this.loginForm.valid) { 
       localStorage.setItem('nem-server-ip', this.loginForm.value.IP);
       localStorage.setItem('nem-server-port', this.loginForm.value.Port);   
-      this.router.navigate(['/dashboard']); 
+      this.router.navigate(['/stocks']); 
     }
   }
 }
