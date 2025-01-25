@@ -4,6 +4,7 @@ body, html {
         font-family:Arial, Helvetica, sans-serif;
         /* overflow-x: auto;      */
         background-color: #dcdcdc;
+        height: 100%;
 }
 
 ::-webkit-scrollbar {

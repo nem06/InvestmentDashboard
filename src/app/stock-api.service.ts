@@ -12,7 +12,9 @@ export class StockApiService {
 
   getStockPrices(tickerList: string): Observable<any> {
     return this.http.get(
-      "https://" + localStorage.getItem('nem-server-ip') + ':' + localStorage.getItem('nem-server-port') + '/get_stock_data?tickerList='+ tickerList
+      "https://nem-6-dns.duckdns.org:8000/get_stock_data?tickerList="+ tickerList
+      
+      // "https://" + localStorage.getItem('nem-server-ip') + ':' + localStorage.getItem('nem-server-port') + '/get_stock_data?tickerList='+ tickerList
     );
   }
 

@@ -12,17 +12,16 @@ import { StockApiService } from '../stock-api.service';
 export class StocksComponent {
   // @Input() stockList: any;
   stockList:any;
+  tickerList: string = '';
   totalDayRet = 0
   totalRet = 0
   constructor(private router: Router, private stockAPI:StockApiService) {}
 
   ngOnInit(): void {
-
-    
       this.getStockPrices();
       setInterval(() => {
         this.getStockPrices();
-      }, 30000);
+      }, 5000);
   }
 
   setIP(){
@@ -30,21 +29,26 @@ export class StocksComponent {
   }
 
   getStockPrices(){
-    fetch('stocks-list.json')
+    if(this.stockList === undefined || this.stockList === null || this.stockList.length === 0){
+      fetch('stocks-list.json')
       .then(response => response.json())
       .then(data => {
         this.stockList = data; 
         console.log(this.stockList); 
-        let tickerList = '';
 
-      this.stockList.forEach((stock:any) => {
-        if(!tickerList.includes(stock.name))
-          tickerList += stock.name + '.NS,';
+        this.stockList.forEach((stock:any) => {
+          if(!this.tickerList.includes(stock.name))
+            this.tickerList += stock.name + '.NS,';
+        });
+
+        console.log(this.tickerList);
+        this.tickerList = this.tickerList.slice(0, -1);
       });
-      console.log(tickerList);
-      tickerList = tickerList.slice(0, -1);
-      this.stockAPI.getStockPrices(tickerList).subscribe((response:any) => {
-          console.log(response);
+    }
+    
+    setTimeout(() => {
+      this.stockAPI.getStockPrices(this.tickerList).subscribe((response:any) => {
+        console.log(response);
           this.totalDayRet = 0
           this.totalRet = 0
           this.stockList.forEach((stock:any) => {
@@ -58,15 +62,9 @@ export class StocksComponent {
             stock.total_ret = (st.current_price - stock.buy) * stock.qty;
             this.totalDayRet += stock.day_ret;
             this.totalRet += stock.total_ret;
-        });
       });
-      })
-      .catch(error => {
-        console.error('Error fetching JSON:', error);
-      });
-
-      
-      
-      
+    }); 
+    }, 1000);
+    
   }
 }

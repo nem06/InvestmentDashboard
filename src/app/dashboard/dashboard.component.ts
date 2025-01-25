@@ -1,82 +1,33 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { StockApiService } from '../stock-api.service';
-import { expand } from 'rxjs';
+import { Router } from '@angular/router';
+import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-dashboard',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css'
 })
 export class DashboardComponent {
-  isExpanded:boolean = false;
-  data: any;
-  expandProgress = false
 
-  ngOnInit(): void {
-    // Use fetch to get the JSON data
-    fetch('latestReturns.json')
-      .then(response => response.json())
-      .then(data => {
-        this.data = data; // Assign the data from the JSON file
-        console.log(this.data); // You can process the data here
-      })
-      .catch(error => {
-        console.error('Error fetching JSON:', error);
-      });
-  }
+  mutualFunds: any;
 
-  expandDayOverview(name: string, operation: string) {
-    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
-    if(!this.expandProgress){
-      this.expandProgress = true;
-      if(operation === 'open' || (operation === 'close' && !user.isExpandedDay)) 
-        user.isExpandedDay = true;
-      else if(operation === 'close') 
-        user.isExpandedDay = false;
+  constructor(private router: Router, private sharedService:SharedService) {}
+
+
+  ngOnInit(){
+    this.mutualFunds = this.sharedService.MutualFundsObject;
+    if(this.mutualFunds === undefined || this.mutualFunds === null){
       setTimeout(() => {
-        this.expandProgress = false;
-      }, 100);
+        this.mutualFunds = this.sharedService.MutualFundsObject;
+      }, 1000);
     }
   }
 
-  expandOverall(name: string, operation: string) {
-    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
-    if(!this.expandProgress){
-      this.expandProgress = true;
-      if(operation === 'open' || (operation === 'close' && !user.isExpandedAll)) 
-        user.isExpandedAll = true;
-      else if(operation === 'close') 
-        user.isExpandedAll = false;
-      setTimeout(() => {
-        this.expandProgress = false;
-      }, 100);
-    }
-  }
 
-  expandMutualFund(name:string, MFId: number) {
-    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
-    const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
-    mf.isExpanded = !mf.isExpanded;
-
+  navigateMututalFund(){
+    this.router.navigate(['/mutualfund']);
   }
-
-  expandMutualFundDaily(name:string, MFId: number) {
-    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
-    const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
-    mf.isExpandedDaily = !mf.isExpandedDaily;
-  }
-
-  expandMutualFundOverView(name:string, MFId: number) {
-    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
-    const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
-    mf.isExpandedOverview = !mf.isExpandedOverview;
-  }
-
-  togglePurchase(name:string, MFId: number) {
-    const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
-    const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
-    mf.isPurchaseShow = !mf.isPurchaseShow;
-  }
+  
 }
