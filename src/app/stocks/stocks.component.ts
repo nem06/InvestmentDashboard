@@ -15,6 +15,8 @@ export class StocksComponent {
   data:any;
   totalDayRet = 0
   totalRet = 0
+  expandProgress = false
+
   constructor(private router: Router, private stockAPI:StockApiService, private sharedService: SharedService) {}
 
   ngOnInit(): void {
@@ -43,6 +45,24 @@ export class StocksComponent {
     const user = this.data.find((s:any) => s.Name === name);
     user.ExpandList = !user.ExpandList;
 
+  }
+
+  toggleRateContainer(){
+    this.data[0].rateListExpanded = !this.data[0].rateListExpanded;
+  }
+
+  expandUser(name:string, operation:string){
+    const user = this.data.find((user: { Name: string; }) => user.Name === name);
+    if(!this.expandProgress){
+      this.expandProgress = true;
+      if(operation === 'open' || (operation === 'close' && !user.isExpanded)) 
+        user.isExpanded = true;
+      else if(operation === 'close') 
+        user.isExpanded = false;
+      setTimeout(() => {
+        this.expandProgress = false;
+      }, 100);
+    }
   }
   // getStockPrices(){
   //   fetch('stocks-list.json')

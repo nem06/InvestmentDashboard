@@ -110,7 +110,7 @@
                         <div class="ngtv-amnt"  *ngIf = "data.SingleNodes[0].Investments > data.SingleNodes[0].MarketValue"><span class="amnt-header">Market Value :</span> &#8377;{{data.SingleNodes[0].MarketValue | number}}</div>
                         <div class="max-amnt"  *ngIf = "data.SingleNodes[0].DownFromMax === data.SingleNodes[0].MarketValue"><span class="amnt-header">Down :</span> &#8377;{{data.SingleNodes[0].DownFromMax | number}} ({{ data.SingleNodes[0].DownMax_Per }}%)</div>
                         <div class=" ngtv-amnt"  *ngIf = "data.SingleNodes[0].DownFromMax > 0"><span class="amnt-header">Down :</span> &#8377;{{data.SingleNodes[0].DownFromMax | number}} ({{ data.SingleNodes[0].DownMax_Per }}%)</div>                  
-                         <div class=""><span class="amnt-header">Investment :</span> &#8377;{{data.SingleNodes[0].Investments | number}}</div>
+                        <div class=""><span class="amnt-header">Investment :</span> &#8377;{{data.SingleNodes[0].Investments | number}}</div>
                 </div>
                 <div class="day-sub-return-cont">
                         <div class="day-sub-return" *ngFor="let user of data.UserNodes" (click)="expandOverall(user.Name, 'open')" [ngClass]="{ 'expanded': user.isExpandedAll }">

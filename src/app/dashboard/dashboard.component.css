@@ -33,30 +33,32 @@
         background-color: #e6f3f6;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         flex-direction: column; 
-        padding: 8px 20px;
+        padding: 8px 14px;
         border-radius: 18px;
         cursor: pointer;
 }
 
-h1{
-        margin: 10px;
-        color: blue;
+h2{
+        margin: 7px;
+        color: rgb(24, 50, 146);
 }
 
 .date{
-        font-size: 24px;
+        font-size: 20px;
         font-weight: 550;
         padding: 6px;
 }
 
 .mf-overall{
-        font-size: 20px;
+        font-size: 16px;
         font-weight: 550;
-        padding: 8px;
+        padding: 8px 0;
+        border-top: 1px solid rgb(63, 112, 181);
+        margin-top: 4px;
 }
 
 .day-return-amnt{
-        font-size: 28px;
+        font-size: 20px;
         font-weight: 550;
         padding: 6px;
 }
@@ -66,9 +68,9 @@ h1{
         justify-content: center;
         align-items: flex-start;
         flex-direction: column; 
-        padding: 6px 12px;
+        padding: 2px 8px;
         width: 100%;
-        font-size: 18px;
+        font-size: 14px;
         font-weight: 600;
         color: rgb(63, 112, 181);
 }
@@ -80,6 +82,17 @@ h1{
         justify-content: space-between;
 }
 
+.mf-overall{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+}
+.overall-amnt{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 20px;
+}
 .ngtv-amnt{
         color: #ff4f4f;
 }
@@ -91,4 +104,7 @@ h1{
 }
 .mid-amnt{
         color: rgb(199, 189, 0);
+}
+.inv-amnt{
+        color: rgb(53, 53, 53);
 }

@@ -1,26 +1,33 @@
 <div id="title">Investment Dashboard</div>
 <div class="container">
         <div class="stocks-container" (click)="navigateStocks()">
-                <h1>STOCKS</h1>
+                <h2>STOCKS</h2>
                 <div class="date">{{stocks[0].MaxDate | date: 'EEEE, dd MMMM'}}</div>
                 <div class="user-container" *ngFor="let user of stocks">
-                        <div class="name-return" >
+                        <div class="name-return" *ngIf="user.Name != 'OTHER'">
                                 <div>{{user.Name}}</div>
                                 <div *ngIf = "user.Day_Change >= 0" class="pstv-amnt">+&#8377;{{ user.Day_Change | number}}  ({{ user.Day_Change_P | number }}%)</div>
                                 <div *ngIf = "user.Day_Change < 0" class="ngtv-amnt">-&#8377;{{ user.Day_Change*-1 | number}}  ({{ user.Day_Change_P  *-1 | number }}%)</div>                                                        
                         </div>
                 </div>
-                <div class="date">Total Returns</div>
+                <div class="date">Overall Returns</div>
                 <div class="user-container" *ngFor="let user of stocks">
-                        <div class="name-return" >
+                        <div class="name-return" *ngIf="user.Name != 'OTHER'">
                                 <div>{{user.Name}}</div>
                                 <div *ngIf = "user.TotalReturn >= 0" class="pstv-amnt">+&#8377;{{ user.TotalReturn | number}}  ({{ user.TotalReturn_P | number }}%)</div>
                                 <div *ngIf = "user.TotalReturn < 0" class="ngtv-amnt">-&#8377;{{ user.TotalReturn*-1 | number}}  ({{ user.TotalReturn_P  *-1 | number }}%)</div>                                                        
                         </div>
                 </div>
+                <div class="date">Investments</div>
+                <div class="user-container" *ngFor="let user of stocks">
+                        <div class="name-return" *ngIf="user.Name != 'OTHER'">
+                                <div>{{user.Name}}</div>
+                                <div class="inv-amnt">&#8377;{{ user.Investment | number}}</div>                                                        
+                        </div>
+                </div>
         </div>
         <div class="mutualfund-container" (click)="navigateMututalFund()">
-                <h1>MUTUAL FUNDS</h1>
+                <h2>MUTUAL FUNDS</h2>
                 <div class="date">{{mutualFunds.MaxDate | date: 'EEEE, dd MMMM'}}</div>
                 <div class="day-return-amnt pstv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Daily_Ret >= 0">+&#8377;{{mutualFunds.SingleNodes[0].Daily_Ret | number}}  &nbsp;  {{mutualFunds.SingleNodes[0].Daily_Per}}%</div>
                 <div class="day-return-amnt ngtv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Daily_Ret < 0">-&#8377;{{mutualFunds.SingleNodes[0].Daily_Ret*-1 | number}}  &nbsp;  {{mutualFunds.SingleNodes[0].Daily_Per*-1}}%</div>
@@ -32,10 +39,20 @@
                         </div>
                 </div>
                 <div class="mf-overall">
-                        OVERALL &nbsp; - &nbsp;
-                        <span class="pstv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret >= 0">+&#8377;{{mutualFunds.SingleNodes[0].Total_Ret | number}}  &nbsp;  {{mutualFunds.SingleNodes[0].Daily_Per}}%</span>
-                        <span class="ngtv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret < 0">-&#8377;{{mutualFunds.SingleNodes[0].Total_Ret*-1 | number}}  &nbsp;  {{mutualFunds.SingleNodes[0].Daily_Per*-1}}%</span>
-                
+                        <div class="overall-amnt">
+                                Overall
+                                <span class="pstv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret >= 0">+&#8377;{{mutualFunds.SingleNodes[0].Total_Ret | number}} ({{mutualFunds.SingleNodes[0].Daily_Per}}%)</span>
+                                <span class="ngtv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret < 0">-&#8377;{{mutualFunds.SingleNodes[0].Total_Ret*-1 | number}}  ({{mutualFunds.SingleNodes[0].Daily_Per*-1}}%)</span>
+                        </div>
+                        <div class="overall-amnt">
+                                Market Value
+                                <span class="pstv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret >= 0">+&#8377;{{mutualFunds.SingleNodes[0].MarketValue | number}}</span>
+                                <span class="ngtv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret < 0">&#8377;{{mutualFunds.SingleNodes[0].MarketValue | number}}</span>
+                        </div>
+                        <div class="overall-amnt">
+                                Investment
+                                <span class="">&#8377;{{mutualFunds.SingleNodes[0].Investments | number}}</span>
+                        </div>
                 </div>
         </div>
 </div>
