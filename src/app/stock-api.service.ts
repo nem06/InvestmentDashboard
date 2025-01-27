@@ -12,7 +12,7 @@ export class StockApiService {
 
   getLatestJson(type: string): Observable<any> {
     return this.http.get(
-      "https://stock-node-server.onrender.com/api/test?type="+ type
+      "https://stock-node-server.onrender.com/api/GetLatestReturns?type="+ type
     );
   }
 

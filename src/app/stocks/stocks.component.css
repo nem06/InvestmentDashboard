@@ -54,8 +54,8 @@ h2{
         overflow-y: hidden;
         margin-bottom: 5px;
 }
-.user_symbl-tbl-cont{
-}
+/* .user_symbl-tbl-cont{
+} */
 .stock-rate-tbl-cont.expanded{
         height: 100%;
         overflow-y: auto;
