@@ -97,6 +97,7 @@
         font-size: 24px;
         font-weight: 550;
         padding: 2px 6px 10px;
+        
 }
 
 .user-container{
@@ -132,9 +133,11 @@
 }
 .ngtv-amnt{
         color: #ff4f4f;
+        text-shadow: 2px 2px 20px #f5664ae3;
 }
 .pstv-amnt{
         color: rgb(1, 177, 1);
+        text-shadow: 2px 2px 20px #6de755e3;
 }
 .max-amnt{
         color: rgb(93, 122, 162);
