@@ -49,18 +49,18 @@ h2{
         padding: 6px;
 }
 .time{
-        font-size: 14px;
+        font-size: 16px;
         padding-bottom: 6px;
         animation: blink 2s infinite;
         font-weight: 600;
-        color:rgb(14, 66, 68);
+        color:rgb(10, 123, 204);
 }
 @keyframes blink {
         0%, 100% {
                 opacity: 1; /* Fully visible */
         }
         50% {
-                opacity: 0.5; /* Fully hidden */
+                opacity: 0.3; /* Fully hidden */
         }
 }
 
@@ -75,7 +75,7 @@ h2{
 .day-return-amnt{
         font-size: 24px;
         font-weight: 550;
-        padding: 6px 6px 10px;
+        padding: 2px 6px 10px;
 }
 
 .user-container{
