@@ -5,7 +5,7 @@
 <div class="container">
       <div class="stock-rate-container" *ngIf="livedata">
         <div class="container-title" (click)="rateListExpanded = !rateListExpanded">Live Rates</div>
-        <div class="live-time">as of {{ livedata[0].Date | date: 'dd MMM HH:mm:ss'}}</div>
+        <div class="live-time">as of &nbsp; {{ livedata[0].Date | date: 'MMM dd - H:mm a'}}</div>
         <div class="stock-rate-tbl-cont" [ngClass]="{'expanded': rateListExpanded}">
                 <table class="stock-rate-tbl">
                         <thead>

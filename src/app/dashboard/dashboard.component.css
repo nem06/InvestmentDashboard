@@ -48,6 +48,21 @@ h2{
         font-weight: 550;
         padding: 6px;
 }
+.time{
+        font-size: 14px;
+        padding-bottom: 6px;
+        animation: blink 2s infinite;
+        font-weight: 600;
+        color:rgb(14, 66, 68);
+}
+@keyframes blink {
+        0%, 100% {
+                opacity: 1; /* Fully visible */
+        }
+        50% {
+                opacity: 0.5; /* Fully hidden */
+        }
+}
 
 .mf-overall{
         font-size: 16px;

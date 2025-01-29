@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 export class DashboardComponent {
   mutualFunds: any;
   stocks: any;
+  livedata:any;
 
   constructor(private router: Router,  private sharedService: SharedService) {}
 
@@ -24,6 +25,10 @@ export class DashboardComponent {
     this.sharedService.StocksObject$.subscribe(
       (stocks:any) => {
         this.stocks = stocks; 
+      });
+      this.sharedService.LiveDataObject$.subscribe(
+        (liveData:any) => {
+        this.livedata = liveData; 
       });
   }
 
