@@ -27,7 +27,6 @@ export class AppComponent {
       });
 
       this.apiService.getLatestJson("LiveData").subscribe(data => {
-        console.log(JSON.stringify(data))
         if(Object.keys(data).length != 0)
           this.sharedService.LiveDataObject = data;
         else{
@@ -40,7 +39,6 @@ export class AppComponent {
 
       const alwayRun = setInterval(() => {
         this.apiService.getLatestJson("LiveData").subscribe(data => {
-          console.log(data)
           if(Object.keys(data).length === 0){
               this.apiService.getLatestJson("ClosedData").subscribe(data2 => {
                 this.sharedService.LiveDataObject = data2;
@@ -69,6 +67,12 @@ export class AppComponent {
                   dayReturn += parseInt(symbol.Day_Change);
                   totalReturn += parseInt(symbol.TotalReturn);
                 }
+                else{
+                  console.log(symbol.Symbol)
+                  currentValue += parseInt(symbol.CurrentValue);
+                  dayReturn += parseInt(symbol.Day_Change);
+                  totalReturn += parseInt(symbol.TotalReturn);
+                }
                
               })
               user.Day_Change = dayReturn;
@@ -82,6 +86,6 @@ export class AppComponent {
             console.log("currentStocks updated")
         });
 
-      }, 5000);
+      }, 7000);
   }
 }
