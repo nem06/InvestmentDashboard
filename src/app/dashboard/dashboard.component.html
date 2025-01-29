@@ -2,9 +2,9 @@
 <div class="container">
         <div class="stocks-container" (click)="navigateStocks()">
                 <h2>STOCKS</h2>
-                <div class="date" *ngIf="livedata === undefined">{{stocks?.[0].MaxDate | date: 'EEEE, dd MMMM'}}</div>
-                <div class="date" *ngIf="livedata[0].Date">{{livedata[0].Date | date: 'EEEE, dd MMMM'}}</div>
-                <div class="time"  *ngIf="livedata[0].Date">As of &nbsp; {{ livedata[0].Date | date: 'h:mm a'}}</div>  
+                <div class="date" *ngIf="!livedata">{{stocks?.[0].MaxDate | date: 'EEEE, dd MMMM'}}</div>
+                <div class="date" *ngIf="livedata && livedata[0].Date">{{livedata[0].Date | date: 'EEEE, dd MMMM'}}</div>
+                <div class="time"  *ngIf="livedata && livedata[0].Date">As of &nbsp; {{ livedata[0].Date | date: 'h:mm a'}}</div>  
                 <div class="user-container" *ngFor="let user of stocks">
                         <div class="name-return" *ngIf="user.Name != 'OTHER'">
                                 <div>{{user.Name}}</div>

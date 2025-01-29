@@ -68,13 +68,13 @@ h1{
         gap: 10px;
 }
 .day-sub-return{
-        width: 175px;
+        width: 180px;
         height: 100%;
         border-radius: 18px;
         color: rgb(63, 112, 181);
         background-color: #e6f3f6;
         box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        padding: 8px 12px;
+        padding: 8px;
         justify-content: center;
         align-items: center;
         text-align: center;
@@ -113,7 +113,7 @@ h1{
 }
 @media (max-width: 768px) {
         .day-sub-return{
-                width: 175px;
+                width: 180px;
                 padding: 8px;
         }
         .day-sub-return.expanded {
