@@ -1,6 +1,6 @@
 #title{
         font-family: 'Montserrat', sans-serif;
-        background-color: rgb(63, 112, 181);
+        background-color: #3f70b5;
         color: rgb(255, 255, 255);
         font-size: 28px;
         font-weight: bolder;
@@ -21,26 +21,45 @@
         flex-direction: row;  
         flex-wrap: wrap;
         padding: 20px 0;
-        gap: 30px 50px;
+        gap: 20px 50px;
         /* overflow-x: auto; */
 }
 
 .mutualfund-container, .stocks-container{
+        height: 100%;
+        align-items: center; 
         display: flex;
         justify-content: center;
-        align-items: center;
-        height: 100%;
-        background-color: #e6f3f6;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        align-items: center; 
         flex-direction: column; 
-        padding: 8px 14px;
+        background-color: #e6f3f6;
         border-radius: 18px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         cursor: pointer;
 }
-
-h2{
-        margin: 7px;
-        color: rgb(24, 50, 146);
+.container-title{
+        border-top-right-radius: 18px;
+        border-top-left-radius: 18px;
+        padding: 14px 28px;
+        font-size: 38px;
+        font-weight: bolder;
+        text-align: center;
+        background-color: #3f70b5;
+        color: #e6f3f6;
+        width: 100%;
+        box-sizing: border-box;
+}
+.mutualfund-container-content, .stocks-container-content{
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        flex-direction: column; 
+        padding: 6px 14px 12px;
+        background-color: transparent;
+        border-bottom-right-radius: 18px;
+        border-bottom-left-radius: 18px;
+        /* width: 100%; */
+        box-sizing: border-box;
 }
 
 .date{
@@ -50,7 +69,7 @@ h2{
 }
 .time{
         font-size: 16px;
-        padding-bottom: 6px;
+        /* padding-bottom: 6px; */
         animation: blink 2s infinite;
         font-weight: 600;
         color:rgb(10, 123, 204);
@@ -123,4 +142,33 @@ h2{
 }
 .inv-amnt{
         color: rgb(53, 53, 53);
+}
+.day-rate-chang{
+        font-size: 11.5px;
+        font-weight: 600;
+}
+
+.stock-rate-tbl{
+        font-size: 15px;
+        border-collapse: collapse;
+        width: 100%;
+        color: rgb(84, 84, 84);
+}
+.stock-rate-tbl tr th{
+        padding: 8px 5px 4px;
+        color: rgb(10, 38, 75);
+}
+.stock-rate-tbl tr td{
+        padding: 5px 8px;
+        text-align: right;
+        font-weight: 600;
+        border-bottom: 1px solid #a7a7a7;
+}
+.stock-rate-tbl tr:last-child td{
+        border-bottom: none;
+}
+.stock-rate-tbl tr td:first-child{
+        text-align: left;
+        font-weight: 600;
+        color: rgb(63, 112, 181);
 }

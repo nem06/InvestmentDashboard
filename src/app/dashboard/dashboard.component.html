@@ -1,12 +1,15 @@
 <div id="title">Investment Dashboard</div>
 <div class="container">
         <div class="stocks-container" (click)="navigateStocks()">
-                <h2>STOCKS</h2>
+                <div class="container-title">STOCKS</div>
+                <div class="stocks-container-content">
+
+
                 <div class="date" *ngIf="!liveData && liveDataStatus">{{stocks?.[0].MaxDate | date: 'EEEE, dd MMMM'}}</div>
                 <div class="date" *ngIf="liveData">{{liveData[0].Date | date: 'EEEE, dd MMMM'}}</div>
                 <div class="time"  *ngIf="liveData && liveDataStatus">As of &nbsp; {{ liveData[0].Date | date: 'h:mm a'}}</div>  
                 <div class="time"  *ngIf="liveData && !liveDataStatus">As of Day Close</div>  
-                <div class="user-container" *ngFor="let user of stocks">
+                <!-- <div class="user-container" *ngFor="let user of stocks">
                         <div class="name-return" *ngIf="user.Name != 'OTHER'">
                                 <div>{{user.Name}}</div>
                                 <div *ngIf = "user.Day_Change >= 0" class="pstv-amnt">+&#8377;{{ user.Day_Change | number}}  ({{ user.Day_Change_P | number }}%)</div>
@@ -27,10 +30,55 @@
                                 <div>{{user.Name}}</div>
                                 <div class="inv-amnt">&#8377;{{ user.Investment | number}}</div>                                                        
                         </div>
+                </div> -->
+                <div class="user-container">
+                        <table class="stock-rate-tbl">
+                                <thead>
+                                        <tr>
+                                                <th></th>
+                                                <th>Today</th>
+                                                <th>Overall</th>
+                                                <th>Investment</th>
+                                        </tr>
+                                </thead>
+                                <ng-container *ngFor="let user of stocks">
+                                        <tr *ngIf="user.Name != 'OTHER'">
+                                                <td>{{user.Name}}</td>
+                                                <td *ngIf = "user.Day_Change >= 0" class="pstv-amnt">
+                                                        +&#8377;{{ user.Day_Change | number}} 
+                                                        <br />
+                                                        <span class="day-rate-chang">({{ user.Day_Change_P | number }}%)</span>
+                                                </td>
+                                                <td *ngIf = "user.Day_Change < 0" class="ngtv-amnt">
+                                                        -&#8377;{{ user.Day_Change*-1 | number}}
+                                                        <br />
+                                                        <span class="day-rate-chang">({{ user.Day_Change_P  *-1 | number }}%)</span>
+                                                </td>
+                                                <td *ngIf = "user.TotalReturn >= 0" class="pstv-amnt">
+                                                        +&#8377;{{ user.TotalReturn | number}} 
+                                                        <br />
+                                                        <span class="day-rate-chang">({{ user.TotalReturn_P | number }}%)</span>
+                                                </td>
+                                                <td *ngIf = "user.TotalReturn < 0" class="ngtv-amnt">
+                                                        -&#8377;{{ user.TotalReturn*-1 | number}}
+                                                        <br />
+                                                        <span class="day-rate-chang">({{ user.TotalReturn_P  *-1 | number }}%)</span>
+                                                </td>
+                                                <td>
+                                                        <span class="inv-amnt">&#8377;{{ formatToLacs(user.Investment)}}</span>
+                                                </td>
+                                        </tr>
+                                </ng-container>
+                                <tr>
+
+                                </tr>
+                        </table>
+                </div>
                 </div>
         </div>
         <div class="mutualfund-container" (click)="navigateMututalFund()" *ngIf="mutualFunds">
-                <h2>MUTUAL FUNDS</h2>
+                <div class="container-title">MUTUAL FUNDS</div>
+                <div class="mutualfund-container-content">
                 <div class="date">{{mutualFunds.MaxDate | date: 'EEEE, dd MMMM'}}</div>
                 <div class="day-return-amnt pstv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Daily_Ret >= 0">+&#8377;{{mutualFunds.SingleNodes[0].Daily_Ret | number}}  &nbsp;  {{mutualFunds.SingleNodes[0].Daily_Per}}%</div>
                 <div class="day-return-amnt ngtv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Daily_Ret < 0">-&#8377;{{mutualFunds.SingleNodes[0].Daily_Ret*-1 | number}}  &nbsp;  {{mutualFunds.SingleNodes[0].Daily_Per*-1}}%</div>
@@ -56,6 +104,7 @@
                                 Investment
                                 <span class="">&#8377;{{mutualFunds.SingleNodes[0].Investments | number}}</span>
                         </div>
+                </div>
                 </div>
         </div>
 </div>

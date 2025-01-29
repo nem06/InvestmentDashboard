@@ -45,4 +45,11 @@ export class DashboardComponent {
   navigateStocks(){
     this.router.navigate(['/stocks']);
   }
+
+  formatToLacs(num: number): string {
+    if (num >= 100000) {
+        return (num / 100000).toFixed(2) + " L";
+    }
+    return num.toString();
+  }
 }
