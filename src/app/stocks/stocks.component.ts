@@ -14,6 +14,7 @@ export class StocksComponent {
   // @Input() stockList: any;
   data:any;
   livedata:any;
+  liveDataStatus:any;
   totalDayRet = 0
   totalRet = 0
   expandProgress = false
@@ -30,6 +31,11 @@ export class StocksComponent {
     this.sharedService.LiveDataObject$.subscribe(
       (liveData:any) => {
       this.livedata = liveData; 
+    });
+
+    this.sharedService.LiveDataStatusObject$.subscribe(
+      (liveDataStatus:any) => {
+      this.liveDataStatus = liveDataStatus; 
     });
   }
 

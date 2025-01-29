@@ -29,7 +29,22 @@ export class AppComponent {
       this.apiService.getLatestJson("LiveData").subscribe(data => {
         if(Object.keys(data).length != 0){
           this.sharedService.LiveDataObject = data;
-          this.updateData(data)
+          let currentStocks = this.sharedService.getCurrentStocks();
+          if(currentStocks)
+            this.updateData(data, currentStocks);
+          else{
+            setTimeout(()=>{
+              currentStocks = this.sharedService.getCurrentStocks();
+              this.updateData(data, currentStocks);
+            },500)
+          }
+          this.sharedService.LiveDataStatusObject = true
+        }
+        else{
+          this.apiService.getLatestJson("ClosedData").subscribe(data => {
+            this.sharedService.LiveDataObject = data;
+            this.sharedService.LiveDataStatusObject = false
+          });
         }
           
       });
@@ -37,19 +52,26 @@ export class AppComponent {
       const alwayRun = setInterval(() => {
         this.apiService.getLatestJson("LiveData").subscribe(data => {
           if(Object.keys(data).length === 0){
+            this.apiService.getLatestJson("ClosedData").subscribe(data => {
+              this.sharedService.LiveDataObject = data;
+              this.sharedService.LiveDataStatusObject = false
+              let currentStocks = this.sharedService.getCurrentStocks();
+              this.updateData(data, currentStocks)
+            });
             clearInterval(alwayRun)
             return
           }
-          this.updateData(data)
+          let currentStocks = this.sharedService.getCurrentStocks();
+          this.updateData(data, currentStocks)
         });
 
       }, 7000);
   }
 
-  updateData(data: any){
+  updateData(data: any, currentStocks:any){
     this.sharedService.LiveDataObject = data;
         
-    const currentStocks = this.sharedService.getCurrentStocks();
+    
     currentStocks.forEach((user: any) => {
       let dayReturn = 0;
       let totalReturn = 0;
@@ -82,6 +104,7 @@ export class AppComponent {
       user.Day_Change_P = ((user.CurrentValue - user.CurrentValueStatic)*100/user.CurrentValueStatic).toFixed(2);
       user.TotalReturn_P = ((user.CurrentValue - user.Investment)*100/user.Investment).toFixed(2);
     });
+    this.sharedService.StocksObject = currentStocks
     console.log("currentStocks updated")
   }
 }

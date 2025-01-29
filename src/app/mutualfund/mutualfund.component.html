@@ -1,6 +1,6 @@
 <div id="title">Mutual Funds</div>
 <div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
-<div class="container">
+<div class="container" *ngIf="data">
          <div class="day-container">
                 <h1>{{data.MaxDate | date:'EEEE, dd MMMM'}}</h1>
                 <div class="day-return-amnt pstv-amnt" *ngIf = "data.SingleNodes[0].Daily_Ret >= 0">&#8377;{{data.SingleNodes[0].Daily_Ret | number}}  &nbsp;  {{data.SingleNodes[0].Daily_Per}}%</div>

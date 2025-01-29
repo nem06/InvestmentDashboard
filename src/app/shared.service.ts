@@ -34,4 +34,12 @@ export class SharedService {
   set LiveDataObject(stocks: any) {
     this.liveDataSubject.next(stocks);
   }
+
+  private liveDataStatusSubject = new BehaviorSubject<any>(null);
+  get LiveDataStatusObject$() {
+    return this.liveDataStatusSubject.asObservable(); 
+  }
+  set LiveDataStatusObject(stocks: any) {
+    this.liveDataStatusSubject.next(stocks);
+  }
 }

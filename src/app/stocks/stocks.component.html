@@ -1,18 +1,19 @@
 
 <div id="title">Stocks</div>
 <div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
-<h2>{{data[0].MaxDate | date:'EEEE, dd MMMM'}}</h2>
-<div class="container">
+<h2 *ngIf="data">{{data[0].MaxDate | date:'EEEE, dd MMMM'}}</h2>
+<div class="container" *ngIf="data">
       <div class="stock-rate-container" *ngIf="livedata">
-        <div class="container-title" (click)="rateListExpanded = !rateListExpanded">Live Rates</div>
-        <div class="live-time">as of &nbsp; {{ livedata[0].Date | date: 'MMM dd - H:mm a'}}</div>
+        <div class="container-title" (click)="rateListExpanded = !rateListExpanded">Stock Price</div>
+        <div class="live-time" *ngIf="liveDataStatus">As of &nbsp; {{ livedata[0].Date | date: 'MMM dd - H:mm a'}}</div>
+        <div class="live-time" *ngIf="!liveDataStatus">As of Day Close</div>
         <div class="stock-rate-tbl-cont" [ngClass]="{'expanded': rateListExpanded}">
                 <table class="stock-rate-tbl">
                         <thead>
                                 <tr>
                                         <th></th>
                                         <th>Price/Change</th>
-                                        <th>High/Low</th>
+                                        <th>Day High/Low</th>
                                 </tr>
                         </thead>
                         <tbody>
