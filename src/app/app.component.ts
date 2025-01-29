@@ -29,20 +29,11 @@ export class AppComponent {
       this.apiService.getLatestJson("LiveData").subscribe(data => {
         if(Object.keys(data).length != 0)
           this.sharedService.LiveDataObject = data;
-        else{
-          this.apiService.getLatestJson("ClosedData").subscribe(data2 => {
-              this.sharedService.LiveDataObject = data2;
-          });
-        }
-
       });
 
       const alwayRun = setInterval(() => {
         this.apiService.getLatestJson("LiveData").subscribe(data => {
           if(Object.keys(data).length === 0){
-              this.apiService.getLatestJson("ClosedData").subscribe(data2 => {
-                this.sharedService.LiveDataObject = data2;
-            });
             clearInterval(alwayRun)
             return
           }
