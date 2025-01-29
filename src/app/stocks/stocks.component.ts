@@ -13,24 +13,24 @@ import { SharedService } from '../shared.service';
 export class StocksComponent {
   // @Input() stockList: any;
   data:any;
+  livedata:any;
   totalDayRet = 0
   totalRet = 0
   expandProgress = false
+  rateListExpanded = false
 
   constructor(private router: Router, private stockAPI:StockApiService, private sharedService: SharedService) {}
 
   ngOnInit(): void {
-    this.data = this.sharedService.StocksObject;
-    if(this.data === undefined || this.data === null){
-      setTimeout(() => {
-        this.data = this.sharedService.StocksObject;
-      }, 1000);
-    }
+    this.sharedService.StocksObject$.subscribe(
+        (stocks:any) => {
+        this.data = stocks; 
+      });
 
-      // this.getStockPrices();
-      // setInterval(() => {
-      //   this.getStockPrices();
-      // }, 30000);
+    this.sharedService.LiveDataObject$.subscribe(
+      (liveData:any) => {
+      this.livedata = liveData; 
+    });
   }
 
   navigateHome(){

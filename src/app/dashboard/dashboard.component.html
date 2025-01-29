@@ -2,7 +2,7 @@
 <div class="container">
         <div class="stocks-container" (click)="navigateStocks()">
                 <h2>STOCKS</h2>
-                <div class="date">{{stocks[0].MaxDate | date: 'EEEE, dd MMMM'}}</div>
+                <div class="date">{{stocks?.[0].MaxDate | date: 'EEEE, dd MMMM'}}</div>
                 <div class="user-container" *ngFor="let user of stocks">
                         <div class="name-return" *ngIf="user.Name != 'OTHER'">
                                 <div>{{user.Name}}</div>

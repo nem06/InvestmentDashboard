@@ -19,12 +19,10 @@ export class MutualfundComponent {
   constructor(private sharedService:SharedService, private router:Router) {}
 
   ngOnInit(): void {
-    this.data = this.sharedService.MutualFundsObject;
-    if(this.data === undefined || this.data === null){
-      setTimeout(() => {
-        this.data = this.sharedService.MutualFundsObject;
-      }, 1000);
-    }
+    this.sharedService.MutualFundsObject$.subscribe(
+      (mutualFunds:any) => {
+        this.data = mutualFunds;  
+      });
   }
 
   navigateHome(){

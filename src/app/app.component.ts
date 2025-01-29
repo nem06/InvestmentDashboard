@@ -16,25 +16,72 @@ export class AppComponent {
   constructor(private sharedService:SharedService, private apiService: StockApiService) {}
 
   ngOnInit(): void {
-    console.log('AppComponent ngOnInit');
-    // fetch('latestReturns.json')
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     this.sharedService.MutualFundsObject = data; 
-    //     console.log(this.sharedService.MutualFundsObject); 
-    //   })
-    //   .catch(error => {
-    //     console.error('Error fetching JSON:', error);
-    //   });
 
      this.apiService.getLatestJson("MutualFunds").subscribe(data => {
         this.sharedService.MutualFundsObject = data;
-        console.log(this.sharedService.MutualFundsObject);
       });
 
       this.apiService.getLatestJson("Stocks").subscribe(data => {
-        this.sharedService.StocksObject = data;
-        console.log(this.sharedService.StocksObject);
+        console.log(data)
+        this.sharedService.StocksObject  = data;
       });
+
+      this.apiService.getLatestJson("LiveData").subscribe(data => {
+        console.log(JSON.stringify(data))
+        if(Object.keys(data).length != 0)
+          this.sharedService.LiveDataObject = data;
+        else{
+          this.apiService.getLatestJson("ClosedData").subscribe(data2 => {
+              this.sharedService.LiveDataObject = data2;
+          });
+        }
+
+      });
+
+      const alwayRun = setInterval(() => {
+        this.apiService.getLatestJson("LiveData").subscribe(data => {
+          console.log(data)
+          if(Object.keys(data).length === 0){
+              this.apiService.getLatestJson("ClosedData").subscribe(data2 => {
+                this.sharedService.LiveDataObject = data2;
+            });
+            clearInterval(alwayRun)
+            return
+          }
+            this.sharedService.LiveDataObject = data;
+        
+            const currentStocks = this.sharedService.getCurrentStocks();
+            currentStocks.forEach((user: any) => {
+              let dayReturn = 0;
+              let totalReturn = 0;
+              let currentValue = 0;
+              user.Symbol.forEach((symbol:any) => {
+                const liveSymbol = data.find((sym: { Symbol: string; }) => sym.Symbol === symbol.Symbol);
+                if(liveSymbol){
+                  symbol.CurrentRate = liveSymbol.Current.toFixed(2);
+                  symbol.CurrentValue = (symbol.Total_Qty * liveSymbol.Current).toFixed(0);
+                  symbol.Day_Rate_Change = liveSymbol.DayChange.toFixed(0);
+                  symbol.Day_Rate_Change_P = liveSymbol.DayChangePercent.toFixed(2);
+                  symbol.Day_Change = (symbol.Total_Qty * liveSymbol.DayChange).toFixed(0);
+                  symbol.TotalReturn = (symbol.CurrentValue - symbol.Investment).toFixed(0);
+                  symbol.TotalReturn_P = (symbol.TotalReturn*100/symbol.Investment).toFixed(2);
+                  currentValue += parseInt(symbol.CurrentValue);
+                  dayReturn += parseInt(symbol.Day_Change);
+                  totalReturn += parseInt(symbol.TotalReturn);
+                }
+               
+              })
+              user.Day_Change = dayReturn;
+              user.TotalReturn = totalReturn;
+              user.CurrentValue = currentValue;
+              user.Day_Change_P = ((user.CurrentValue - user.CurrentValueStatic)*100/user.CurrentValueStatic).toFixed(2);
+              user.TotalReturn_P = ((user.CurrentValue - user.Investment)*100/user.Investment).toFixed(2);
+            });
+
+            // this.sharedService.StocksObject  = currentStocks;
+            console.log("currentStocks updated")
+        });
+
+      }, 5000);
   }
 }

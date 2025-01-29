@@ -49,6 +49,22 @@ h2{
         color: rgb(19, 60, 117);
         text-align: center;
 }
+.live-time{
+        font-size: 16px;
+        font-weight: 550;
+        text-align: center;
+        color:rgb(14, 66, 68);
+        margin: 3px;
+        animation: blink 2s infinite;
+}
+@keyframes blink {
+        0%, 100% {
+                opacity: 1; /* Fully visible */
+        }
+        50% {
+                opacity: 0.5; /* Fully hidden */
+        }
+}
 .stock-rate-tbl-cont{
         height: 150px;
         overflow-y: hidden;

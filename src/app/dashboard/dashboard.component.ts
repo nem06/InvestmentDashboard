@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { SharedService } from '../shared.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -15,20 +16,15 @@ export class DashboardComponent {
 
   constructor(private router: Router,  private sharedService: SharedService) {}
 
-
   ngOnInit(){
-    this.mutualFunds = this.sharedService.MutualFundsObject;
-    this.stocks = this.sharedService.StocksObject;
-    if(this.mutualFunds === undefined || this.mutualFunds === null){
-      setTimeout(() => {
-        this.mutualFunds = this.sharedService.MutualFundsObject;
-      }, 1000);
-    }
-    if(this.stocks === undefined || this.stocks === null){
-      setTimeout(() => {
-        this.stocks = this.sharedService.StocksObject;
-      }, 1000);
-    }
+   this.sharedService.MutualFundsObject$.subscribe(
+      (mutualFunds:any) => {
+        this.mutualFunds = mutualFunds;  
+      });
+    this.sharedService.StocksObject$.subscribe(
+      (stocks:any) => {
+        this.stocks = stocks; 
+      });
   }
 
 

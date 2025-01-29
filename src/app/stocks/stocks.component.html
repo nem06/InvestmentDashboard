@@ -3,9 +3,10 @@
 <div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
 <h2>{{data[0].MaxDate | date:'EEEE, dd MMMM'}}</h2>
 <div class="container">
-      <div class="stock-rate-container" *ngIf="false">
+      <div class="stock-rate-container" *ngIf="livedata">
         <div class="container-title">Live Rates</div>
-        <div class="stock-rate-tbl-cont" [ngClass]="{'expanded': data[0].rateListExpanded}">
+        <div class="live-time">as of {{ livedata[0].Date | date: 'dd MMM HH:mm:ss'}}</div>
+        <div class="stock-rate-tbl-cont" [ngClass]="{'expanded': rateListExpanded}">
                 <table class="stock-rate-tbl">
                         <thead>
                                 <tr>
@@ -15,24 +16,24 @@
                                 </tr>
                         </thead>
                         <tbody>
-                                <tr *ngFor="let symbol of data[1].Symbol">
+                                <tr *ngFor="let symbol of livedata">
                                         <td>{{symbol.Symbol}}</td>
                                         <td>
-                                                {{symbol.CurrentRate | number}}<br />
-                                                <span *ngIf = "symbol.Day_Rate_Change >= 0" class="pstv-amnt day-rate-chang">+{{ symbol.Day_Rate_Change | number}} ({{symbol.Day_Rate_Change_P }}%)</span>
-                                                <span *ngIf = "symbol.Day_Rate_Change < 0" class="ngtv-amnt day-rate-chang">-{{ symbol.Day_Rate_Change*-1 | number}} ({{symbol.Day_Rate_Change_P*-1 }}%)</span>
+                                                {{symbol.Current | number}}<br />
+                                                <span *ngIf = "symbol.DayChange >= 0" class="pstv-amnt day-rate-chang">+{{ symbol.DayChange | number}} ({{symbol.DayChangePercent | number }}%)</span>
+                                                <span *ngIf = "symbol.DayChange < 0" class="ngtv-amnt day-rate-chang">-{{ symbol.DayChange*-1 | number}} ({{symbol.DayChangePercent*-1 | number }}%)</span>
                                         </td>
                                         <td>
-                                                <span class="day-hl">{{ symbol.CurrentRate | number}}</span>
+                                                <span class="day-hl">{{ symbol.DayHigh | number}}</span>
                                                 <br/>
-                                                <span class="day-hl">{{ symbol.CurrentRate | number}}</span>
+                                                <span class="day-hl">{{ symbol.DayLow | number}}</span>
                                         </td>
                                 </tr>
                         </tbody>
                 </table>
         </div>
         <div class="expand-btn" >
-                <button class="flat-arrow-btn" (click)="toggleRateContainer()">
+                <button class="flat-arrow-btn" (click)="rateListExpanded = !rateListExpanded">
                         <img src="expand-icon.png" height="10px" *ngIf = "!data[0].rateListExpanded">
                         <img src="collapse-icon.png" height="10px" *ngIf = "data[0].rateListExpanded"> 
                 </button>
