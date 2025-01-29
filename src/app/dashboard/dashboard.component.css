@@ -73,9 +73,9 @@ h2{
 }
 
 .day-return-amnt{
-        font-size: 20px;
+        font-size: 24px;
         font-weight: 550;
-        padding: 6px;
+        padding: 6px 6px 10px;
 }
 
 .user-container{
@@ -95,6 +95,7 @@ h2{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
+        font-size: 16px;
 }
 
 .mf-overall{
