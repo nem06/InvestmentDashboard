@@ -5,7 +5,7 @@
 <div class="container" *ngIf="data">
       <div class="stock-rate-container" *ngIf="livedata">
         <div class="container-title" (click)="rateListExpanded = !rateListExpanded">Stock Price</div>
-        <div class="live-time" *ngIf="liveDataStatus">As of &nbsp; {{ livedata[0].Date | date: 'MMM dd - H:mm a'}}</div>
+        <div class="live-time" *ngIf="liveDataStatus">As of &nbsp; {{ livedata[0].Date | date: 'MMM dd - h:mm a'}}</div>
         <div class="live-time" *ngIf="!liveDataStatus">As of Day Close</div>
         <div class="stock-rate-tbl-cont" [ngClass]="{'expanded': rateListExpanded}">
                 <table class="stock-rate-tbl">
@@ -77,8 +77,8 @@
                                         <ng-container *ngFor="let symbol of user.Symbol">
                                                 <tr (click)="symbol.showPurchases = !symbol.showPurchases" [ngClass]="{'user-symbol-row': symbol.showPurchases}">
                                                         <td>
-                                                                {{symbol.Symbol}}
-                                                                <br />
+                                                                <div class="symbol-live-cont"><span>{{symbol.Symbol}}</span><span class="symbol-rate" >{{symbol.CurrentRate | number}}</span></div>
+                                                                <!-- <br /> -->
                                                                 <span class="day-rate-chang inv-amnt">&#8377;{{symbol.Investment | number}} &nbsp; Q: {{symbol.Total_Qty}} &nbsp; R: {{symbol.Avg_Purchase_Rate | number}}</span>
                                                         </td>
                                                         <td>

@@ -85,6 +85,10 @@ export class AppComponent {
           symbol.Day_Change = (symbol.Total_Qty * liveSymbol.DayChange).toFixed(0);
           symbol.TotalReturn = (symbol.CurrentValue - symbol.Investment).toFixed(0);
           symbol.TotalReturn_P = (symbol.TotalReturn*100/symbol.Investment).toFixed(2);
+          symbol.Purchases.forEach((pur:any)=>{
+            pur.TotalReturn = (pur.Qty * (liveSymbol.Current - pur.Buy)).toFixed(2);
+            pur.TotalReturn_P = ((liveSymbol.Current - pur.Buy)*100/pur.Buy).toFixed(2);
+          });
           currentValue += parseInt(symbol.CurrentValue);
           dayReturn += parseInt(symbol.Day_Change);
           totalReturn += parseInt(symbol.TotalReturn);

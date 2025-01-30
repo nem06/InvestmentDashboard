@@ -198,7 +198,16 @@ h2{
 .day-hl{
         font-size: 12.5px;
 }
-
+.symbol-live-cont{
+        display: flex;
+        justify-content: space-between;
+}
+.symbol-rate{
+        color: rgb(109, 109, 238);
+        font-size: 12px;
+        animation: blink 2s infinite;
+        /* vertical-align: text-top; */
+}
 .expand-btn{
         display: flex;
         justify-content: center;

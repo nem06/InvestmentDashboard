@@ -1,7 +1,7 @@
 <div id="title">Investment Dashboard</div>
 <div class="container">
         <div class="stocks-container" (click)="navigateStocks()">
-                <div class="container-title">STOCKS</div>
+                <div class="container-title">Stocks</div>
                 <div class="stocks-container-content">
 
 
@@ -38,7 +38,7 @@
                                                 <th></th>
                                                 <th>Today</th>
                                                 <th>Overall</th>
-                                                <th>Investment</th>
+                                                <th>Invested</th>
                                         </tr>
                                 </thead>
                                 <ng-container *ngFor="let user of stocks">
@@ -77,7 +77,7 @@
                 </div>
         </div>
         <div class="mutualfund-container" (click)="navigateMututalFund()" *ngIf="mutualFunds">
-                <div class="container-title">MUTUAL FUNDS</div>
+                <div class="container-title">Mutual Funds</div>
                 <div class="mutualfund-container-content">
                 <div class="date">{{mutualFunds.MaxDate | date: 'EEEE, dd MMMM'}}</div>
                 <div class="day-return-amnt pstv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Daily_Ret >= 0">+&#8377;{{mutualFunds.SingleNodes[0].Daily_Ret | number}}  &nbsp;  {{mutualFunds.SingleNodes[0].Daily_Per}}%</div>
