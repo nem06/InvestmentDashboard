@@ -160,7 +160,8 @@ h2{
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        /* gap: 3px 50px; */
+        /* gap: 5px 50px; */
+        margin: 1.5px 0;
 }
 .purchase-tbl{
         font-size: 11px;

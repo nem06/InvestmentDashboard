@@ -79,7 +79,7 @@
                                                         <td>
                                                                 <div class="symbol-live-cont"><span>{{symbol.Symbol}}</span><span class="symbol-rate" >{{symbol.CurrentRate | number}}</span></div>
                                                                 <!-- <br /> -->
-                                                                <span class="day-rate-chang inv-amnt">&#8377;{{symbol.Investment | number}} &nbsp; Q: {{symbol.Total_Qty}} &nbsp; R: {{symbol.Avg_Purchase_Rate | number}}</span>
+                                                                <span class="day-rate-chang inv-amnt">&#8377;{{symbol.Investment | number}} &nbsp; Q: {{symbol.Total_Qty}} &nbsp; P: {{symbol.Avg_Purchase_Rate | number}}</span>
                                                         </td>
                                                         <td>
                                                                 <span *ngIf = "symbol.Day_Change >= 0" class="pstv-amnt">+&#8377;{{symbol.Day_Change| number}}</span>
@@ -99,9 +99,14 @@
                                                 <tr class="user-symbol-row" *ngIf="symbol.showPurchases">
                                                         <td colspan="3">
                                                                 <div class="symbol-max-row">
-                                                                        <span class="day-rate-chang">H: <span class="inv-amnt">{{symbol.HighRet | number}} ({{symbol.HighDate}})</span></span>
-                                                                        <span class="day-rate-chang">L: <span class="inv-amnt">{{symbol.LowRet | number}}  ({{symbol.LowDate}})</span></span>
-                                                                        <span class="day-rate-chang">C: <span class="inv-amnt">{{symbol.CurrentRate | number}}</span></span>
+                                                                        <span class="day-rate-chang">Low : <span class="inv-amnt">{{symbol.Low | number}}  ({{symbol.LowDate}})</span></span>
+                                                                        <span class="day-rate-chang">High : <span class="inv-amnt">{{symbol.High | number}} ({{symbol.HighDate}})</span></span>
+                                                                        <!-- <span class="day-rate-chang">C: <span class="inv-amnt">{{symbol.CurrentRate | number}}</span></span> -->
+                                                                </div>
+                                                                <div class="symbol-max-row">
+                                                                        <span class="day-rate-chang">Min Ret : <span class="inv-amnt">{{symbol.LowRet | number}} </span></span>
+                                                                        <span class="day-rate-chang">Max Ret : <span class="inv-amnt">{{symbol.HighRet | number}} </span></span>
+                                                                        <!-- <span class="day-rate-chang">C: <span class="inv-amnt">{{symbol.CurrentRate | number}}</span></span> -->
                                                                 </div>
                                                         </td>
                                                 </tr>
