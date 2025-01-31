@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { SharedService } from './shared.service';
 import { StockApiService } from './stock-api.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -13,59 +14,17 @@ import { Observable } from 'rxjs';
 export class AppComponent {
   title = 'InvestmentDashboard';
 
-  constructor(private sharedService:SharedService, private apiService: StockApiService) {}
+  constructor(private sharedService:SharedService, private apiService: StockApiService, private router: Router) {}
 
   ngOnInit(): void {
-
-     this.apiService.getLatestJson("MutualFunds").subscribe(data => {
-        this.sharedService.MutualFundsObject = data;
-      });
-
-      this.apiService.getLatestJson("Stocks").subscribe(data => {
-        this.sharedService.StocksObject  = data;
-      });
-
-      this.apiService.getLatestJson("LiveData").subscribe(data => {
-        if(Object.keys(data).length != 0){
-          this.sharedService.LiveDataObject = data;
-          let currentStocks = this.sharedService.getCurrentStocks();
-          if(currentStocks)
-            this.updateData(data, currentStocks);
-          else{
-            setTimeout(()=>{
-              currentStocks = this.sharedService.getCurrentStocks();
-              this.updateData(data, currentStocks);
-            },500)
-          }
-          this.sharedService.LiveDataStatusObject = true
-
-          const alwayRun = setInterval(() => {
-            this.apiService.getLatestJson("LiveData").subscribe(data => {
-              if(Object.keys(data).length === 0){
-                this.apiService.getLatestJson("ClosedData").subscribe(data => {
-                  this.sharedService.LiveDataObject = data;
-                  this.sharedService.LiveDataStatusObject = false
-                  let currentStocks = this.sharedService.getCurrentStocks();
-                  this.updateData(data, currentStocks)
-                });
-                clearInterval(alwayRun)
-                return
-              }
-              let currentStocks = this.sharedService.getCurrentStocks();
-              this.updateData(data, currentStocks)
-            });
-    
-          }, 7000);
-
-        }
-        else{
-          this.apiService.getLatestJson("ClosedData").subscribe(data => {
-            this.sharedService.LiveDataObject = data;
-            this.sharedService.LiveDataStatusObject = false
-          });
-        }
-          
-      });
+    const token = localStorage.getItem('InvestmentauthToken');
+    if (token) {
+      console.log('Token found, calling callAfterLogin...');
+      this.callAfterLogin();
+    } else {
+      console.warn('No token found, redirecting to login...');
+      this.router.navigate(['/login']);
+    }
   }
 
   updateData(data: any, currentStocks:any){
@@ -109,5 +68,67 @@ export class AppComponent {
     });
     this.sharedService.StocksObject = currentStocks
     console.log("Live Data Updated")
+  }
+
+  callAfterLogin(){
+    console.log('Calling callAfterLogin...');
+    this.apiService.getLatestJson("MutualFunds").subscribe(data => {
+      console.log('MutualFunds data received:', data);
+      this.sharedService.MutualFundsObject = data;
+    }, error => {
+      console.error('Error fetching MutualFunds data:', error);
+    });
+
+  this.apiService.getLatestJson("Stocks").subscribe(data => {
+      console.log('Stocks data received:', data);
+      this.sharedService.StocksObject  = data;
+    }, error => {
+      console.error('Error fetching Stocks data:', error);
+    });
+
+  this.apiService.getLatestJson("LiveData").subscribe(data => {
+      console.log('LiveData received:', data);
+      if(Object.keys(data).length != 0){
+        this.sharedService.LiveDataObject = data;
+        let currentStocks = this.sharedService.getCurrentStocks();
+        if(currentStocks)
+          this.updateData(data, currentStocks);
+        else{
+          setTimeout(()=>{
+            currentStocks = this.sharedService.getCurrentStocks();
+            this.updateData(data, currentStocks);
+          },500)
+        }
+        this.sharedService.LiveDataStatusObject = true
+
+        const alwayRun = setInterval(() => {
+          this.apiService.getLatestJson("LiveData").subscribe(data => {
+            if(Object.keys(data).length === 0){
+              this.apiService.getLatestJson("ClosedData").subscribe(data => {
+                this.sharedService.LiveDataObject = data;
+                this.sharedService.LiveDataStatusObject = false
+                let currentStocks = this.sharedService.getCurrentStocks();
+                this.updateData(data, currentStocks)
+              });
+              clearInterval(alwayRun)
+              return
+            }
+            let currentStocks = this.sharedService.getCurrentStocks();
+            this.updateData(data, currentStocks)
+          });
+  
+        }, 7000);
+
+      }
+      else{
+        this.apiService.getLatestJson("ClosedData").subscribe(data => {
+          this.sharedService.LiveDataObject = data;
+          this.sharedService.LiveDataStatusObject = false
+        });
+      }
+        
+    }, error => {
+      console.error('Error fetching LiveData:', error);
+    });
   }
 }

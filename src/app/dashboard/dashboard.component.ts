@@ -19,6 +19,7 @@ export class DashboardComponent {
   constructor(private router: Router,  private sharedService: SharedService) {}
 
   ngOnInit(){
+    console.log("redirected")
    this.sharedService.MutualFundsObject$.subscribe(
       (mutualFunds:any) => {
         this.mutualFunds = mutualFunds;  
@@ -51,5 +52,10 @@ export class DashboardComponent {
         return (num / 100000).toFixed(2) + " L";
     }
     return num.toString();
+  }
+
+  logout(){
+    localStorage.removeItem('InvestmentauthToken')
+    this.router.navigate(['/login'])
   }
 }

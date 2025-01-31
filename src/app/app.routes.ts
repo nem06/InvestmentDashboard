@@ -1,13 +1,16 @@
-import { Routes } from '@angular/router';
+import { RouterModule,Routes } from '@angular/router';
+import { NgModule } from '@angular/core';
 import { MutualfundComponent } from './mutualfund/mutualfund.component';
-import { IpManagerComponent } from './ip-manager/ip-manager.component';
+import { LoginComponent } from './login/login.component';
 import { StocksComponent } from './stocks/stocks.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
-        { path: '', component: DashboardComponent },
-        { path: 'dashboard', component: DashboardComponent },
-        { path: 'mutualfund', component: MutualfundComponent },
-        { path: 'ip-manager', component: IpManagerComponent },
-        { path: 'stocks', component: StocksComponent }
+        { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
+        { path: 'login', component: LoginComponent },
+        { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
+        { path: 'mutualfund', component: MutualfundComponent, canActivate: [AuthGuard] },
+        { path: 'stocks', component: StocksComponent, canActivate: [AuthGuard] },
+        { path: '**', redirectTo: 'dashboard' }, 
 ];
