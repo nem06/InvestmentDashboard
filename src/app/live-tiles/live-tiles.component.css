@@ -1,0 +1,76 @@
+#title{
+        font-family: 'Montserrat', sans-serif;
+        background-color: rgb(63, 112, 181);
+        color: rgb(255, 255, 255);
+        font-size: 28px;
+        font-weight: bolder;
+        padding: 15px;
+        width: calc(100% - 30px);
+        text-align: center;
+        position: fixed;
+        top: 0;
+}
+.back-icon{
+        position: fixed;
+        left:30px;
+        top:2px;
+        font-size: 45px;
+        color: white;
+        cursor: pointer;
+}
+.tile-container{
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 4px;
+        padding: 5px;
+        justify-content: space-evenly;
+        /* flex: 3; */
+        margin-top: 65px;
+}
+.tile{
+        padding: 3px;
+        background-color: aliceblue;
+        border-radius: 4px;
+        flex-grow: 1;
+}
+.name-line{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        gap:5px;
+        
+}
+.name, .price{
+        font-size: 15px;
+        font-weight: 600;
+        color: black;
+}
+.price{
+        color:rgb(3, 36, 37);
+        /* margin: 3px; */
+        animation: blink 2s infinite;
+}
+@keyframes blink {
+0%, 100% {
+        opacity: 1; /* Fully visible */
+}
+50% {
+        opacity: 0.5; /* Fully hidden */
+}
+}
+.change-line{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        margin-top: 3px;
+}
+.change, .hilow{
+       font-size: 11px; 
+}
+.ngtv-amnt{
+        background-color: #ff7d7d;
+}
+.pstv-amnt{
+        background-color: rgb(26, 239, 26);
+}

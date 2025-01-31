@@ -1,0 +1,19 @@
+
+<div id="title">Live Tiles</div>
+<div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
+<div class="tile-container" *ngIf="livedata && livedata.length > 0">
+  <ng-container *ngFor="let stock of livedata">
+    <div class="tile" [ngClass]="{'pstv-amnt':  stock.DayChange >= 0, 'ngtv-amnt':  stock.DayChange < 0} ">
+      <div class="name-line" >
+        <div class="name">{{ stock.Symbol }}</div>
+        <div class="price">{{ stock.Current | number }}</div>
+      </div>
+      <div class="change-line">
+        <div class="hilow">{{ stock.DayLow | number}} | </div>
+        <div class="change " *ngIf="stock.DayChange >= 0"> {{ stock.DayChange | number }} ({{stock.DayChangePercent}}%) </div>
+        <div class="change " *ngIf="stock.DayChange < 0"> {{ stock.DayChange | number }} ({{stock.DayChangePercent}}%)</div>
+        <div class="hilow"> | {{ stock.DayHigh | number }}</div>
+      </div>
+    </div>
+  </ng-container>
+</div>

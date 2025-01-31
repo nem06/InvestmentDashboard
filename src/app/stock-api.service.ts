@@ -16,14 +16,14 @@ export class StockApiService {
       'Authorization': token
     });
     return this.http.get(
-      "http://192.168.2.60:3000/api/GetLatestReturns?type="+ type,
+      "https://stock-node-server.onrender.com/api/GetLatestReturns?type="+ type,
       {headers}
     );
   }
 
   login(email: string, password: string): Observable<any> {
     return this.http.post(
-      "http://192.168.2.60:3000/api/login", 
+      "https://stock-node-server.onrender.com/api/login", 
       { "username":email, "password":password, "AccessToken":"" },
     );
   }

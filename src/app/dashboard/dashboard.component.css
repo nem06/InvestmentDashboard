@@ -25,7 +25,17 @@
         gap: 20px 50px;
         /* overflow-x: auto; */
 }
-
+.live-tiles{
+        border-radius: 18px;
+        padding: 14px 65px;
+        font-size: 32px;
+        font-weight: bolder;
+        text-align: center;
+        background-color: #3f70b5;
+        color: #e6f3f6;
+        box-sizing: border-box;
+        box-shadow: 0 12px 6px rgba(0, 0, 0, 0.1);
+}
 .mutualfund-container, .stocks-container{
         height: 100%;
         align-items: center; 

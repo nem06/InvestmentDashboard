@@ -2,8 +2,6 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SharedService} from '../shared.service';
 import { Router } from '@angular/router';
-import { StockApiService } from '../stock-api.service';
-import { expand } from 'rxjs';
 
 @Component({
   selector: 'app-mutualfund',

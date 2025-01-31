@@ -58,4 +58,7 @@ export class DashboardComponent {
     localStorage.removeItem('InvestmentauthToken')
     this.router.navigate(['/login'])
   }
+  navigateLive(){
+    this.router.navigate(['/live'])
+  }
 }
