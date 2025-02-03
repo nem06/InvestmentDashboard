@@ -9,7 +9,7 @@
         <div class="name">{{ stock.Symbol.substring(0,8) }}</div>
         <div class="price">{{ stock.Current | number }}</div>
         <div class="change " *ngIf="stock.DayChange >= 0"> {{ stock.DayChange | number }} ({{stock.DayChangePercent}}%) </div>
-        <div class="change " *ngIf="stock.DayChange < 0"> {{ stock.DayChange | number }} ({{stock.DayChangePercent}}%)</div>
+        <div class="change " *ngIf="stock.DayChange < 0"> {{ stock.DayChange | number }} ({{stock.DayChangePercent*-1}}%)</div>
       </div>
       <!-- <div class="change-line">
         <div class="hilow">{{ stock.DayLow | number}} | </div>
