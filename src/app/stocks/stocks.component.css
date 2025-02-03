@@ -58,8 +58,8 @@ h2{
         font-size: 16px;
         font-weight: 550;
         text-align: center;
-        color:rgb(225, 230, 230);
-        margin: 3px;
+        color:rgb(14, 66, 68);
+        margin: 0 0 8px;
         animation: blink 2s infinite;
 }
 @keyframes blink {
@@ -107,7 +107,7 @@ h2{
 }
 .live-tiles{
         border-radius: 18px;
-        padding: 10px 60px;
+        padding: 10px 60px 15px;
         font-size: 28px;
         font-weight: bolder;
         text-align: center;
@@ -123,7 +123,7 @@ h2{
         align-items: flex-start;
         flex-direction: row; 
         flex-wrap: wrap;
-        padding: 6px;
+        /* padding: 6px; */
         font-size: 18px;
         font-weight: 600;
         color: rgb(63, 112, 181);
