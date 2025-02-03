@@ -26,7 +26,7 @@
         padding: 5px;
         justify-content: space-evenly;
         /* flex: 3; */
-        margin-top: 65px;
+        /* margin-top: 65px; */
 }
 .tile{
         padding: 3px;
@@ -51,6 +51,14 @@
         color:rgb(37, 47, 47);
         font-size: 17px;
         /* margin: 3px; */
+        animation: blink 2s infinite;
+}
+.live-time{
+        font-size: 16px;
+        font-weight: 550;
+        text-align: center;
+        color:rgb(14, 66, 68);
+        margin: 70px 0 5px;
         animation: blink 2s infinite;
 }
 @keyframes blink {
