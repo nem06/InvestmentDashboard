@@ -1,9 +1,10 @@
 
 <div id="title">Stocks</div>
 <div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
-<h2 *ngIf="data">{{data[0].MaxDate | date:'EEEE, dd MMMM'}}</h2>
-<div class="live-time" *ngIf="liveDataStatus">As of &nbsp; {{ livedata[0].Date | date: 'MMM dd - h:mm a'}}</div>
+<h2 *ngIf="data && !liveDataStatus">{{data[0].MaxDate | date:'EEEE, dd MMMM'}}</h2>
 <div class="live-time" *ngIf="!liveDataStatus">As of Day Close</div>
+<h2 *ngIf="data && liveDataStatus" >{{livedata[0].Date | date:'EEEE, dd MMMM'}}</h2>
+<div class="live-time" *ngIf="liveDataStatus">As of &nbsp; {{ livedata[0].Date | date: 'MMM dd - h:mm a'}}</div>
 <div class="container" *ngIf="data">
         <div class="live-tiles" (click)="navigateLive()">
                 Live Tiles
