@@ -79,4 +79,16 @@ export class MutualfundComponent {
     const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
     mf.isPurchaseShow = !mf.isPurchaseShow;
   }
+
+  formatToLacs(num: number): string {
+    if (num >= 100000) {
+        return (num / 100000).toFixed(2) + " L";
+    }
+    else if( num >= 10000){
+      return (num/1000).toFixed(2) + " K";
+    }
+    else{
+      return num.toString();
+    }
+  }
 }

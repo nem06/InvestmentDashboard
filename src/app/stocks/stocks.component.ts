@@ -57,6 +57,22 @@ export class StocksComponent {
     this.data[0].rateListExpanded = !this.data[0].rateListExpanded;
   }
 
+  navigateLive(){
+    this.router.navigate(['/live'])
+  }
+
+  formatToLacs(num: number): string {
+    if (num >= 100000) {
+        return (num / 100000).toFixed(2) + " L";
+    }
+    else if( num >= 10000){
+      return (num/1000).toFixed(2) + " K";
+    }
+    else{
+      return num.toString();
+    }
+  }
+
   expandUser(name:string, operation:string){
     const user = this.data.find((user: { Name: string; }) => user.Name === name);
     if(!this.expandProgress){
@@ -70,6 +86,7 @@ export class StocksComponent {
       }, 100);
     }
   }
+
   // getStockPrices(){
   //   fetch('stocks-list.json')
   //     .then(response => response.json())

@@ -3,7 +3,10 @@
 <div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
 <h2 *ngIf="data">{{data[0].MaxDate | date:'EEEE, dd MMMM'}}</h2>
 <div class="container" *ngIf="data">
-      <div class="stock-rate-container" *ngIf="livedata">
+        <div class="live-tiles" (click)="navigateLive()">
+                Live Tiles
+        </div>
+      <!-- <div class="stock-rate-container" *ngIf="livedata">
         <div class="container-title" (click)="rateListExpanded = !rateListExpanded">Stock Price</div>
         <div class="live-time" *ngIf="liveDataStatus">As of &nbsp; {{ livedata[0].Date | date: 'MMM dd - h:mm a'}}</div>
         <div class="live-time" *ngIf="!liveDataStatus">As of Day Close</div>
@@ -39,122 +42,131 @@
                         <img src="collapse-icon.png" height="10px" *ngIf = "rateListExpanded"> 
                 </button>
         </div>
-      </div> 
+      </div>  -->
       <div class="users-container">
         <div class="user-container" *ngFor="let user of data" (click)="expandUser(user.Name,'open')" [ngClass]="{'expanded': user.isExpanded}">
                 <div class="container-title" (click)="expandUser(user.Name,'close')">{{user.Name}}</div>
-                <div class="user-amnts-container" [ngClass]="{'expanded': user.isExpanded}">
-                        <div class="user-amnts i1">
-                                Today : &nbsp;
-                                <div class="pstv-amnt" *ngIf = "user.Day_Change >= 0" > +&#8377;{{user.Day_Change | number}} ({{user.Day_Change_P }}%)</div>
-                                <div class="ngtv-amnt" *ngIf = "user.Day_Change < 0" > -&#8377;{{user.Day_Change*-1 | number}} ({{user.Day_Change_P*-1}}%)</div>
+                <div class="container-content">
+                        <div class="user-amnts-container" [ngClass]="{'expanded': user.isExpanded}">
+                                <div class="user-amnts i1">
+                                        Today: &nbsp;
+                                        <div class="pstv-amnt" *ngIf = "user.Day_Change >= 0" > +&#8377;{{user.Day_Change | number}} ({{user.Day_Change_P }}%)</div>
+                                        <div class="ngtv-amnt" *ngIf = "user.Day_Change < 0" > -&#8377;{{user.Day_Change*-1 | number}} ({{user.Day_Change_P*-1}}%)</div>
+                                </div>
+                                <div class="user-amnts i3">
+                                        M Value: &nbsp;
+                                        <div class="pstv-amnt" *ngIf = "user.TotalReturn >= 0" > +&#8377;{{formatToLacs(user.CurrentValue)}}</div>
+                                        <div class="ngtv-amnt" *ngIf = "user.TotalReturn < 0" > &#8377;{{formatToLacs(user.CurrentValue )}}</div>
+                                </div>
+                                <div class="user-amnts i2">
+                                        Overall: &nbsp;
+                                        <div class="pstv-amnt" *ngIf = "user.TotalReturn >= 0" > +&#8377;{{user.TotalReturn | number}} ({{user.TotalReturn_P }}%)</div>
+                                        <div class="ngtv-amnt" *ngIf = "user.TotalReturn < 0" > -&#8377;{{user.TotalReturn*-1  | number}} ({{user.TotalReturn_P*-1}}%)</div>
+                                </div>
+                                <div class="user-amnts i4">
+                                        Invested: &nbsp;
+                                        <div class="inv-amnt"> &#8377;{{formatToLacs(user.Investment)}}</div>
+                                </div>
                         </div>
-                        <div class="user-amnts i2">
-                                Overall : &nbsp;
-                                <div class="pstv-amnt" *ngIf = "user.TotalReturn >= 0" > +&#8377;{{user.TotalReturn | number}} ({{user.TotalReturn_P }}%)</div>
-                                <div class="ngtv-amnt" *ngIf = "user.TotalReturn < 0" > -&#8377;{{user.TotalReturn*-1 | number}} ({{user.TotalReturn_P*-1}}%)</div>
-                        </div>
-                        <div class="user-amnts i3">
-                                Market Value : &nbsp;
-                                <div class="pstv-amnt" *ngIf = "user.TotalReturn >= 0" > +&#8377;{{user.CurrentValue | number}}</div>
-                                <div class="ngtv-amnt" *ngIf = "user.TotalReturn < 0" > &#8377;{{user.CurrentValue | number}}</div>
-                        </div>
-                        <div class="user-amnts i4">
-                                Investments : &nbsp;
-                                <div class="inv-amnt"> &#8377;{{user.Investment | number}}</div>
-                        </div>
-                </div>
-                <div class="user_symbl-tbl-cont" *ngIf="user.isExpanded">
-                        <table class="stock-rate-tbl">
-                                <thead>
-                                        <tr>
-                                                <th></th>
-                                                <th>Today</th>
-                                                <th>Overall</th>
-                                        </tr>
-                                </thead>
-                                <tbody>
-                                        <ng-container *ngFor="let symbol of user.Symbol">
-                                                <tr (click)="symbol.showPurchases = !symbol.showPurchases" [ngClass]="{'user-symbol-row': symbol.showPurchases}">
-                                                        <td>
-                                                                <div class="symbol-live-cont"><span>{{symbol.Symbol}}</span><span class="symbol-rate" >{{symbol.CurrentRate | number}}</span></div>
-                                                                <!-- <br /> -->
-                                                                <span class="day-rate-chang inv-amnt">&#8377;{{symbol.Investment | number}} &nbsp; Q: {{symbol.Total_Qty}} &nbsp; P: {{symbol.Avg_Purchase_Rate | number}}</span>
-                                                        </td>
-                                                        <td>
-                                                                <span *ngIf = "symbol.Day_Change >= 0" class="pstv-amnt">+&#8377;{{symbol.Day_Change| number}}</span>
-                                                                <span *ngIf = "symbol.Day_Change < 0" class="ngtv-amnt">-&#8377;{{symbol.Day_Change*-1| number}}</span>
-                                                                <br />
-                                                                <span *ngIf = "symbol.Day_Change >= 0" class="pstv-amnt day-rate-chang">({{symbol.Day_Rate_Change_P }}%)</span>
-                                                                <span *ngIf = "symbol.Day_Change < 0" class="ngtv-amnt day-rate-chang">({{symbol.Day_Rate_Change_P*-1 }}%)</span>
-                                                        </td>
-                                                        <td>
-                                                                <span *ngIf = "symbol.TotalReturn >= 0" class="pstv-amnt">+&#8377;{{symbol.TotalReturn| number}}</span>
-                                                                <span *ngIf = "symbol.TotalReturn < 0" class="ngtv-amnt">-&#8377;{{symbol.TotalReturn*-1| number}}</span>
-                                                                <br />
-                                                                <span *ngIf = "symbol.TotalReturn >= 0" class="pstv-amnt day-rate-chang">({{symbol.TotalReturn_P }}%)</span>
-                                                                <span *ngIf = "symbol.TotalReturn < 0" class="ngtv-amnt day-rate-chang">({{symbol.TotalReturn_P*-1 }}%)</span>
-                                                        </td>
+                        <div class="user_symbl-tbl-cont" *ngIf="user.isExpanded">
+                                <table class="stock-rate-tbl">
+                                        <thead>
+                                                <tr>
+                                                        <th></th>
+                                                        <th>Today</th>
+                                                        <th>Overall</th>
                                                 </tr>
-                                                <tr class="user-symbol-row" *ngIf="symbol.showPurchases">
-                                                        <td colspan="3">
-                                                                <div class="symbol-max-row">
-                                                                        <span class="day-rate-chang">Low : <span class="inv-amnt">{{symbol.Low | number}}  ({{symbol.LowDate}})</span></span>
-                                                                        <span class="day-rate-chang">High : <span class="inv-amnt">{{symbol.High | number}} ({{symbol.HighDate}})</span></span>
-                                                                        <!-- <span class="day-rate-chang">C: <span class="inv-amnt">{{symbol.CurrentRate | number}}</span></span> -->
-                                                                </div>
-                                                                <div class="symbol-max-row">
-                                                                        <span class="day-rate-chang">Min Ret : <span class="inv-amnt">{{symbol.LowRet | number}} </span></span>
-                                                                        <span class="day-rate-chang">Max Ret : <span class="inv-amnt">{{symbol.HighRet | number}} </span></span>
-                                                                        <!-- <span class="day-rate-chang">C: <span class="inv-amnt">{{symbol.CurrentRate | number}}</span></span> -->
-                                                                </div>
-                                                        </td>
-                                                </tr>
-                                                <tr *ngIf="symbol.showPurchases">
-                                                        <td colspan="3">
-                                                                <table class="purchase-tbl">
-                                                                        <thead>
-                                                                                <tr>
-                                                                                        <th></th>
-                                                                                        <th>Qty</th>
-                                                                                        <th>Buy</th>
-                                                                                        <th>Return</th>
-                                                                                        <th>Investment</th>
+                                        </thead>
+                                        <tbody>
+                                                <ng-container *ngFor="let symbol of user.Symbol">
+                                                        <tr (click)="symbol.showPurchases = !symbol.showPurchases" [ngClass]="{'user-symbol-row': symbol.showPurchases}">
+                                                                <td>
+                                                                        <div class="symbol-live-cont"><span>{{symbol.Symbol}}</span><span class="symbol-rate" >{{symbol.CurrentRate | number}}</span></div>
+                                                                        <!-- <br /> -->
+                                                                        <span class="day-rate-chang inv-amnt">&#8377;{{symbol.Investment | number}} &nbsp; Q: {{symbol.Total_Qty}} &nbsp; P: {{symbol.Avg_Purchase_Rate | number}}</span>
+                                                                </td>
+                                                                <td>
+                                                                        <span *ngIf = "symbol.Day_Change >= 0" class="pstv-amnt">+&#8377;{{symbol.Day_Change| number}}</span>
+                                                                        <span *ngIf = "symbol.Day_Change < 0" class="ngtv-amnt">-&#8377;{{symbol.Day_Change*-1| number}}</span>
+                                                                        <br />
+                                                                        <span *ngIf = "symbol.Day_Change >= 0" class="pstv-amnt day-rate-chang">({{symbol.Day_Rate_Change_P }}%)</span>
+                                                                        <span *ngIf = "symbol.Day_Change < 0" class="ngtv-amnt day-rate-chang">({{symbol.Day_Rate_Change_P*-1 }}%)</span>
+                                                                </td>
+                                                                <td>
+                                                                        <span *ngIf = "symbol.TotalReturn >= 0" class="pstv-amnt">+&#8377;{{symbol.TotalReturn| number}}</span>
+                                                                        <span *ngIf = "symbol.TotalReturn < 0" class="ngtv-amnt">-&#8377;{{symbol.TotalReturn*-1| number}}</span>
+                                                                        <br />
+                                                                        <span *ngIf = "symbol.TotalReturn >= 0" class="pstv-amnt day-rate-chang">({{symbol.TotalReturn_P }}%)</span>
+                                                                        <span *ngIf = "symbol.TotalReturn < 0" class="ngtv-amnt day-rate-chang">({{symbol.TotalReturn_P*-1 }}%)</span>
+                                                                </td>
+                                                        </tr>
+                                                        <tr class="user-symbol-row" *ngIf="symbol.showPurchases">
+                                                                <td colspan="3">
+                                                                        <div class="symbol-max-row">
+                                                                                <span class="day-rate-chang">Low : <span class="inv-amnt">{{symbol.Low | number}}  ({{symbol.LowDate}})</span></span>
+                                                                                <span class="day-rate-chang">High : <span class="inv-amnt">{{symbol.High | number}} ({{symbol.HighDate}})</span></span>
+                                                                                <!-- <span class="day-rate-chang">C: <span class="inv-amnt">{{symbol.CurrentRate | number}}</span></span> -->
+                                                                        </div>
+                                                                        <div class="symbol-max-row">
+                                                                                <span class="day-rate-chang">Min Ret : <span class="inv-amnt">{{symbol.LowRet | number}} </span></span>
+                                                                                <span class="day-rate-chang">Max Ret : <span class="inv-amnt">{{symbol.HighRet | number}} </span></span>
+                                                                                <!-- <span class="day-rate-chang">C: <span class="inv-amnt">{{symbol.CurrentRate | number}}</span></span> -->
+                                                                        </div>
+                                                                </td>
+                                                        </tr>
+                                                        <tr *ngIf="symbol.showPurchases">
+                                                                <td colspan="3">
+                                                                        <table class="purchase-tbl">
+                                                                                <thead>
+                                                                                        <tr>
+                                                                                                <th></th>
+                                                                                                <th>Qty</th>
+                                                                                                <th>Buy</th>
+                                                                                                <th>Return</th>
+                                                                                                <th>Investment</th>
+                                                                                        </tr>
+                                                                                </thead>
+                                                                                <tr *ngFor="let purchase of symbol.Purchases">
+                                                                                        <td>{{purchase.PurchaseDate}}</td>
+                                                                                        <td>{{purchase.Qty}} </td>
+                                                                                        <td> &#8377;{{purchase.Buy | number}}</td>
+                                                                                        <td *ngIf = "purchase.TotalReturn >= 0" class="pstv-amnt">+&#8377;{{purchase.TotalReturn}} ({{purchase.TotalReturn_P }}%)</td>
+                                                                                        <td *ngIf = "purchase.TotalReturn < 0" class="ngtv-amnt">-&#8377;{{purchase.TotalReturn*-1}} ({{purchase.TotalReturn_P*-1 }}%)</td>
+                                                                                        <td>&#8377; {{purchase.Investment | number}}</td>
                                                                                 </tr>
-                                                                        </thead>
-                                                                        <tr *ngFor="let purchase of symbol.Purchases">
-                                                                                <td>{{purchase.PurchaseDate}}</td>
-                                                                                <td>{{purchase.Qty}} </td>
-                                                                                <td> &#8377;{{purchase.Buy | number}}</td>
-                                                                                <td *ngIf = "purchase.TotalReturn >= 0" class="pstv-amnt">+&#8377;{{purchase.TotalReturn}} ({{purchase.TotalReturn_P }}%)</td>
-                                                                                <td *ngIf = "purchase.TotalReturn < 0" class="ngtv-amnt">-&#8377;{{purchase.TotalReturn*-1}} ({{purchase.TotalReturn_P*-1 }}%)</td>
-                                                                                <td>&#8377; {{purchase.Investment | number}}</td>
-                                                                        </tr>
-                                                                </table>
+                                                                        </table>
+                                                                </td>
+                                                        </tr>
+                                                        
+                                                </ng-container>
+                                                <tr>
+                                                        <td></td>
+                                                        <td>
+                                                                <span *ngIf = "user.Day_Change >= 0" class="pstv-amnt">+&#8377;{{user.Day_Change| number}}</span>
+                                                                <span *ngIf = "user.Day_Change < 0" class="ngtv-amnt">-&#8377;{{user.Day_Change*-1| number}}</span>
+                                                                <br />
+                                                                <span *ngIf = "user.Day_Change >= 0" class="pstv-amnt day-rate-chang">({{user.Day_Change_P }}%)</span>
+                                                                <span *ngIf = "user.Day_Change < 0" class="ngtv-amnt day-rate-chang">({{user.Day_Change_P*-1 }}%)</span>
+                                                        </td>
+                                                        <td>
+                                                                <span *ngIf = "user.TotalReturn >= 0" class="pstv-amnt">+&#8377;{{user.TotalReturn| number}}</span>
+                                                                <span *ngIf = "user.TotalReturn < 0" class="ngtv-amnt">-&#8377;{{user.TotalReturn*-1| number}}</span>
+                                                                <br />
+                                                                <span *ngIf = "user.TotalReturn >= 0" class="pstv-amnt day-rate-chang">({{user.TotalReturn_P }}%)</span>
+                                                                <span *ngIf = "user.TotalReturn < 0" class="ngtv-amnt day-rate-chang">({{user.TotalReturn_P*-1 }}%)</span>
                                                         </td>
                                                 </tr>
-                                                
-                                        </ng-container>
-                                        <tr>
-                                                <td></td>
-                                                <td>
-                                                        <span *ngIf = "user.Day_Change >= 0" class="pstv-amnt">+&#8377;{{user.Day_Change| number}}</span>
-                                                        <span *ngIf = "user.Day_Change < 0" class="ngtv-amnt">-&#8377;{{user.Day_Change*-1| number}}</span>
-                                                        <br />
-                                                        <span *ngIf = "user.Day_Change >= 0" class="pstv-amnt day-rate-chang">({{user.Day_Change_P }}%)</span>
-                                                        <span *ngIf = "user.Day_Change < 0" class="ngtv-amnt day-rate-chang">({{user.Day_Change_P*-1 }}%)</span>
-                                                </td>
-                                                <td>
-                                                        <span *ngIf = "user.TotalReturn >= 0" class="pstv-amnt">+&#8377;{{user.TotalReturn| number}}</span>
-                                                        <span *ngIf = "user.TotalReturn < 0" class="ngtv-amnt">-&#8377;{{user.TotalReturn*-1| number}}</span>
-                                                        <br />
-                                                        <span *ngIf = "user.TotalReturn >= 0" class="pstv-amnt day-rate-chang">({{user.TotalReturn_P }}%)</span>
-                                                        <span *ngIf = "user.TotalReturn < 0" class="ngtv-amnt day-rate-chang">({{user.TotalReturn_P*-1 }}%)</span>
-                                                </td>
-                                        </tr>
-                                </tbody>
-                        </table>
+                                        </tbody>
+                                </table>
+                        </div>
+                        <div class="expand-btn" >
+                                <button class="flat-arrow-btn" >
+                                        <img src="expand-icon.png" height="10px" *ngIf="!user.isExpanded" (click)="expandUser(user.Name,'open')">
+                                        <img src="collapse-icon.png" height="10px" *ngIf="user.isExpanded" (click)="expandUser(user.Name,'close')"> 
+                                </button>
+                        </div>
                 </div>
+                
         </div>
       </div>
 </div>

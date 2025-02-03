@@ -101,12 +101,12 @@
                         </div>
                         <div class="overall-amnt">
                                 Market Value
-                                <span class="pstv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret >= 0">+&#8377;{{mutualFunds.SingleNodes[0].MarketValue | number}}</span>
-                                <span class="ngtv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret < 0">&#8377;{{mutualFunds.SingleNodes[0].MarketValue | number}}</span>
+                                <span class="pstv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret >= 0">+&#8377;{{formatToLacs(mutualFunds.SingleNodes[0].MarketValue)}}</span>
+                                <span class="ngtv-amnt" *ngIf = "mutualFunds.SingleNodes[0].Total_Ret < 0">&#8377;{{formatToLacs(mutualFunds.SingleNodes[0].MarketValue)}}</span>
                         </div>
                         <div class="overall-amnt">
                                 Investment
-                                <span class="">&#8377;{{mutualFunds.SingleNodes[0].Investments | number}}</span>
+                                <span class="">&#8377;{{formatToLacs(mutualFunds.SingleNodes[0].Investments)}}</span>
                         </div>
                 </div>
                 </div>
