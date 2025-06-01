@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {SharedService} from '../shared.service';
 import { Router } from '@angular/router';
+import { StockApiService } from '../stock-api.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-mutualfund',
-  imports: [CommonModule],
+  imports: [ CommonModule, FormsModule],
   templateUrl: './mutualfund.component.html',
   styleUrl: './mutualfund.component.css'
 })
@@ -13,14 +15,29 @@ export class MutualfundComponent {
   isExpanded:boolean = false;
   data: any;
   expandProgress = false
+  startDate: any = '2024-03-01';
+  endDate: any = '2025-05-25';
+  asOn: any = '2025-05-29';
 
-  constructor(private sharedService:SharedService, private router:Router) {}
+  constructor(private sharedService:SharedService, private router:Router, private apiService:StockApiService) {}
 
   ngOnInit(): void {
     this.sharedService.MutualFundsObject$.subscribe(
       (mutualFunds:any) => {
         this.data = mutualFunds;  
+        this.asOn = mutualFunds.MaxDate;
+        this.startDate = mutualFunds.MinPurchaseDate;
+        this.endDate = mutualFunds.MaxPurchaseDate;
       });
+    // const inputJson = {"as_on":this.asOn,"start_date":this.startDate,"end_date":this.endDate}
+
+    // this.apiService.getMFByDate(inputJson).subscribe(data => {
+    //   console.log('MutualFunds data by date received:', data);
+    //   this.data = data;
+    // }, error => {
+    //   console.error('Error fetching MutualFunds data:', error);
+    // });
+
   }
 
   navigateHome(){
@@ -90,5 +107,16 @@ export class MutualfundComponent {
     else{
       return num.toString();
     }
+  }
+
+  onDateChange() {
+    const inputJson = {"as_on":this.asOn,"start_date":this.startDate,"end_date":this.endDate}
+
+    this.apiService.getMFByDate(inputJson).subscribe(data => {
+      console.log('MutualFunds data by date received:', data);
+      this.data = data;
+    }, error => {
+      console.error('Error fetching MutualFunds data:', error);
+    });
   }
 }

@@ -1,5 +1,24 @@
 <div id="title">Mutual Funds</div>
 <div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
+<div class="filter-container">
+        <div class="purchase-filter-outer">
+                <label for="startDate" class="filter-label">Purchase Period</label>
+                <div class="purchase-filter">
+                        <!-- <label for="endDate" class="filter-label">From </label> -->
+                        <input id="startDate" type="date" [(ngModel)]="startDate" name="startDate" class="filter-input" (change)="onDateChange()" />
+                        <label for="endDate" class="filter-label">to </label>
+                        <input id="endDate" type="date" [(ngModel)]="endDate" name="endDate" class="filter-input" (change)="onDateChange()" />
+                </div>
+        </div>
+        <div class="purchase-filter-outer">
+                <label for="asOn" class="filter-label">As of</label>
+                <div>
+                        <input id="asOn" type="date" [(ngModel)]="asOn" name="singleDate" class="filter-input" (change)="onDateChange()" />
+                </div>
+        </div>
+       
+        
+</div>
 <div class="container" *ngIf="data">
          <div class="day-container">
                 <h1>{{data.MaxDate | date:'EEEE, dd MMMM'}}</h1>

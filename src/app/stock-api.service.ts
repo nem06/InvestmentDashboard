@@ -21,6 +21,18 @@ export class StockApiService {
     );
   }
 
+   getMFByDate(dates: object): Observable<any> {
+    const token = localStorage.getItem('InvestmentauthToken') || ''; 
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    console.log(JSON.stringify(dates))
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetReturnByDate?json="+ JSON.stringify(dates),
+      {headers}
+    );
+  }
+
   login(email: string, password: string): Observable<any> {
     return this.http.post(
       "https://stock-node-server.onrender.com/api/login", 
