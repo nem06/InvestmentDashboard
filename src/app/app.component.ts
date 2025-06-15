@@ -4,10 +4,11 @@ import { SharedService } from './shared.service';
 import { StockApiService } from './stock-api.service';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, CommonModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

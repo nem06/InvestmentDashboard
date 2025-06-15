@@ -16,8 +16,6 @@
                         <input id="asOn" type="date" [(ngModel)]="asOn" name="singleDate" class="filter-input" (change)="onDateChange()" />
                 </div>
         </div>
-       
-        
 </div>
 <div class="container" *ngIf="data">
          <div class="day-container">
@@ -119,8 +117,10 @@
                 <h1>Overall Return</h1>
                 <div class="day-return-amnt pstv-amnt" *ngIf = "data.SingleNodes[0].Total_Ret >= 0">+&#8377;{{data.SingleNodes[0].Total_Ret | number}} &nbsp; ({{data.SingleNodes[0].Total_Per}}%)</div>
                 <div class="day-return-amnt ngtv-amnt" *ngIf = "data.SingleNodes[0].Total_Ret < 0">-&#8377;{{data.SingleNodes[0].Total_Ret*-1 | number}} &nbsp; ({{data.SingleNodes[0].Total_Per*-1}}%)</div>
+                <div style="font-size: 20px; margin: 8px">
+                        <a href="#/mf-returns" >Returns Insights</a>
+                </div>
                 <div class="day-other-return-amnt">
-                        
                         <div *ngIf = "data.SingleNodes[0].MaxReturn >= 0"><span class="amnt-header">Max Ret :</span><span class="pstv-amnt"> +&#8377;{{formatToLacs(data.SingleNodes[0].MaxReturn)}} ({{data.SingleNodes[0].Max_Per}}%)</span></div>
                         <div *ngIf = "data.SingleNodes[0].MaxReturn < 0"><span class="amnt-header">Max Ret :</span><span class="ngtv-amnt"> -&#8377;{{formatToLacs(data.SingleNodes[0].MaxReturn*-1)}} ({{data.SingleNodes[0].Max_Per*-1}}%)</span></div>
                         <div *ngIf = "data.SingleNodes[0].Investments <= data.SingleNodes[0].MarketValue"><span class="amnt-header">M Value :</span><span class="pstv-amnt"> &#8377;{{formatToLacs(data.SingleNodes[0].MarketValue)}}</span></div>

@@ -1,0 +1,169 @@
+<div id="title">Returns Insights</div>
+<div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
+<div class="master-container">
+        <div class="filter-container">
+                <div class="purchase-filter-outer">
+                        <label for="startDate" class="filter-title">Purchase Filters</label>
+                        <div class="filter-bar" >
+                                <div class="filter-box"  [class.selected]="purchaseYear == 0" (click)="onPurchaseYearChange(0)">
+                                        ALL
+                                </div>
+                                <div class="filter-box"  [class.selected]="purchaseYear == -1" (click)="onPurchaseYearChange(-1)">
+                                        CUSTOM
+                                </div>
+                                <ng-container *ngFor="let year of purchaseYears; let i = index">
+                                        <div class="filter-box"  [class.selected]="year === purchaseYear" (click)="onPurchaseYearChange(year)">
+                                                {{ year }}
+                                        </div>
+                                </ng-container>
+                        </div>
+                        <div class="purchase-filter" *ngIf="purchaseYear == -1">
+                                <label for="startDate" class="filter-label">From </label>
+                                <input id="startDate" type="date" [(ngModel)]="minDate" name="startDate" class="filter-input" (change)="onDateChange()" />
+                                <label for="endDate" class="filter-label">to </label>
+                                <input id="endDate" type="date" [(ngModel)]="maxDate" name="endDate" class="filter-input" (change)="onDateChange()" />
+                        </div>
+                        <div class="filter-bar">
+                                <div class="filter-box"  [class.selected]="selectedOwner == 0" (click)="onOwnerFilter(0)">
+                                        ALL
+                                </div>
+                                <ng-container *ngFor="let owner of owners; let i = index">
+                                        <div class="filter-box"  [class.selected]="owner.id === selectedOwner" (click)="onOwnerFilter(owner.id)">
+                                                {{owner.name}}
+                                        </div>
+                                </ng-container> 
+                        </div>
+                        <div class="selectList-container">
+                                <select id="mfMultiSelect" multiple [(ngModel)]="selectedMFs" (change)="toggleMFSelection()" class="filter-input">
+                                        <option 
+                                                *ngFor="let mf of mfList" 
+                                                [ngValue]="mf.id"
+                                                [selected]="selectedMFs && selectedMFs.indexOf(mf.id) !== -1"
+                                                [ngClass]="{'selected-option': selectedMFs && selectedMFs.indexOf(mf.id) !== -1}">
+                                                {{ mf.name }}
+                                        </option>
+                                </select>
+                        </div>
+                </div>
+                <div class="filter-bar">
+                        <div class="filter-box" [class.selected]="groupBy == 'year'" (click)="onGroupBy('year')">YEAR</div>
+                        <div class="filter-box" [class.selected]="groupBy == 'month'" (click)="onGroupBy('month')">MONTH</div>
+                        <div class="filter-box" [class.selected]="groupBy == 'week'" (click)="onGroupBy('week')">WEEK</div>
+                        <div class="filter-box" [class.selected]="groupBy == 'day'" (click)="onGroupBy('day')">DAY</div>
+                </div>
+                <div class="filter-bar" *ngIf="groupBy != 'year'">
+                        <div class="filter-box"  [class.selected]="selectedYear == 0" (click)="onYearFilter(0)">
+                                ALL
+                        </div>
+                        <ng-container *ngFor="let year of yearList; let i = index">
+                                <div class="filter-box"  [class.selected]="year === selectedYear" (click)="onYearFilter(year)">
+                                        {{ year }}
+                                </div>
+                        </ng-container>
+                </div>
+                <div class="filter-bar" *ngIf="groupBy == 'day' && selectedYear != 0">
+                        <div class="filter-box"  [class.selected]="selectedMonth == 'all'" (click)="onMonthFilter('all')">
+                                ALL
+                        </div>
+                        <ng-container *ngFor="let month of monthList; let i = index">
+                                <div class="filter-box"   [class.selected]="month === selectedMonth" (click)="onMonthFilter(month)">
+                                        {{ getMonthName(month) }}    
+                                </div>
+                        </ng-container>
+                </div>
+        </div>
+        <div class="container" *ngIf="filteredData && filteredData.length > 0">
+                <div class="sort-buttons" *ngIf="sortFieldType === 'return' || sortFieldType === 'overall'">
+                        <label>
+                                <input type="radio" name="insightType" value="percentage" [checked]="sortBy === 'percentage'" (change)="sortBy = 'percentage'; sortData(null)" />
+                                Sort by percentage
+                        </label>
+                        <label>
+                                <input type="radio" name="insightType" value="amount" [checked]="sortBy === 'amount'" (change)="sortBy = 'amount'; sortData(null)" />
+                                Sort by amount
+                        </label>
+                </div>
+                <div class="details-container" >
+                        <table class="details-tbl">
+                                <thead>
+                                        <tr>
+                                                <th (click)="sortData('period')">
+                                                        PERIOD
+                                                        <span *ngIf="sortFieldType === 'period'">
+                                                                <span *ngIf="sortOrder === 'asc'">&#9650;</span>
+                                                                <span *ngIf="sortOrder === 'desc'">&#9660;</span>
+                                                        </span>
+                                                </th>
+                                                <th (click)="sortData('return')">
+                                                        RETURN
+                                                        <span *ngIf="sortFieldType === 'return'">
+                                                                <span *ngIf="sortOrder === 'asc'">&#9650;</span>
+                                                                <span *ngIf="sortOrder === 'desc'">&#9660;</span>
+                                                        </span>
+                                                </th>
+                                                <th >BASE</th>
+                                                <th (click)="sortData('overall')">
+                                                        OVERALL 
+                                                        <span *ngIf="sortFieldType === 'overall'">
+                                                                <span *ngIf="sortOrder === 'asc'">&#9650;</span>
+                                                                <span *ngIf="sortOrder === 'desc'">&#9660;</span>
+                                                        </span>
+                                                </th>
+                                                <th >INVESTED</th>
+                                        </tr>
+                                </thead>
+                                <ng-container *ngFor="let row of filteredData">
+                                        <tr >
+                                                <td *ngIf="groupBy == 'year'">{{ row.dateyear }}</td>
+                                                <td *ngIf="groupBy == 'month' && selectedYear == 0">{{ convertYMString(row.ym) }}</td>
+                                                <td *ngIf="groupBy == 'month' && selectedYear != 0">{{ getMonthName(row.ym) }}</td>
+                                                <td *ngIf="groupBy == 'week'">{{ row.yw }}</td>
+                                                <td *ngIf="groupBy == 'day'">{{ row.date }}</td>
+                                                <td *ngIf = "row.period_return === undefined" class="pstv-amnt"></td>
+                                                <td *ngIf = "row.period_return >= 0" class="pstv-amnt">&#8377;{{ formatToLacs( row.period_return)}}  <br/> <span class="day-perct">{{ row.period_return_per }}%</span></td>
+                                                <td *ngIf = "row.period_return < 0" class="ngtv-amnt">-&#8377;{{ formatToLacs( row.period_return*-1)}}  <br/> <span class="day-perct">{{ row.period_return_per*-1 }}%</span></td>
+                                                <td>&#8377;{{ formatToLacs(row.baseamount) }}</td>
+                                                <td *ngIf = "row.cumulative_return === undefined" class="pstv-amnt"></td>
+                                                <td *ngIf = "row.cumulative_return >= 0" class="pstv-amnt">&#8377;{{ formatToLacs( row.cumulative_return)}}  <br/> <span class="day-perct">{{ row.cumulative_return_per }}%</span></td>
+                                                <td *ngIf = "row.cumulative_return < 0" class="ngtv-amnt">-&#8377;{{ formatToLacs( row.cumulative_return*-1)}}  <br/> <span class="day-perct">{{ row.cumulative_return_per*-1 }}%</span></td>
+                                                <td>&#8377;{{ formatToLacs(row.investment) }} <br /><span class="day-perct">+{{ formatToLacs(row.investment_added) }}</span></td>
+                                        </tr>
+                                        <!-- <tr *ngIf="MutualFund.isExpandedDaily">
+                                                <td colspan="5">
+                                                        <table class="sub-table">
+                                                                <ng-container *ngFor="let purchase of MutualFund.Purchase">
+                                                                        <tr>
+                                                                                <td>{{purchase.PurchaseDate}} <br /> N : {{purchase.Purchase_NAV}}</td>
+                                                                                <td *ngIf = "purchase.Daily_Ret === undefined" class="pstv-amnt"></td>
+                                                                                <td *ngIf = "purchase.Daily_Ret >= 0" class="pstv-amnt">&#8377;{{ purchase.Daily_Ret | number}} <br/> <span class="day-perct">{{ purchase.Daily_Per }}%</span></td>
+                                                                                <td *ngIf = "purchase.Daily_Ret < 0" class="ngtv-amnt">-&#8377;{{ purchase.Daily_Ret*-1 | number}} <br/>  <span class="day-perct">{{ purchase.Daily_Per*-1 }}%</span></td>
+                                                                                <td *ngIf = "purchase.Yest_Ret === undefined" class="pstv-amnt"></td>
+                                                                                <td *ngIf = "purchase.Yest_Ret >= 0" class="pstv-amnt">&#8377;{{ purchase.Yest_Ret | number}} <br/>  <span class="day-perct">{{ purchase.Yest_Per }}%</span></td>
+                                                                                <td *ngIf = "purchase.Yest_Ret < 0" class="ngtv-amnt">-&#8377;{{ purchase.Yest_Ret*-1 | number}} <br/>  <span class="day-perct">{{ purchase.Yest_Per*-1 }}%</span></td>
+                                                                                <td *ngIf = "purchase.Weekly_Ret === undefined" class="pstv-amnt"></td>
+                                                                                <td *ngIf = "purchase.Weekly_Ret >= 0" class="pstv-amnt">&#8377;{{ purchase.Weekly_Ret | number}} <br/>  <span class="day-perct">{{ purchase.Weekly_Per }}%</span></td>
+                                                                                <td *ngIf = "purchase.Weekly_Ret < 0" class="ngtv-amnt">-&#8377;{{ purchase.Weekly_Ret*-1 | number}} <br/>  <span class="day-perct">{{ purchase.Weekly_Per*-1 }}%</span></td>
+                                                                                <td *ngIf = "purchase.Monthly_Ret >= 0" class="pstv-amnt">&#8377;{{ purchase.Monthly_Ret | number}} <br/>  <span class="day-perct">{{ purchase.Monthly_Per }}%</span></td>
+                                                                                <td *ngIf = "purchase.Monthly_Ret < 0" class="ngtv-amnt">-&#8377;{{ purchase.Monthly_Ret*-1 | number}} <br/>  <span class="day-perct">{{ purchase.Monthly_Per*-1 }}%</span></td>                        
+                                                                        </tr>
+                                                                </ng-container>
+                                                        </table>
+                                                </td>
+                                        </tr> -->
+                                </ng-container>
+                                <!-- <tr style="background-color: #dfdfdf;">
+                                        <td></td>
+                                        <td *ngIf = "user.Daily_Ret >= 0" class="pstv-amnt">&#8377;{{ user.Daily_Ret | number}} <br/> <span class="day-perct">{{ user.Daily_Per }}%</span></td>
+                                        <td *ngIf = "user.Daily_Ret < 0" class="ngtv-amnt">-&#8377;{{ user.Daily_Ret*-1 | number}} <br/>  <span class="day-perct">{{ user.Daily_Per*-1 }}%</span></td>
+                                        <td *ngIf = "user.Yest_Ret >= 0" class="pstv-amnt">&#8377;{{ user.Yest_Ret | number}} <br/>  <span class="day-perct">{{ user.Yest_Per }}%</span></td>
+                                        <td *ngIf = "user.Yest_Ret < 0" class="ngtv-amnt">-&#8377;{{ user.Yest_Ret*-1 | number}} <br/>  <span class="day-perct">{{ user.Yest_Per*-1 }}%</span></td>
+                                        <td *ngIf = "user.Weekly_Ret >= 0" class="pstv-amnt">&#8377;{{ user.Weekly_Ret | number}} <br/>  <span class="day-perct">{{ user.Weekly_Per }}%</span></td>
+                                        <td *ngIf = "user.Weekly_Ret < 0" class="ngtv-amnt">-&#8377;{{ user.Weekly_Ret*-1 | number}} <br/>  <span class="day-perct">{{ user.Weekly_Per*-1 }}%</span></td>
+                                        <td *ngIf = "user.Monthly_Ret >= 0" class="pstv-amnt">&#8377;{{ user.Monthly_Ret | number}} <br/>  <span class="day-perct">{{ user.Monthly_Per }}%</span></td>
+                                        <td *ngIf = "user.Monthly_Ret < 0" class="ngtv-amnt">-&#8377;{{ user.Monthly_Ret*-1 | number}} <br/>  <span class="day-perct">{{ user.Monthly_Per*-1 }}%</span></td>
+                                </tr> -->
+                        </table>
+                </div>
+        </div>
+</div>
+

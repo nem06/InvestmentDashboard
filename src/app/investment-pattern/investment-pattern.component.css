@@ -1,0 +1,59 @@
+#title{
+        font-family: 'Montserrat', sans-serif;
+        background-color: rgb(63, 112, 181);
+        color: rgb(255, 255, 255);
+        font-size: 28px;
+        font-weight: bolder;
+        padding: 15px;
+        width: calc(100% - 30px);
+        text-align: center;
+        position: fixed;
+        top: 0;
+        box-shadow: 0 8px 6px rgba(0, 0, 0, 0.3);
+}
+.back-icon{
+        position: fixed;
+        left:30px;
+        top:2px;
+        font-size: 45px;
+        color: white;
+        cursor: pointer;
+}
+.container{
+        margin: 15px 5px 0;
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        height: 100%;
+        flex-direction: row;  
+        flex-wrap: wrap;
+        gap: 10px 50px;
+        /* overflow-x: auto; */
+}
+.filter-container{
+        margin: 80px 5px 0;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 8px 15px;
+}
+.selectable-option {
+        display: inline-block;
+        padding: 8px 16px;
+        margin: 4px;
+        border: 1px solid #007bff;
+        border-radius: 8px;
+        cursor: pointer;
+        background: #f8f9fa;
+        color: #007bff;
+        /* transition: background 0.1s, color 0.1s; */
+        user-select: none;
+}
+.selectable-option.selected {
+        background: #007bff;
+        color: #fff;
+        font-weight: bold;
+}

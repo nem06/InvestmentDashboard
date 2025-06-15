@@ -1,0 +1,38 @@
+<div id="title">Investment Insights</div>
+<div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
+<div class="filter-container">
+        <ng-container *ngFor = "let owner of owners">   
+                <div class="selectable-option" [class.selected]="owner.selected" (click)="owner.selected = !owner.selected ; onOwnerFilter()">
+                        {{owner.name}}
+                </div>
+        </ng-container> 
+        <!-- <div class="purchase-filter-outer">
+                <label for="startDate" class="filter-label">Purchase Period</label>
+                <div class="purchase-filter">
+                        <input id="startDate" type="date" [(ngModel)]="startDate" name="startDate" class="filter-input" (change)="onDateChange()" />
+                        <label for="endDate" class="filter-label">to </label>
+                        <input id="endDate" type="date" [(ngModel)]="endDate" name="endDate" class="filter-input" (change)="onDateChange()" />
+                </div>
+        </div>
+        <div class="purchase-filter-outer">
+                <label for="asOn" class="filter-label">As of</label>
+                <div>
+                        <input id="asOn" type="date" [(ngModel)]="asOn" name="singleDate" class="filter-input" (change)="onDateChange()" />
+                </div>
+        </div>
+        -->
+        
+</div>
+<div class="container" *ngIf="data && data.length > 0">
+    {{convertPeriodString(data[data.length-1].YM)}}&nbsp; &nbsp;{{formatToLacs(data[data.length-1].sum_investment)}} 
+        <div>
+                <canvas style="width: 400px;overflow-x: auto;"
+                        baseChart
+                        [data]="chartData"
+                        [type]="chartType"
+                        [options]="chartOptions"
+                        [plugins]="barChartPlugins"
+                >
+                </canvas>
+        </div>
+</div>

@@ -1,0 +1,286 @@
+#title{
+        font-family: 'Montserrat', sans-serif;
+        background-color: rgb(63, 112, 181);
+        color: rgb(255, 255, 255);
+        font-size: 28px;
+        font-weight: bolder;
+        padding: 15px;
+        width: calc(100% - 30px);
+        text-align: center;
+        position: fixed;
+        top: 0;
+        box-shadow: 0 8px 6px rgba(0, 0, 0, 0.3);
+}
+.back-icon{
+        position: fixed;
+        left:30px;
+        top:2px;
+        font-size: 45px;
+        color: white;
+        cursor: pointer;
+}
+.master-container{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 20px 50px;
+        margin: 80px 5px 0;
+        height: 100%;
+        width: 100%;
+        /* overflow-y: auto; */
+}
+.container{
+        /* margin: 0 5px 0; */
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        height: 100%;
+        gap: 10px 50px;
+        flex-direction: column;  
+        flex-wrap: wrap;
+        /* gap: 10px 50px; */
+        /* overflow-x: auto; */
+}
+
+.purchase-filter-outer{
+        border: #121213 2px solid;
+        border-radius: 12px;
+        padding: 6px 8px 12px;
+        display: flex;
+        flex-direction: column;
+        align-self: flex-start;
+        justify-items: flex-start;
+        gap: 12px;
+        width: 100%;
+        max-width: 380px;
+}
+
+.purchase-filter{
+        display: flex;
+        justify-content: center;
+        flex-direction: row;
+        align-items: center;
+        gap: 12px;
+}
+
+.filter-input[type="date"] {
+    /* padding: 0.5rem 1rem; */
+    border: none;
+    /* border-radius: 8px; */
+    background-color: #dcdcdc;
+    font-size: 14px;
+    /* color: #2b3b8b; */
+    transition: border 0.2s;
+    text-align: left;
+    /* margin-right: 1rem; */
+}
+
+.filter-title {
+        font-size: 20px;
+        font-weight: 600;
+        color: #121213;
+}
+
+.filter-label {
+        font-size: 14px;
+        font-weight: 600;
+        color: #2b3b8b;
+}
+
+.filter-input[type="date"]:focus {
+    border-color: #50aec8;
+    outline: none;
+    box-shadow: 0 0 0 2px #50aec830;
+}
+
+.filter-container{
+        margin: 0 5px;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        /* align-items: center; */
+        gap: 15px;
+        width: 100%;
+        max-width: 400px;
+}
+.selectable-option {
+        display: inline-block;
+        padding: 8px 16px;
+        margin: 4px;
+        border: 1px solid rgb(63, 112, 181);
+        border-radius: 8px;
+        cursor: pointer;
+        background: #f8f9fa;
+        color: rgb(63, 112, 181);
+        /* transition: background 0.1s, color 0.1s; */
+        user-select: none;
+}
+.selectable-option.selected {
+        background: rgb(63, 112, 181);
+        color: #fff;
+        font-weight: bold;
+}
+
+.filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+        background: #f5f5f5;
+        align-items: center;
+        /* margin-top: 8px; */
+        /* border: 2px solid rgb(63, 112, 181); */
+        border-radius: 4px;
+        overflow: hidden;
+
+        border: 1.2px solid rgb(63, 112, 181);
+}
+
+.filter-box {
+        flex: 1;
+        padding: 4px 16px;
+        text-align: center;
+        font-weight: 550;
+        color: rgb(63, 112, 181);
+        cursor: pointer;
+        /* border-right: 2px solid rgb(63, 112, 181); */
+        border-top: none;
+        border-bottom: none;
+        border-left: none;
+        background: #f8f9fa;
+
+        border: 1.5px solid rgb(63, 112, 181);
+        flex-grow: 1;
+}
+
+/* .filter-box:last-child {
+        border-right: none;
+} */
+
+.filter-box.selected {
+        background: rgb(63, 112, 181);
+        color: #f5f5f5;
+}
+
+.selectList-container{
+        font-size: 16px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+}
+
+.selectList-container select{
+        width: 100%;
+        padding: 4px 8px;
+        border-radius: 8px;
+        border: 1.5px solid rgb(63, 112, 181);
+        background-color: #f8f9fa;
+        color: rgb(63, 112, 181);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+}
+
+.selected-option{
+        background-color: rgb(63, 112, 181);
+        color: #fff;
+        font-weight: bold;
+}
+
+.selectList-container select option{
+        padding: 2px 4px;
+}
+
+.sort-buttons{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+}
+
+.details-container{
+        border-radius: 18px;
+        overflow: hidden;
+        max-width: 450px
+        /* margin-top: 12px; */
+}
+
+.details-tbl{
+        border-collapse: collapse;
+        font-size: 13.5px;
+        font-weight: 600;
+        color: rgb(91, 91, 91);
+        width: 100%;
+}
+
+.details-tbl tr{
+        border-bottom: 1px gray solid;
+}
+.details-tbl thead {
+        /* text-align: right; */
+        font-size: 13px;
+        border-bottom: none;
+        
+}
+.details-tbl thead th{
+        padding: 12px;
+        font-weight: 600;
+        background-color: rgb(63, 112, 181);
+        color: rgb(255, 255, 255);
+        cursor: pointer;
+}
+
+
+.details-tbl tr:last-child{
+        /* text-align: right; */
+        /* font-size: 11px; */
+        border-bottom: none;
+        /* border-top: 1px gray solid; */
+}
+
+
+.details-tbl td{
+        padding: 4px 8px;
+        /* white-space: nowrap; */
+        overflow: hidden;
+        background-color: #e6f3f6;
+}
+
+.details-tbl tr:nth-child(2) td{
+        padding-top: 8px;
+}
+
+.details-tbl td:first-child{
+        text-align: left;
+        /* padding-left: 0; */
+}
+.details-tbl td:nth-child(2), td:nth-child(3), td:nth-child(4), td:nth-child(5){
+        text-align: right;
+        white-space: nowrap;
+}
+
+
+.ngtv-amnt{
+        color: #ff4f4f;
+        text-shadow: 2px 2px 20px #f5664ae3;
+}
+.pstv-amnt{
+        color: rgb(1, 177, 1);
+        text-shadow: 2px 2px 20px #6de755e3;
+}
+.max-amnt{
+        color: rgb(93, 122, 162);
+}
+.mid-amnt{
+        color: rgb(199, 189, 0);
+}
+.amnt-header{
+        color: rgb(79, 79, 79);
+        /* font-weight: 600; */
+}
+.day-perct{
+        font-size: 12px;
+        font-weight: 100;
+}

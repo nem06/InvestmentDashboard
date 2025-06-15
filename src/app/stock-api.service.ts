@@ -26,9 +26,45 @@ export class StockApiService {
     const headers = new HttpHeaders({
       'Authorization': token
     });
-    console.log(JSON.stringify(dates))
+    
     return this.http.get(
       "https://stock-node-server.onrender.com/api/GetReturnByDate?json="+ JSON.stringify(dates),
+      {headers}
+    );
+  }
+
+  getInvestmentPatternDate(data: object): Observable<any> {
+    const token = localStorage.getItem('InvestmentauthToken') || ''; 
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    console.log(JSON.stringify(data))
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetInvestmentPattern?json="+ JSON.stringify(data),
+      {headers}
+    );
+  }
+
+  getDynamicReturnView(data: object): Observable<any> {
+    const token = localStorage.getItem('InvestmentauthToken') || ''; 
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    console.log(JSON.stringify(data))
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetReturnView?json="+ JSON.stringify(data),
+      {headers}
+    );
+  }
+
+  getMfMetadata(): Observable<any> {
+
+    const token = localStorage.getItem('InvestmentauthToken') || '';
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetMFMetadata",
       {headers}
     );
   }
