@@ -114,11 +114,11 @@
                                 </thead>
                                 <ng-container *ngFor="let row of filteredData">
                                         <tr >
-                                                <td *ngIf="groupBy == 'year'">{{ row.dateyear }}</td>
-                                                <td *ngIf="groupBy == 'month' && selectedYear == 0">{{ convertYMString(row.ym) }}</td>
-                                                <td *ngIf="groupBy == 'month' && selectedYear != 0">{{ getMonthName(row.ym) }}</td>
-                                                <td *ngIf="groupBy == 'week'">{{ row.yw }}</td>
-                                                <td *ngIf="groupBy == 'day'">{{ row.date }}</td>
+                                                <td *ngIf="groupBy == 'year'" (click)="getMFData(row.dateyear)">{{ row.dateyear }}</td>
+                                                <td *ngIf="groupBy == 'month' && selectedYear == 0" (click)="getMFData(row.ym)">{{ convertYMString(row.ym) }}</td>
+                                                <td *ngIf="groupBy == 'month' && selectedYear != 0" (click)="getMFData(row.ym)">{{ getMonthName(row.ym) }}</td>
+                                                <td *ngIf="groupBy == 'week'" (click)="getMFData(row.ym)">{{ row.yw }}</td>
+                                                <td *ngIf="groupBy == 'day'" (click)="getMFData(row.date)">{{ row.date }}</td>
                                                 <td *ngIf = "row.period_return === undefined" class="pstv-amnt"></td>
                                                 <td *ngIf = "row.period_return >= 0" class="pstv-amnt">&#8377;{{ formatToLacs( row.period_return)}}  <br/> <span class="day-perct">{{ row.period_return_per }}%</span></td>
                                                 <td *ngIf = "row.period_return < 0" class="ngtv-amnt">-&#8377;{{ formatToLacs( row.period_return*-1)}}  <br/> <span class="day-perct">{{ row.period_return_per*-1 }}%</span></td>
@@ -128,6 +128,36 @@
                                                 <td *ngIf = "row.cumulative_return < 0" class="ngtv-amnt">-&#8377;{{ formatToLacs( row.cumulative_return*-1)}}  <br/> <span class="day-perct">{{ row.cumulative_return_per*-1 }}%</span></td>
                                                 <td>&#8377;{{ formatToLacs(row.investment) }} <br /><span class="day-perct">+{{ formatToLacs(row.investment_added) }}</span></td>
                                         </tr>
+                                        <ng-container *ngIf="row.detailedReturn && row.expanded">
+                                                <ng-container *ngFor="let row2 of row.detailedReturn">
+                                                        <tr class="owner-row" *ngIf = "selectedOwner == 0">
+                                                                <!-- <td></td> -->
+                                                                <td colspan="2">{{ row2.name }}</td>
+                                                                <td *ngIf = "row2.period_return === undefined" class="pstv-amnt"></td>
+                                                                <td *ngIf = "row2.period_return >= 0" class="pstv-amnt">&#8377;{{ formatToLacs( row2.period_return)}}  <br/> <span class="day-perct">{{ row2.period_return_per }}%</span></td>
+                                                                <td *ngIf = "row2.period_return < 0" class="ngtv-amnt">-&#8377;{{ formatToLacs( row2.period_return*-1)}}  <br/> <span class="day-perct">{{ row2.period_return_per*-1 }}%</span></td>
+                                                                
+                                                                <td *ngIf = "row2.overall_return === undefined" class="pstv-amnt"></td>
+                                                                <td *ngIf = "row2.overall_return >= 0" class="pstv-amnt">&#8377;{{ formatToLacs( row2.overall_return)}}  <br/> <span class="day-perct">{{ row2.overall_return_per }}%</span></td>
+                                                                <td *ngIf = "row2.overall_return < 0" class="ngtv-amnt">-&#8377;{{ formatToLacs( row2.overall_return*-1)}}  <br/> <span class="day-perct">{{ row2.overall_return_per*-1 }}%</span></td>
+                                                                <td>&#8377;{{ formatToLacs(row2.investment) }} <br /><span class="day-perct">+{{ formatToLacs(row2.investment_added) }}</span></td>
+                                                        </tr>
+                                                         <ng-container *ngFor="let row3 of row2.mfs">
+                                                        <tr class="mf-row">
+                                                                <!-- <td></td> -->
+                                                                <td colspan="2">{{ row3.mutualfund }}</td>
+                                                                <td *ngIf = "row3.period_return === undefined" class="pstv-amnt"></td>
+                                                                <td *ngIf = "row3.period_return >= 0" class="pstv-amnt">&#8377;{{ formatToLacs( row3.period_return)}}  <br/> <span class="day-perct">{{ row3.period_return_per }}%</span></td>
+                                                                <td *ngIf = "row3.period_return < 0" class="ngtv-amnt">-&#8377;{{ formatToLacs( row3.period_return*-1)}}  <br/> <span class="day-perct">{{ row3.period_return_per*-1 }}%</span></td>         
+                                                                <td *ngIf = "row3.overall_return === undefined" class="pstv-amnt"></td>
+                                                                <td *ngIf = "row3.overall_return >= 0" class="pstv-amnt">&#8377;{{ formatToLacs( row3.overall_return)}}  <br/> <span class="day-perct">{{ row3.overall_return_per }}%</span></td>
+                                                                <td *ngIf = "row3.overall_return < 0" class="ngtv-amnt">-&#8377;{{ formatToLacs( row3.overall_return*-1)}}  <br/> <span class="day-perct">{{ row3.overall_return_per*-1 }}%</span></td>
+                                                                <td>&#8377;{{ formatToLacs(row3.investment) }} <br /><span class="day-perct">+{{ formatToLacs(row3.investment_added) }}</span></td>
+                                                        </tr>
+                                                </ng-container> 
+                                                </ng-container> 
+                                        </ng-container>
+                                        
                                         <!-- <tr *ngIf="MutualFund.isExpandedDaily">
                                                 <td colspan="5">
                                                         <table class="sub-table">

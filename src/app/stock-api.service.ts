@@ -57,8 +57,19 @@ export class StockApiService {
     );
   }
 
-  getMfMetadata(): Observable<any> {
+    getReturnByPeriod(data: object): Observable<any> {
+    const token = localStorage.getItem('InvestmentauthToken') || ''; 
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    console.log(JSON.stringify(data))
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetReturnByPeriod?json="+ JSON.stringify(data),
+      {headers}
+    );
+  }
 
+  getMfMetadata(): Observable<any> {
     const token = localStorage.getItem('InvestmentauthToken') || '';
     const headers = new HttpHeaders({
       'Authorization': token

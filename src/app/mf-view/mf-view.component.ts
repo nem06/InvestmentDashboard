@@ -35,6 +35,8 @@ export class MfViewComponent {
   monthList: string[] = [];
   selectedYear: number | null = 0;
   selectedMonth: string | null = 'all';
+  selectedMFs: any[] = [];
+  mfReturnsByUser: any[] = [];
 
   inputJson: {
       group_by: string,
@@ -49,7 +51,6 @@ export class MfViewComponent {
       mfid: [],
       ownerid: []
   }
-selectedMFs: any[] = [];
 
 
   constructor(private sharedService: SharedService, private router: Router, private apiService: StockApiService) { }
@@ -221,6 +222,30 @@ selectedMFs: any[] = [];
       this.monthList = [...new Set(data.map((item: any) => item.ym))] as string[];
     }, error => {
       console.error('Error fetching Dynamic return view data:', error);
+    });
+  }
+
+  getMFData(period: any){
+    const tempData = this.filteredData.find((item: any) => 
+        item.date === period || item.ym === period || item.yw === period || item.dateyear === period);
+    tempData.expanded = !tempData.expanded;
+
+    if(tempData && tempData.detailedReturn) 
+      return; // Data already fetched for this period
+    
+    let tempjson = {
+      group_by: this.groupBy,
+      start_date: this.inputJson.start_date,
+      end_date: this.inputJson.end_date, 
+      mfid: this.inputJson.mfid.length > 0 ? this.inputJson.mfid : [],
+      ownerid: this.inputJson.ownerid.length > 0 ? this.inputJson.ownerid : [],
+      period_val: period.toString()
+    }
+    this.apiService.getReturnByPeriod(tempjson).subscribe(data => {
+      console.log('Return by period received:', data);
+      const tempData = this.filteredData.find((item: any) => 
+        item.date === period || item.ym === period || item.yw === period || item.dateyear === period);
+      tempData.detailedReturn = data;
     });
   }
 

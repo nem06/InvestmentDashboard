@@ -261,7 +261,15 @@
         white-space: nowrap;
 }
 
+.owner-row td{
+        background-color: #b8f2f3;
+        font-size: 13px;
+}
 
+.mf-row td{
+        background-color: #d5e3e9;
+        font-size: 12px;
+}
 .ngtv-amnt{
         color: #ff4f4f;
         text-shadow: 2px 2px 20px #f5664ae3;
