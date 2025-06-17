@@ -117,7 +117,7 @@
                                                 <td *ngIf="groupBy == 'year'" (click)="getMFData(row.dateyear)">{{ row.dateyear }}</td>
                                                 <td *ngIf="groupBy == 'month' && selectedYear == 0" (click)="getMFData(row.ym)">{{ convertYMString(row.ym) }}</td>
                                                 <td *ngIf="groupBy == 'month' && selectedYear != 0" (click)="getMFData(row.ym)">{{ getMonthName(row.ym) }}</td>
-                                                <td *ngIf="groupBy == 'week'" (click)="getMFData(row.ym)">{{ row.yw }}</td>
+                                                <td *ngIf="groupBy == 'week'" (click)="getMFData(row.yw)">{{ row.yw }}</td>
                                                 <td *ngIf="groupBy == 'day'" (click)="getMFData(row.date)">{{ row.date }}</td>
                                                 <td *ngIf = "row.period_return === undefined" class="pstv-amnt"></td>
                                                 <td *ngIf = "row.period_return >= 0" class="pstv-amnt">&#8377;{{ formatToLacs( row.period_return)}}  <br/> <span class="day-perct">{{ row.period_return_per }}%</span></td>
