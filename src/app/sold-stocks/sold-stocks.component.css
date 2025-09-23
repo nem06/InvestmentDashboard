@@ -1,0 +1,21 @@
+#title{
+        font-family: 'Montserrat', sans-serif;
+        background-color: rgb(63, 112, 181);
+        color: rgb(255, 255, 255);
+        font-size: 28px;
+        font-weight: bolder;
+        padding: 15px;
+        width: calc(100% - 30px);
+        text-align: center;
+        position: fixed;
+        top: 0;
+        box-shadow: 0 8px 6px rgba(0, 0, 0, 0.3);
+}
+.back-icon{
+        position: fixed;
+        left:25px;
+        top:2px;
+        font-size: 45px;
+        color: white;
+        cursor: pointer;
+}

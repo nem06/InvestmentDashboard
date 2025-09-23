@@ -80,6 +80,18 @@ export class StockApiService {
     );
   }
 
+  getSoldStocks(data: object): Observable<any> {
+    const token = localStorage.getItem('InvestmentauthToken') || ''; 
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    console.log(JSON.stringify(data))
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetSoldStockReturns?json="+ JSON.stringify(data),
+      {headers}
+    );
+  }
+
   login(email: string, password: string): Observable<any> {
     return this.http.post(
       "https://stock-node-server.onrender.com/api/login", 
