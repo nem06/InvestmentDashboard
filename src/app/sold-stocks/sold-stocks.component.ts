@@ -6,7 +6,7 @@ import { SharedService } from '../shared.service';
 
 @Component({
   selector: 'app-sold-stocks',
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './sold-stocks.component.html',
   styleUrl: './sold-stocks.component.css'
 })
@@ -25,7 +25,7 @@ export class SoldStocksComponent {
 
     this.stockAPI.getSoldStocks(inputDates).subscribe(data => {
       console.log('Sold stocks data received:', data);
-      this.data = data;
+      this.data = {userData: data};
     }, error => {
       console.error('Error fetching Sold stocks data:', error);
     });

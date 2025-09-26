@@ -19,3 +19,124 @@
         color: white;
         cursor: pointer;
 }
+.container{
+        margin-top: 60px;
+        display: flex;
+        justify-content: center;
+        /* align-items: center; */
+        height: 100%;
+        margin-top: 70px;
+        flex-direction: row;  
+        flex-wrap: wrap;
+        padding: 20px 0;
+        gap: 20px 50px;
+        /* overflow-x: auto; */
+}
+
+.stocks-container{
+        height: 100%;
+        align-items: center; 
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        flex-direction: column; 
+        background-color: #e6f3f6;
+        border-radius: 18px;
+        box-shadow: 0 8px 6px rgba(0, 0, 0, 0.1);
+        cursor: pointer;
+}
+.container-title{
+        border-top-right-radius: 18px;
+        border-top-left-radius: 18px;
+        padding: 14px 65px;
+        font-size: 32px;
+        font-weight: bolder;
+        text-align: center;
+        background-color: #3f70b5;
+        color: #e6f3f6;
+        width: 100%;
+        box-sizing: border-box;
+        box-shadow: 0 12px 6px rgba(0, 0, 0, 0.1);
+}
+.stocks-container-content{
+        display: flex;
+        justify-content: center;
+        align-items: center; 
+        flex-direction: column; 
+        padding: 6px 14px 12px;
+        background-color: transparent;
+        border-bottom-right-radius: 18px;
+        border-bottom-left-radius: 18px;
+        /* width: 100%; */
+        box-sizing: border-box;
+}
+.user-container{
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        flex-direction: column; 
+        padding: 2px 8px;
+        width: 100%;
+        font-size: 14px;
+        font-weight: 600;
+        color: rgb(63, 112, 181);
+}
+
+.stock-rate-tbl{
+        font-size: 15px;
+        border-collapse: collapse;
+        width: 100%;
+        color: rgb(84, 84, 84);
+}
+.stock-rate-tbl tr th{
+        padding: 8px 5px 4px;
+        color: rgb(10, 38, 75);
+}
+.stock-rate-tbl tr td{
+        padding: 5px 8px;
+        text-align: right;
+        font-weight: 600;
+        border-bottom: 1px solid #a7a7a7;
+}
+.stock-rate-tbl tr:last-child td{
+        border-bottom: none;
+}
+.stock-rate-tbl tr td:first-child{
+        text-align: left;
+        font-weight: 600;
+        color: rgb(63, 112, 181);
+}
+.overall-amnt{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        gap: 45px;
+}
+.ngtv-amnt{
+        color: #ff4f4f;
+        text-shadow: 2px 2px 20px #f5664ae3;
+}
+.pstv-amnt{
+        color: rgb(1, 177, 1);
+        text-shadow: 2px 2px 20px #6de755e3;
+}
+.max-amnt{
+        color: rgb(93, 122, 162);
+}
+.mid-amnt{
+        color: rgb(199, 189, 0);
+}
+.inv-amnt{
+        color: rgb(53, 53, 53);
+}
+.day-rate-chang{
+        font-size: 11.5px;
+        font-weight: 600;
+}
+.right-arrow{
+        font-size: 21px;
+        font-weight: 800;
+        /* vertical-align: middle; */
+        line-height: 0.65em;;
+        margin-top: 10px;
+}

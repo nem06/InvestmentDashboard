@@ -1,2 +1,78 @@
 <div id="title">Sold Stocks</div>
 <div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
+<div class="container">
+    <div class="stocks-container">
+        <div class="container-title">Stocks</div>
+        <div class="stocks-container-content">
+            <div class="user-container">
+                <table class="stock-rate-tbl">
+                        <thead>
+                                <tr>
+                                        <th></th>
+                                        <th>Booked</th>
+                                        <th>Today</th>
+                                </tr>
+                        </thead>
+                        <ng-container *ngFor="let user of data.userData">
+                                <tr *ngIf="user.Name != 'OTHER'">
+                                        <td>{{user.Name}}</td>
+                                        <td *ngIf = "user.Booked_Ret >= 0" class="pstv-amnt">
+                                                +&#8377;{{ user.Booked_Ret | number}} 
+                                                <br />
+                                                <span class="day-rate-chang">({{ user.Booked_Ret_Per | number }}%)</span>
+                                        </td>
+                                        <td *ngIf = "user.Booked_Ret < 0" class="ngtv-amnt">
+                                                -&#8377;{{ user.Booked_Ret*-1 | number}}
+                                                <br />
+                                                <span class="day-rate-chang">({{ user.Booked_Ret_Per  *-1 | number }}%)</span>
+                                        </td>
+                                        <td *ngIf = "user.Current_Ret >= 0" class="pstv-amnt">
+                                                +&#8377;{{ user.Current_Ret | number}} 
+                                                <br />
+                                                <span class="day-rate-chang">({{ user.Current_Ret_Per | number }}%)</span>
+                                        </td>
+                                        <td *ngIf = "user.Current_Ret < 0" class="ngtv-amnt">
+                                                -&#8377;{{ user.Current_Ret*-1 | number}}
+                                                <br />
+                                                <span class="day-rate-chang">({{ user.Current_Ret_Per  *-1 | number }}%)</span>
+                                        </td>
+
+                                </tr>
+                                <ng-container *ngFor="let stock of user.Stocks">
+                                    <tr>
+                                        <td>
+                                            {{stock.Symbol}}
+                                            <br />
+                                            <span class="day-rate-chang">{{ stock.Avg_Purchase | number }}<span class="right-arrow"> &#10230; </span>{{ stock.Avg_Sell | number }}</span>
+                                        </td>
+                                        <td *ngIf = "stock.Booked_Ret >= 0" class="pstv-amnt">
+                                                +&#8377;{{ stock.Booked_Ret | number}} 
+                                                <br />
+                                                <span class="day-rate-chang">({{ stock.Booked_Ret_Per | number }}%)</span>
+                                        </td>
+                                        <td *ngIf = "stock.Booked_Ret < 0" class="ngtv-amnt">
+                                                -&#8377;{{ stock.Booked_Ret*-1 | number}}
+                                                <br />
+                                                <span class="day-rate-chang">({{ stock.Booked_Ret_Per  *-1 | number }}%)</span>
+                                        </td>
+                                        <td *ngIf = "stock.Current_Ret >= 0" class="pstv-amnt">
+                                                +&#8377;{{ stock.Current_Ret | number}} 
+                                                <br />
+                                                <span class="day-rate-chang">({{ stock.Current_Ret_Per | number }}%)</span>
+                                        </td>
+                                        <td *ngIf = "stock.Current_Ret < 0" class="ngtv-amnt">
+                                                -&#8377;{{ stock.Current_Ret*-1 | number}}
+                                                <br />
+                                                <span class="day-rate-chang">({{ stock.Current_Ret_Per  *-1 | number }}%)</span>
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                        </ng-container>
+                        <tr>
+
+                        </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
