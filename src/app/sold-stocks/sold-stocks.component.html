@@ -1,0 +1,115 @@
+<div id="title">Sold Stocks</div>
+<div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
+<div class="container">
+        <div class="filter-bar" >
+                <ng-container *ngFor="let year of financialYears; let i = index">
+                        <div class="filter-box"  [class.selected]="year.label === selectedYear" (click)="onFinancialYearChange(year)">
+                                {{ year.label }}
+                        </div>
+                </ng-container>
+        </div>
+        <div class="container-body">
+                <ng-container *ngFor="let user of data.userData">
+                        <div class="user-container">
+                                <div class="user-header">
+                                        <div>{{user.Name}}</div>
+                                        <div *ngIf = "user.Booked_Ret >= 0" class="pstv-amnt">+&#8377;{{ user.Booked_Ret | number}}  ({{ user.Booked_Ret_Per }}%)</div>
+                                        <div *ngIf = "user.Booked_Ret < 0" class="ngtv-amnt">-&#8377;{{ user.Booked_Ret*-1 | number}}  ({{ user.Booked_Ret_Per*-1 }}%)</div>
+                                </div>
+                                <div class="user-body">
+                                        <div class="stock-tbl-cont" [ngClass]="{ 'expand-list' : user.isExpanded }">
+                                                <table class="stock-tbl">
+                                                        <thead>
+                                                                <tr>
+                                                                        <th></th>
+                                                                        <th>Booked</th>
+                                                                        <th>Today</th>
+                                                                </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                                <ng-container *ngFor="let stock of user.Stocks">
+                                                                        <tr (click)="stock.isExpanded = !stock.isExpanded">
+                                                                                <td>
+                                                                                <div class="name-cur-cont"><span>{{stock.Symbol}}</span><span class="symbol-rate" >{{stock.Current | number}}</span></div>
+                                                                                <!-- <br /> -->
+                                                                                <span class="span-txt rates"><b>Q: </b>{{ stock.Total_Qty | number}} &nbsp; &nbsp; {{ stock.Avg_Purchase | number }}<span class="right-arrow"> &#10230; </span>{{ stock.Avg_Sell | number }}</span>
+                                                                                </td>
+                                                                                <td *ngIf = "stock.Booked_Ret >= 0" class="pstv-amnt">
+                                                                                        +&#8377;{{ stock.Booked_Ret | number}} 
+                                                                                        <br />
+                                                                                        <span class="span-txt">({{ stock.Booked_Ret_Per | number }}%)</span>
+                                                                                </td>
+                                                                                <td *ngIf = "stock.Booked_Ret < 0" class="ngtv-amnt">
+                                                                                        -&#8377;{{ stock.Booked_Ret*-1 | number}}
+                                                                                        <br />
+                                                                                        <span class="span-txt">({{ stock.Booked_Ret_Per  *-1 | number }}%)</span>
+                                                                                </td>
+                                                                                <td *ngIf = "stock.Current_Ret >= 0" class="pstv-amnt">
+                                                                                        +&#8377;{{ stock.Current_Ret | number}} 
+                                                                                        <br />
+                                                                                        <span class="span-txt">({{ stock.Current_Ret_Per | number }}%)</span>
+                                                                                </td>
+                                                                                <td *ngIf = "stock.Current_Ret < 0" class="ngtv-amnt">
+                                                                                        -&#8377;{{ stock.Current_Ret*-1 | number}}
+                                                                                        <br />
+                                                                                        <span class="span-txt">({{ stock.Current_Ret_Per  *-1 | number }}%)</span>
+                                                                                </td>
+                                                                        </tr>
+                                                                        <tr class="sub-row" *ngIf="stock.isExpanded">
+                                                                                <td colspan="3">
+                                                                                        <div class="stock-insights">
+                                                                                                <div><b>During :</b> &nbsp; &nbsp; {{stock.During_Low}} <span class="right-arrow"> &#10230; </span>{{stock.During_High}}</div>
+                                                                                                <div><b>Overall :</b> &nbsp; &nbsp; {{stock.Overall_Low}} <span class="right-arrow"> &#10230; </span>{{stock.Overall_High}}</div>
+                                                                                        </div>
+                                                                                </td>
+                                                                        </tr>
+                                                                        
+                                                                                <tr *ngIf="stock.Purchase.length > 1 && stock.isExpanded">
+                                                                                        <td colspan="3">
+                                                                                                <div class="stock-insights">
+                                                                                                        <table class="purchase-tbl">
+                                                                                                                <ng-container *ngFor="let purchase of stock.Purchase" >
+                                                                                                                <tr>
+                                                                                                                        <td><b>Q:</b> {{ purchase.Qty }}</td>
+                                                                                                                        <td>{{purchase.Buy}} <br /><span class="span-txt span-sml">({{purchase.PurchaseDate}})</span></td>
+                                                                                                                        <!-- <td><span class="right-arrow"> &#10230; </span></td> -->
+                                                                                                                        <td>{{purchase.Sell}} <br /><span class="span-txt span-sml">({{purchase.SellDate}})</span></td>
+                                                                                                                        <td *ngIf="purchase.Booked_Ret > 0" class="pstv-amnt">
+                                                                                                                                +&#8377;{{ purchase.Booked_Ret | number}} <br />
+                                                                                                                                <span class="span-txt span-sml">({{ purchase.Booked_Ret_Per | number }}%)</span>
+                                                                                                                        </td>
+                                                                                                                        <td *ngIf="purchase.Booked_Ret < 0" class="ngtv-amnt">
+                                                                                                                                -&#8377;{{ purchase.Booked_Ret*-1 | number}} <br />
+                                                                                                                                <span class="span-txt span-sml">({{ purchase.Booked_Ret_Per*-1 | number }}%)</span>
+                                                                                                                        </td>
+                                                                                                                </tr>
+                                                                                                                </ng-container>
+                                                                                                        </table>
+                                                                                                        <!-- <div><b>Q:</b> {{ purchase.Qty }}</div>
+                                                                                                        <div>{{purchase.Buy}} ({{purchase.PurchaseDate}}) <span class="right-arrow"> &#10230; </span>{{purchase.Sell}} ({{purchase.SellDate}})</div>
+                                                                                                        <div *ngIf="purchase.Booked_Ret > 0" class="pstv-amnt">
+                                                                                                                +&#8377;{{ stock.Booked_Ret | number}} 
+                                                                                                                <span class="span-txt">({{ stock.Booked_Ret_Per | number }}%)</span>
+                                                                                                        </div>
+                                                                                                        <div *ngIf="purchase.Booked_Ret < 0" class="ngtv-amnt">
+                                                                                                                -&#8377;{{ stock.Booked_Ret*-1 | number}} 
+                                                                                                                <span class="span-txt">({{ stock.Booked_Ret_Per*-1 | number }}%)</span>
+                                                                                                        </div> -->
+                                                                                                </div>
+                                                                                        </td>
+                                                                                </tr>
+                                                                </ng-container>
+                                                        </tbody>
+                                                </table>
+                                        </div>
+                                        <div class="expand-btn" >
+                                                <button class="flat-arrow-btn" (click)="expandList(user.Name)">
+                                                        <img src="expand-icon.png" height="10px" *ngIf = "!user.isExpanded">
+                                                        <img src="collapse-icon.png" height="10px" *ngIf = "user.isExpanded"> 
+                                                </button>
+                                        </div>   
+                                </div>
+                        </div>
+                </ng-container>
+        </div>
+</div>
