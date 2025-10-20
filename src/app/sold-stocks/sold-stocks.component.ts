@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { StockApiService } from '../stock-api.service';
 import { SharedService } from '../shared.service';
+import { LineChartComponent } from "../line-chart/line-chart.component";
 
 @Component({
   selector: 'app-sold-stocks',
-  imports: [CommonModule],
+  imports: [CommonModule, LineChartComponent],
   templateUrl: './sold-stocks.component.html',
   styleUrl: './sold-stocks.component.css'
 })
@@ -39,6 +40,38 @@ export class SoldStocksComponent {
   expandList(name: string){
     const user = this.data.userData.find((user: { Name: string; }) => user.Name === name);
     user.isExpanded = !user.isExpanded;
+  }
+
+  stockExpand(user: any, stock: any){
+    const tuser = this.data.userData.find((users: { Name: string; }) => users.Name === user.Name);
+    const tstock = tuser.Stocks.find((s: { Symbol: string; }) => s.Symbol === stock.Symbol);
+
+    tstock.isExpanded = !tstock.isExpanded;
+    if(!tuser.isExpanded)
+      this.expandList(user.Name);
+
+    if(tstock.isExpanded && !tstock.pricesFetched){
+      tstock.pricesFetched = true;
+      
+      // const purchaseDates = (tstock.Purchase ?? [])
+      //   .map((p: any) => p.PurchaseDate ?? null)
+      //   .filter((d: any) => d !== null);
+      // const sellDates = (tstock.Purchase ?? [])
+      //   .map((s: any) => s.SellDate ?? null)
+      //   .filter((d: any) => d !== null);
+      // tstock.SellDates = sellDates;
+      // tstock.PurchaseDates = purchaseDates;
+
+      let data = { owner: user.Name, symbol: tstock.Symbol };
+      this.stockAPI.getStockPrices(data).subscribe((response:any) => {
+        tstock.prices = response;
+      });
+
+      this.stockAPI.getStockDates(data).subscribe((response:any) => {
+        tstock.SellDates = response.sellDates;
+        tstock.PurchaseDates = response.purchaseDates;
+      });
+    }
   }
 
   navigateHome(){

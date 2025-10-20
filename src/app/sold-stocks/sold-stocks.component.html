@@ -28,11 +28,11 @@
                                                         </thead>
                                                         <tbody>
                                                                 <ng-container *ngFor="let stock of user.Stocks">
-                                                                        <tr (click)="stock.isExpanded = !stock.isExpanded">
+                                                                        <tr (click)="stockExpand(user, stock)" class="stock-row">
                                                                                 <td>
-                                                                                <div class="name-cur-cont"><span>{{stock.Symbol}}</span><span class="symbol-rate" >{{stock.Current | number}}</span></div>
-                                                                                <!-- <br /> -->
-                                                                                <span class="span-txt rates"><b>Q: </b>{{ stock.Total_Qty | number}} &nbsp; &nbsp; {{ stock.Avg_Purchase | number }}<span class="right-arrow"> &#10230; </span>{{ stock.Avg_Sell | number }}</span>
+                                                                                        <div class="name-cur-cont"><span>{{stock.Symbol}}</span><span class="symbol-rate" >{{stock.Current | number}}</span></div>
+                                                                                        <!-- <br /> -->
+                                                                                        <span class="span-txt rates"><b>Q: </b>{{ stock.Total_Qty | number}} &nbsp; &nbsp; {{ stock.Avg_Purchase | number }}<span class="right-arrow"> &#10230; </span>{{ stock.Avg_Sell | number }}</span>
                                                                                 </td>
                                                                                 <td *ngIf = "stock.Booked_Ret >= 0" class="pstv-amnt">
                                                                                         +&#8377;{{ stock.Booked_Ret | number}} 
@@ -55,6 +55,11 @@
                                                                                         <span class="span-txt">({{ stock.Current_Ret_Per  *-1 | number }}%)</span>
                                                                                 </td>
                                                                         </tr>
+                                                                        <tr class="user-symbol-row" *ngIf="stock.isExpanded">
+                                                                                <td colspan="3">
+                                                                                        <app-line-chart [chartDataList]="stock.prices" [purchaseDates]="stock.PurchaseDates" [sellDates]="stock.SellDates"></app-line-chart>
+                                                                                </td>
+                                                                        </tr>
                                                                         <tr class="sub-row" *ngIf="stock.isExpanded">
                                                                                 <td colspan="3">
                                                                                         <div class="stock-insights">
@@ -64,7 +69,7 @@
                                                                                 </td>
                                                                         </tr>
                                                                         
-                                                                                <tr *ngIf="stock.Purchase.length > 1 && stock.isExpanded">
+                                                                                <tr *ngIf="stock.isExpanded">
                                                                                         <td colspan="3">
                                                                                                 <div class="stock-insights">
                                                                                                         <table class="purchase-tbl">
