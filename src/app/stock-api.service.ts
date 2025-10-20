@@ -80,6 +80,40 @@ export class StockApiService {
     );
   }
 
+  getStockPrices(data: object): Observable<any> {
+    const token = localStorage.getItem('InvestmentauthToken') || '';
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetStockPrice?json="+ JSON.stringify(data),
+      {headers}
+    );
+  }
+
+  getStockDates(data: object): Observable<any> {
+    const token = localStorage.getItem('InvestmentauthToken') || '';
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetStockDates?json="+ JSON.stringify(data),
+      {headers}
+    );
+  }
+
+  getNAVs(data: object): Observable<any> {
+    const token = localStorage.getItem('InvestmentauthToken') || '';
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetNAVs?json="+ JSON.stringify(data),
+      {headers}
+    );
+  }
+
+
   getSoldStocks(data: object): Observable<any> {
     const token = localStorage.getItem('InvestmentauthToken') || ''; 
     const headers = new HttpHeaders({

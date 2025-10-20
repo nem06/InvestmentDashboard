@@ -175,6 +175,9 @@
                                                                                         <div><span class="amnt-header">Min :</span> {{MutualFund.Min_NAV }} ({{MutualFund.Min_NDate}})</div>
                                                                                 </div>
                                                                         </div>
+                                                                        <div *ngIf = "MutualFund.isExpandedOverview">
+                                                                                 <app-line-chart [chartDataList]="MutualFund.NAVs" [purchaseDates]="MutualFund.PurchaseDates" [sellDates]="MutualFund.SellDates"></app-line-chart>
+                                                                        </div>
                                                                         <div class="expand-btn" *ngIf = "MutualFund.isExpandedOverview">
                                                                                 <button class="flat-arrow-btn" (click)="togglePurchase(user.Name, MutualFund.MFId)">
                                                                                         <img src="expand-icon.png" height="10px" *ngIf = "!MutualFund.isPurchaseShow">

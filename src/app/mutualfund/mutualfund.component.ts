@@ -4,10 +4,11 @@ import {SharedService} from '../shared.service';
 import { Router } from '@angular/router';
 import { StockApiService } from '../stock-api.service';
 import { FormsModule } from '@angular/forms';
+import { LineChartComponent } from "../line-chart/line-chart.component";
 
 @Component({
   selector: 'app-mutualfund',
-  imports: [ CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, LineChartComponent],
   templateUrl: './mutualfund.component.html',
   styleUrl: './mutualfund.component.css'
 })
@@ -76,7 +77,7 @@ export class MutualfundComponent {
     const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
     const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
     mf.isExpanded = !mf.isExpanded;
-
+   
   }
 
   expandMutualFundDaily(name:string, MFId: number) {
@@ -89,6 +90,16 @@ export class MutualfundComponent {
     const user = this.data.UserNodes.find((user: { Name: string; }) => user.Name === name);
     const mf = user.MutualFunds.find((mf: { MFId: number; }) => mf.MFId === MFId);
     mf.isExpandedOverview = !mf.isExpandedOverview;
+
+    this.apiService.getNAVs({mfid: MFId}).subscribe((response:any) => {
+      mf.NAVs = response;
+    });
+
+    mf.PurchaseDates = mf.Purchase
+      .map((p: any) => p.PurchaseDate ?? null)
+      .filter((d: any) => d !== null);
+
+    mf.SellDates = []
   }
 
   togglePurchase(name:string, MFId: number) {
