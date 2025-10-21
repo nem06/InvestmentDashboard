@@ -80,6 +80,17 @@ export class StockApiService {
     );
   }
 
+  getDailyOwnerReturns(): Observable<any> {
+    const token = localStorage.getItem('InvestmentauthToken') || '';
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetDailyOwnerReturns",
+      {headers}
+    );
+  }
+
   getStockPrices(data: object): Observable<any> {
     const token = localStorage.getItem('InvestmentauthToken') || '';
     const headers = new HttpHeaders({

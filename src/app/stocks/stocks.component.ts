@@ -39,6 +39,14 @@ export class StocksComponent {
       (liveDataStatus:any) => {
       this.liveDataStatus = liveDataStatus; 
     });
+
+    this.stockAPI.getDailyOwnerReturns().subscribe((response:any) => {
+      setTimeout(() => {
+        this.data.forEach((user:any) => {
+          user.DailyReturns = response.find((u:any) => u.owner === user.Name)?.returns || [];
+        });
+      }, 500);
+    })
   }
 
   navigateHome(){
