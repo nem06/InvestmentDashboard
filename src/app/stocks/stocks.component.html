@@ -71,6 +71,9 @@
                                         <div class="inv-amnt"> &#8377;{{formatToLacs(user.Investment)}}</div>
                                 </div>
                         </div>
+                        <div>
+                                <app-line-chart [chartDataList]="user.DailyReturns" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>
+                        </div>
                         <div class="user_symbl-tbl-cont" *ngIf="user.isExpanded">
                                 <table class="stock-rate-tbl">
                                         <thead>
