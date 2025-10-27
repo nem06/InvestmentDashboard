@@ -1,7 +1,8 @@
 
 <div id="title">Live Tiles</div>
 <div class="back-icon" (click)="navigateHome()">&#x21d0;</div>
-<div class="live-time">As of &nbsp; {{ livedata[0].Date | date: 'MMM dd - h:mm a'}}</div>
+<div class="live-time" *ngIf="liveDataStatus">As of &nbsp; {{ livedata[0].Date | date: 'MMM dd - h:mm a'}}</div>
+<div class="live-time" *ngIf="!liveDataStatus">As of &nbsp; {{ livedata[0].Date | date: 'MMM dd'}} Close</div>
 <div class="tile-container" *ngIf="livedata && livedata.length > 0">
   <ng-container *ngFor="let stock of livedata">
     <div class="tile" [ngClass]="{'pstv-amnt':  stock.DayChange >= 0, 'ngtv-amnt':  stock.DayChange < 0} ">

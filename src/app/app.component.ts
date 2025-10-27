@@ -14,6 +14,7 @@ import { CommonModule } from '@angular/common';
 })
 export class AppComponent {
   title = 'InvestmentDashboard';
+  alwaysRun : any;
 
   constructor(private sharedService:SharedService, private apiService: StockApiService, private router: Router) {}
 
@@ -73,63 +74,53 @@ export class AppComponent {
 
   callAfterLogin(){
     console.log('Calling callAfterLogin...');
-    this.apiService.getLatestJson("MutualFunds").subscribe(data => {
-      console.log('MutualFunds data received:', data);
-      this.sharedService.MutualFundsObject = data;
-    }, error => {
-      console.error('Error fetching MutualFunds data:', error);
-    });
+    this.getMutualFundsData();  
+    setInterval(() => this.getMutualFundsData(), 300000);
 
-  this.apiService.getLatestJson("Stocks").subscribe(data => {
+    this.apiService.getLatestJson("Stocks").subscribe(data => {
       console.log('Stocks data received:', data);
       this.sharedService.StocksObject  = data;
     }, error => {
       console.error('Error fetching Stocks data:', error);
     });
 
-  this.apiService.getLatestJson("LiveData").subscribe(data => {
-      console.log('LiveData received:', data);
-      if(Object.keys(data).length != 0){
-        this.sharedService.LiveDataObject = data;
-        let currentStocks = this.sharedService.getCurrentStocks();
-        if(currentStocks)
-          this.updateData(data, currentStocks);
-        else{
-          setTimeout(()=>{
-            currentStocks = this.sharedService.getCurrentStocks();
-            this.updateData(data, currentStocks);
-          },500)
-        }
-        this.sharedService.LiveDataStatusObject = true
+    this.getLiveData()
+    this.alwaysRun = setInterval(() => this.getLiveData(), 7000);
 
-        const alwayRun = setInterval(() => {
-          this.apiService.getLatestJson("LiveData").subscribe(data => {
-            if(Object.keys(data).length === 0){
-              this.apiService.getLatestJson("ClosedData").subscribe(data => {
-                this.sharedService.LiveDataObject = data;
-                this.sharedService.LiveDataStatusObject = false
-                let currentStocks = this.sharedService.getCurrentStocks();
-                this.updateData(data, currentStocks)
-              });
-              clearInterval(alwayRun)
-              return
-            }
-            let currentStocks = this.sharedService.getCurrentStocks();
-            this.updateData(data, currentStocks)
-          });
-  
-        }, 7000);
+  }
 
-      }
-      else{
-        this.apiService.getLatestJson("ClosedData").subscribe(data => {
-          this.sharedService.LiveDataObject = data;
-          this.sharedService.LiveDataStatusObject = false
-        });
-      }
-        
+  getMutualFundsData(){
+    this.apiService.getLatestJson("MutualFunds").subscribe(data => {
+      console.log('MutualFunds data received:', data);
+      this.sharedService.MutualFundsObject = data;
     }, error => {
-      console.error('Error fetching LiveData:', error);
+      console.error('Error fetching MutualFunds data:', error);
     });
   }
+
+  getLiveData(){
+    this.sharedService.LiveDataStatusObject = true
+    this.apiService.getLiveData().subscribe(async data => {
+      this.sharedService.LiveDataObject = data;
+      let currentStocks = this.sharedService.getCurrentStocks();
+      if(currentStocks == null){
+        await this.delay(500);
+        currentStocks = this.sharedService.getCurrentStocks();
+      }
+
+      if(!data[0].Date.toString().includes('T')){
+        this.sharedService.LiveDataStatusObject = false
+        clearInterval(this.alwaysRun)
+        if(currentStocks[0].MaxDate == data[0].Date)
+          return;
+      }
+      this.updateData(data, currentStocks)
+
+    });
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+  }
+
 }
