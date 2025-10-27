@@ -42,6 +42,7 @@ export class StocksComponent {
 
     this.stockAPI.getDailyOwnerReturns().subscribe((response:any) => {
       setTimeout(() => {
+        console.log("Daily Returns Response:", response);
         this.data.forEach((user:any) => {
           user.DailyReturns = response.find((u:any) => u.owner === user.Name)?.returns || [];
         });

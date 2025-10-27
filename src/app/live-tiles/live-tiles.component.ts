@@ -13,6 +13,7 @@ import { Router } from '@angular/router';
 
 export class LiveTilesComponent {
   livedata:any;
+  liveDataStatus:any;
 
   constructor(private sharedService: SharedService, private router:Router){}
   
@@ -20,6 +21,11 @@ export class LiveTilesComponent {
     this.sharedService.LiveDataObject$.subscribe(
       (liveData:any) => {
       this.livedata = liveData; 
+    });
+
+    this.sharedService.LiveDataStatusObject$.subscribe(
+      (liveDataStatus:any) => {
+      this.liveDataStatus = liveDataStatus; 
     });
   }
 

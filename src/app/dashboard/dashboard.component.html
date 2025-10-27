@@ -11,7 +11,8 @@
 
                 <div class="date" *ngIf="!liveData && liveDataStatus">{{stocks?.[0].MaxDate | date: 'EEEE, dd MMMM'}}</div>
                 <div class="date" *ngIf="liveData">{{liveData[0].Date | date: 'EEEE, dd MMMM'}}</div>
-                <div class="time"  *ngIf="liveData && liveDataStatus">As of &nbsp; {{ liveData[0].Date | date: 'h:mm a'}}</div>  
+                <!-- <div class="time"  *ngIf="liveData && liveDataStatus">As of &nbsp; {{ liveData[0].Date | date: 'h:mm a'}}</div>   -->
+                <div class="time"  *ngIf="liveData && liveDataStatus">Live ({{ agoString }})</div>  
                 <div class="time"  *ngIf="liveData && !liveDataStatus">As of Day Close</div>  
                 <!-- <div class="user-container" *ngFor="let user of stocks">
                         <div class="name-return" *ngIf="user.Name != 'OTHER'">

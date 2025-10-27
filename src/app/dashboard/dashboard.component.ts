@@ -15,6 +15,7 @@ export class DashboardComponent {
   stocks: any;
   liveData:any;
   liveDataStatus: any;
+  agoString: string = '';
 
   constructor(private router: Router,  private sharedService: SharedService) {}
 
@@ -36,6 +37,8 @@ export class DashboardComponent {
       (liveDataStatus:any) => {
       this.liveDataStatus = liveDataStatus; 
     });
+
+    setInterval(() => this.getLiveString(), 1000);
   }
 
 
@@ -54,10 +57,36 @@ export class DashboardComponent {
     return num.toString();
   }
 
+  getLiveString() {
+    const dateVal = this.liveData?.[0]?.Date;
+
+    // handle numeric timestamps or ISO/date strings
+    const date = typeof dateVal === 'number' || /^\d+$/.test(String(dateVal))
+      ? new Date(Number(dateVal))
+      : new Date(dateVal);
+
+    if (isNaN(date.getTime())) this.agoString = '';
+
+    const diffMs = Date.now() - date.getTime();
+    if (diffMs < 1000) this.agoString = '0s ago';
+
+    const seconds = Math.floor(diffMs / 1000);
+    if (seconds < 60) this.agoString = `${seconds}s ago`;
+
+    const minutes = Math.floor(seconds / 60);
+    if (minutes < 60) this.agoString = `${minutes}min ago`;
+
+    const hours = Math.floor(minutes / 60);
+    if (hours > 0)
+      this.agoString = `${hours}h ago`;
+
+  }
+
   logout(){
     localStorage.removeItem('InvestmentauthToken')
     this.router.navigate(['/login'])
   }
+
   navigateLive(){
     this.router.navigate(['/live'])
   }
