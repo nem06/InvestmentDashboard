@@ -60,26 +60,44 @@ export class DashboardComponent {
   getLiveString() {
     const dateVal = this.liveData?.[0]?.Date;
 
-    // handle numeric timestamps or ISO/date strings
-    const date = typeof dateVal === 'number' || /^\d+$/.test(String(dateVal))
-      ? new Date(Number(dateVal))
-      : new Date(dateVal);
+    if (dateVal) {
+      let parsed: Date;
+      const s = String(dateVal).trim();
+      const isNumeric = typeof dateVal === 'number' || /^\d+$/.test(s);
+      const dateOnlyMatch = s.match(/^(\d{4})[-\/](\d{2})[-\/](\d{2})$/);
 
-    if (isNaN(date.getTime())) this.agoString = '';
+      if (isNumeric) {
+        parsed = new Date(Number(dateVal));
+      } 
+      else if (dateOnlyMatch) {
+        // date-only string (e.g. "2025-11-30" or "2025/11/30") -> treat as GMT date at 10:00 AM
+        const year = Number(dateOnlyMatch[1]);
+        const month = Number(dateOnlyMatch[2]) - 1;
+        const day = Number(dateOnlyMatch[3]);
+        parsed = new Date(Date.UTC(year, month, day, 10, 0, 0));
+      } 
+      else {
+        parsed = new Date(dateVal);
+      }
 
-    const diffMs = Date.now() - date.getTime();
-    if (diffMs < 1000) this.agoString = '0s ago';
+      // parsed is already in local timezone — use it directly
+      const diffMsAlt = Date.now() - parsed.getTime();
 
-    const seconds = Math.floor(diffMs / 1000);
-    if (seconds < 60) this.agoString = `${seconds}s ago`;
+      if (diffMsAlt < 1000) { this.agoString = '0s ago'; return; }
 
-    const minutes = Math.floor(seconds / 60);
-    if (minutes < 60) this.agoString = `${minutes}min ago`;
+      const secondsAlt = Math.floor(diffMsAlt / 1000);
+      if (secondsAlt < 60) { this.agoString = `${secondsAlt}s ago`; return; }
 
-    const hours = Math.floor(minutes / 60);
-    if (hours > 0)
-      this.agoString = `${hours}h ago`;
+      const minutesAlt = Math.floor(secondsAlt / 60);
+      if (minutesAlt < 60) { this.agoString = `${minutesAlt}min ago`; return; }
 
+      const hoursAlt = Math.floor(minutesAlt / 60);
+      if (hoursAlt > 0) { this.agoString = `${hoursAlt}h ago`; return; }
+
+      this.agoString = '';
+      return;
+
+    }
   }
 
   logout(){
