@@ -120,6 +120,20 @@
                 <div style="font-size: 20px; margin: 8px">
                         <a href="#/mf-returns" >Returns Insights</a>
                 </div>
+                <div>
+                        <app-line-chart *ngIf="data.SingleNodes[0].GraphView == 'all'" [chartDataList]="data.SingleNodes[0].FilteredDailyReturns" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>
+                        <app-line-chart *ngIf="data.SingleNodes[0].GraphView == 'M12'" [chartDataList]="data.SingleNodes[0].FilteredDailyReturns_12M" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>
+                        <app-line-chart *ngIf="data.SingleNodes[0].GraphView == 'M6'" [chartDataList]="data.SingleNodes[0].FilteredDailyReturns_6M" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>
+                        <app-line-chart *ngIf="data.SingleNodes[0].GraphView == 'M3'" [chartDataList]="data.SingleNodes[0].FilteredDailyReturns_3M" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>
+                        <app-line-chart *ngIf="data.SingleNodes[0].GraphView == 'D30'" [chartDataList]="data.SingleNodes[0].FilteredDailyReturns_30D" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>                    
+                </div>
+                <div class="filter-bar">
+                        <div class="filter-box" [class.selected]="data.SingleNodes[0].GraphView == 'all'" (click)="data.SingleNodes[0].GraphView = 'all'">ALL</div>
+                        <div class="filter-box" [class.selected]="data.SingleNodes[0].GraphView == 'M12'" (click)="data.SingleNodes[0].GraphView = 'M12'">1Y</div>
+                        <div class="filter-box" [class.selected]="data.SingleNodes[0].GraphView == 'M6'" (click)="data.SingleNodes[0].GraphView = 'M6'">6M</div>
+                        <div class="filter-box" [class.selected]="data.SingleNodes[0].GraphView == 'M3'" (click)="data.SingleNodes[0].GraphView = 'M3'">3M</div>
+                        <div class="filter-box" [class.selected]="data.SingleNodes[0].GraphView == 'D30'" (click)="data.SingleNodes[0].GraphView = 'D30'">30D</div>
+                </div>
                 <div class="day-other-return-amnt">
                         <div *ngIf = "data.SingleNodes[0].MaxReturn >= 0"><span class="amnt-header">Max Ret :</span><span class="pstv-amnt"> +&#8377;{{formatToLacs(data.SingleNodes[0].MaxReturn)}} ({{data.SingleNodes[0].Max_Per}}%)</span></div>
                         <div *ngIf = "data.SingleNodes[0].MaxReturn < 0"><span class="amnt-header">Max Ret :</span><span class="ngtv-amnt"> -&#8377;{{formatToLacs(data.SingleNodes[0].MaxReturn*-1)}} ({{data.SingleNodes[0].Max_Per*-1}}%)</span></div>
@@ -142,6 +156,20 @@
                                                 <div class="day-user-other-return-amnt"  *ngIf = "user.Investments <= user.MarketValue"><span class="amnt-header">M Value :</span><span class="pstv-amnt"> &#8377;{{formatToLacs(user.MarketValue)}}</span></div>
                                                 <div class="day-user-other-return-amnt"  *ngIf = "user.Investments > user.MarketValue"><span class="amnt-header">M Value :</span><span class="ngtv-amnt"> &#8377;{{formatToLacs(user.MarketValue)}}</span></div>
                                                 <div class="day-user-other-return-amnt"><span class="amnt-header">Invested :</span> &#8377;{{formatToLacs(user.Investments)}}</div>
+                                        </div>
+                                        <div *ngIf = "user.isExpandedAll">
+                                                <app-line-chart *ngIf="user.GraphView == 'all'" [chartDataList]="user.FilteredDailyReturns" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>
+                                                <app-line-chart *ngIf="user.GraphView == 'M12'" [chartDataList]="user.FilteredDailyReturns_12M" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>
+                                                <app-line-chart *ngIf="user.GraphView == 'M6'" [chartDataList]="user.FilteredDailyReturns_6M" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>
+                                                <app-line-chart *ngIf="user.GraphView == 'M3'" [chartDataList]="user.FilteredDailyReturns_3M" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>
+                                                <app-line-chart *ngIf="user.GraphView == 'D30'" [chartDataList]="user.FilteredDailyReturns_30D" [purchaseDates]="[]" [sellDates]="[]"></app-line-chart>                    
+                                        </div>
+                                        <div class="filter-bar" *ngIf = "user.isExpandedAll">
+                                                <div class="filter-box" [class.selected]="user.GraphView == 'all'" (click)="user.GraphView = 'all'">ALL</div>
+                                                <div class="filter-box" [class.selected]="user.GraphView == 'M12'" (click)="user.GraphView = 'M12'">1Y</div>
+                                                <div class="filter-box" [class.selected]="user.GraphView == 'M6'" (click)="user.GraphView = 'M6'">6M</div>
+                                                <div class="filter-box" [class.selected]="user.GraphView == 'M3'" (click)="user.GraphView = 'M3'">3M</div>
+                                                <div class="filter-box" [class.selected]="user.GraphView == 'D30'" (click)="user.GraphView = 'D30'">30D</div>
                                         </div>
                                         <div class="all-sub-container" *ngIf = "user.isExpandedAll" >
                                                 <ng-container *ngFor="let MutualFund of user.MutualFunds">

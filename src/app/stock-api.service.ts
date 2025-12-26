@@ -57,7 +57,7 @@ export class StockApiService {
     );
   }
 
-    getReturnByPeriod(data: object): Observable<any> {
+  getReturnByPeriod(data: object): Observable<any> {
     const token = localStorage.getItem('InvestmentauthToken') || ''; 
     const headers = new HttpHeaders({
       'Authorization': token
@@ -99,6 +99,18 @@ export class StockApiService {
     });
     return this.http.get(
       "https://stock-node-server.onrender.com/api/GetDailyOwnerReturns",
+      {headers}
+    );
+  }
+
+  getDailyMFReturns(name?:string | null): Observable<any> {
+    if(!name || name === null) name = 'All';
+    const token = localStorage.getItem('InvestmentauthToken') || '';
+    const headers = new HttpHeaders({
+      'Authorization': token
+    });
+    return this.http.get(
+      "https://stock-node-server.onrender.com/api/GetDailyMFReturns?name=" + name,
       {headers}
     );
   }
